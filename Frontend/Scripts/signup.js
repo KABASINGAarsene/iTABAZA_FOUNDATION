@@ -11,7 +11,8 @@ let form =document.querySelector("form");
         }
       try {
 
-        let res=await fetch(baseURL+"user/emailVerify",{
+        let res=await fetch(baseURL+"/user/emailVerify",{
+
             method:"POST",
             headers:{
                 'Content-type':'application/json'

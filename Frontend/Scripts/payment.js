@@ -121,6 +121,9 @@ class PaymentManager {
             return;
         }
         const userId = this.getCurrentUserId();
+
+        const userEmail = this.getCurrentUserEmail();
+
         if (!userId || userId === 'temp-user-id') {
             alert('You must be logged in to book an appointment.');
             window.location.href = 'login.html';
@@ -143,11 +146,13 @@ class PaymentManager {
         try {
             // Prepare appointment data for backend
             const appointmentData = {
+
                 doctorId: doctorId,
                 patientId: userId, // This should come from user session
                 ageOfPatient: this.appointmentDetails.patientAge,
                 gender: this.appointmentDetails.patientGender,
                 address: this.getCurrentUserAddress(), // This should come from user session
+
                 problemDescription: this.appointmentDetails.problemDescription,
                 appointmentDate: this.appointmentDetails.date,
                 appointmentTime: this.appointmentDetails.slot,
@@ -251,6 +256,11 @@ class PaymentManager {
     getAuthToken() {
         // This should get the authentication token from the user session
         return sessionStorage.getItem('authToken') || localStorage.getItem('authToken') || sessionStorage.getItem('token') || localStorage.getItem('token');
+    }
+
+    getCurrentUserEmail() {
+        // Try to get the user's email from sessionStorage or localStorage
+        return sessionStorage.getItem('userEmail') || localStorage.getItem('userEmail') || '';
     }
 
     clearSessionStorage() {

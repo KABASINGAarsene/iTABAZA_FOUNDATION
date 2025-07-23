@@ -433,43 +433,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-section" id="mobile-money-details-section">
-                        <h3><i class="fas fa-mobile-alt me-2"></i>Payment Details</h3>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="transaction-id">Transaction ID (TxId) *</label>
-                                    <input type="text" id="transaction-id" name="transactionId" placeholder="Enter transaction ID" required>
-                                    <small class="text-muted">Transaction ID you received after payment</small>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phone-number">Transaction Phone Number *</label>
-                                    <input type="tel" id="phone-number" name="phoneNumber" placeholder="0781234567" required>
-                                    <small class="text-muted">Phone number used for the transaction</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="owner-name">Account Owner's Full Name *</label>
-                                    <input type="text" id="owner-name" name="ownerName" placeholder="John Doe Uwimana" required>
-                                    <small class="text-muted">Full name as registered on mobile money account</small>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="sim-holder">SIM Card Holder Name *</label>
-                                    <input type="text" id="sim-holder" name="simcardHolder" placeholder="John Doe" required>
-                                    <small class="text-muted">Name registered to the SIM card</small>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="hidden" name="paymentMethod" id="selected-payment-method" value="mtn">
-                    </div>
-                    
+
                     <div class="text-center">
                         <button type="submit" class="btn btn-danger btn-lg" id="confirm-payment-btn">
                             <i class="fas fa-lock me-2"></i>Confirm Payment & Book Appointment
@@ -523,6 +487,12 @@
                     <span class="summary-value">${patientData.firstName} ${patientData.lastName}</span>
                 </div>
                 <div class="summary-item">
+
+                    <span class="summary-label">Email:</span>
+                    <span class="summary-value">${patientData.email}</span>
+                </div>
+                <div class="summary-item">
+
                     <span class="summary-label">Appointment Date:</span>
                     <span class="summary-value">${problemData.preferredDate}</span>
                 </div>
@@ -640,45 +610,57 @@
         // Handle form submission
         document.getElementById('payment-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Check if payment method is selected
-            const selectedMethod = document.querySelector('.payment-method.selected');
-            if (!selectedMethod) {
-                alert('Please select a payment method');
-                return;
-            }
-            
-            // Simulate payment processing
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing Payment...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Store appointment data for backend
-                const appointmentData = {
-                    doctor: JSON.parse(localStorage.getItem('docObj')),
-                    patient: JSON.parse(localStorage.getItem('patientData')),
-                    problem: JSON.parse(localStorage.getItem('problemData')),
-                    payment: {
-                        amount: 1000,
-                        method: selectedMethod.getAttribute('data-method'),
-                        status: 'completed'
-                    },
-                    appointmentType: 'in-person',
-                    createdAt: new Date().toISOString()
-                };
-                
-                // Store in localStorage for now (in real app, send to backend)
-                localStorage.setItem('appointmentData', JSON.stringify(appointmentData));
-                
-                // Show success message
-                alert('Payment successful! Your appointment has been confirmed.');
-                
-                // Redirect to dashboard or confirmation page
-                window.location.href = 'dashboard.html';
-            }, 2000);
+
+
+            const docObj = JSON.parse(localStorage.getItem('docObj'));
+            const patientData = JSON.parse(localStorage.getItem('patientData'));
+            const problemData = JSON.parse(localStorage.getItem('problemData'));
+
+            const appointmentData = {
+                doctor_id: docObj.docID || docObj.id, // use the correct property for doctor ID
+                // If you have patient ID, include it:
+                // patient_id: patientData.id,
+                patient_first_name: patientData.firstName,
+                patient_email: patientData.email,
+                patient_phone: patientData.phone,
+                age_of_patient: patientData.age,
+                gender: patientData.gender,
+                address: patientData.address,
+                doc_first_name: docObj.name,
+                problem_description: problemData.description,
+                symptoms: problemData.symptoms || [],
+                medical_history: problemData.medicalHistory || null,
+                medications: problemData.medications || null,
+                appointment_date: problemData.preferredDate,
+                appointment_time: problemData.preferredTime,
+                slot_time: problemData.preferredTime, // or another slot value if you have one
+                appointmentType: 'in-person', // exact casing as in your schema
+                status: 'pending',
+                booking_source: 'web',
+                payment_status: false,
+                createdAt: new Date().toISOString(), // exact casing as in your schema
+                email: patientData.email // if you use this field
+            };
+
+            // Send to backend
+            fetch('http://localhost:8080/appointment/create-pending', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(appointmentData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.appointment) {
+                    // Redirect to payment verification page
+                    window.location.href = 'https://payment-icbr.onrender.com/verify-payment-web';
+                } else {
+                    alert('Failed to store appointment. Please try again.');
+                }
+            })
+            .catch(err => {
+                alert('Failed to create appointment. Please try again.');
+                console.error(err);
+            });
         });
     </script>
     <script type="module" src="./Scripts/navbar.js"></script>

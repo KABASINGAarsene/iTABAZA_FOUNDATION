@@ -3,7 +3,9 @@ document.querySelector("#footer").innerHTML=`
 <div id="footer-cont">
     <div data-aos="fade-right" data-aos-duration="1000" id="footer-left">
         <div>
-            <h4>Medistar</h4>
+
+            <h4>iTABAZA</h4>
+
             <p>About</p>
             <p>Blog</p>
             <p>Careers</p>
@@ -15,7 +17,9 @@ document.querySelector("#footer").innerHTML=`
             <p>Book an appointment</p>
             <br>
             <h4>For Doctors</h4>
-            <p>Medistar Profile</p>
+
+            <p>iTABAZA Profile</p>
+
         </div>
         <div>
             <h4>More</h4>
@@ -27,7 +31,8 @@ document.querySelector("#footer").innerHTML=`
     </div>
     <div data-aos="fade-left" data-aos-duration="1000" id="footer-right">
         <div id="logo-div">
-            <img alt="logo" src="./Files/Medistar-logo-crop.jpeg"/>
+
+            <img alt="logo" src="./Files/iTABAZA-logo.png"/>
         </div>
         <div id="socials">
             <p><i class="fa-brands fa-facebook"></i></p>

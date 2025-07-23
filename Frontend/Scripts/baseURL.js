@@ -13,6 +13,12 @@ export const API_ENDPOINTS = {
     DOCTOR_AVAILABLE: `${baseURL}/doctor/availableDoctors`,
     DOCTOR_BY_ID: (id) => `${baseURL}/doctor/${id}`,
     DOCTOR_BY_DEPARTMENT: (deptId) => `${baseURL}/doctor/allDoctor/${deptId}`,
+
+    DOCTOR_LOGIN: `${baseURL}/doctor/login`,
+    DOCTOR_APPOINTMENTS: (doctorId) => `${baseURL}/doctor/appointments/${doctorId}`,
+    DOCTOR_STATS: (doctorId) => `${baseURL}/doctor/stats/${doctorId}`,
+    DOCTOR_UPLOAD_DOCUMENT: `${baseURL}/doctor/upload-document`,
+
     
     // Department endpoints
     DEPARTMENT_ALL: `${baseURL}/department/allDepartment`,

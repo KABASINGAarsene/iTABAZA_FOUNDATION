@@ -454,6 +454,8 @@ async function addDoc(){
     let docObj={
         doctorName: docForm.name.value,
         email: docForm.email.value,
+
+        password: docForm.password.value,
         qualifications: docForm.qual.value,
         experience: docForm.exp.value,
         phoneNo: docForm.phone.value,

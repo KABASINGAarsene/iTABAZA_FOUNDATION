@@ -63,7 +63,19 @@ let fourth=document.querySelector("#fourth").value;
     //    password:p.password,
     //    otp:jhola
     // };
-    let register_request = await fetch(baseURL+"user/signup", {
+    console.log('baseURL:', baseURL); // Debug: log the baseURL value
+    
+    // First verify OTP
+    if(bag != otp){
+        swal("", "Wrong OTP", "warning").then(function() {
+            window.location.href = "./otp.html";
+        });
+        return;
+    }
+    
+    // OTP is correct, now create the user
+    let register_request = await fetch(baseURL+"/user/signup", {
+
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,19 +84,22 @@ let fourth=document.querySelector("#fourth").value;
     })
     .then(res=>res.json())
     .then(data=>  {
-      // console.log(data)
-      if(bag==otp){
-        swal("", "Registered successfull", "success").then(function() {
+
+      console.log(data);
+      if(data.msg && data.msg === "Signup Successful"){
+        swal("", "Registration successful!", "success").then(function() {
           window.location.href = "./login.html";
           localStorage.clear();
-      });
+        });
       }
-      else if(bag!=otp){
-        swal("", "Wrong OTP", "warning").then(function() {
-          window.location.href = "./otp.html";
-      });
-      }else{
-        // window.location.href="./signup.html"
+      else if(data.msg && (data.msg === "User already registered" || data.msg === "Mobile number already registered")){
+        swal("", data.msg, "warning").then(function() {
+          window.location.href = "./login.html";
+          localStorage.clear();
+        });
+      } else {
+        swal("", data.msg || "Registration failed. Please try again.", "error");
+
       }   
 })
     .catch(err=>console.log(err))

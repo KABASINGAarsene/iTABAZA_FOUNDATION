@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Patient Login Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .success { color: #28a745; }
+        .info { color: #17a2b8; }
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .button:hover { background-color: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2> Test Patient Login Setup</h2>
+        
+        <div class="info">
+            <p><strong>Test User Information:</strong></p>
+            <pre>{
+  "id": "7da86db0-3264-4b2a-b09e-e1e986246a6e",
+  "first_name": "Test",
+  "last_name": "User",
+  "email": "test@example.com",
+  "mobile": "+250700000001"
+}</pre>
+        </div>
+        
+        <div class="info">
+            <p><strong>Test Token:</strong></p>
+            <pre>test_patient_token_1752346973613</pre>
+        </div>
+        
+        <button class="button" onclick="setupLogin()">Setup Test Login</button>
+        <button class="button" onclick="clearLogin()">Clear Login</button>
+        <button class="button" onclick="openDashboard()">Open Dashboard</button>
+        
+        <div id="status"></div>
+        
+        <script>
+            const patientInfo = {"id":"7da86db0-3264-4b2a-b09e-e1e986246a6e","first_name":"Test","last_name":"User","email":"test@example.com","mobile":"+250700000001"};
+            const patientToken = 'test_patient_token_1752346973613';
+            
+            function setupLogin() {
+                localStorage.setItem('patientInfo', JSON.stringify(patientInfo));
+                localStorage.setItem('patientToken', patientToken);
+                
+                sessionStorage.setItem('patientInfo', JSON.stringify(patientInfo));
+                sessionStorage.setItem('patientToken', patientToken);
+                
+                document.getElementById('status').innerHTML = 
+                    '<div class="success"><p> Test login data set successfully!</p></div>';
+                
+                console.log(' Patient login data set:', patientInfo);
+            }
+            
+            function clearLogin() {
+                localStorage.removeItem('patientInfo');
+                localStorage.removeItem('patientToken');
+                sessionStorage.removeItem('patientInfo');
+                sessionStorage.removeItem('patientToken');
+                
+                document.getElementById('status').innerHTML = 
+                    '<div class="info"><p> Login data cleared</p></div>';
+                
+                console.log(' Patient login data cleared');
+            }
+            
+            function openDashboard() {
+                window.open('/patient-dashboard-new.html', '_blank');
+            }
+            
+            // Auto-setup on page load
+            window.onload = function() {
+                setupLogin();
+            };
+        </script>
+    </div>
+</body>
+</html>
+        

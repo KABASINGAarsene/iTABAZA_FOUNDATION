@@ -6,61 +6,39 @@ let doctorsCache = null;
 let lastFetchTime = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
 
-let depObj = {
-    1: "Neurology",
-    2: "Dermatology", 
-    3: "Dental",
-    4: "Ayurveda",
-    5: "Gastroenterology",
-    6: "Gynaecology",
-    7: "ENT",
-    8: "General Physician",
-    9: "Orthopedic",
-    10: "Cardiology",
-    // String versions
-    "1": "Neurology",
-    "2": "Dermatology", 
-    "3": "Dental",
-    "4": "Ayurveda",
-    "5": "Gastroenterology",
-    "6": "Gynaecology",
-    "7": "ENT",
-    "8": "General Physician",
-    "9": "Orthopedic",
-    "10": "Cardiology"
+let depObj = {};
+let departmentsLoaded = false;
+
+// Fetch all departments and build the mapping
+async function loadDepartments() {
+    try {
+        const response = await fetch(`${baseURL}/department/all`, {
+            headers: getAuthHeaders(),
+        });
+        if (response.ok) {
+            const data = await response.json();
+            depObj = {};
+            data.departments.forEach(dept => {
+                depObj[dept.id] = dept.dept_name;
+            });
+            departmentsLoaded = true;
+        } else {
+            console.error('Failed to fetch departments:', response.status);
+        }
+    } catch (err) {
+        console.error('Error loading departments:', err);
+    }
 }
 
 // Function to get department name with fallback
 function getDepartmentName(departmentId) {
     if (!departmentId) return 'Unknown Department';
-    
-    // Handle the specific UUID department ID found in the database
-    if (departmentId === 'dfae69ef-60b3-49eb-8d9c-76e682e1ebd3') {
-        return 'Cardiology'; // Based on the qualifications showing "cardilogy"
-    }
-    
-    // Try exact match first
+
     if (depObj[departmentId]) {
         return depObj[departmentId];
     }
-    
-    // Try converting to string if it's a number
-    if (typeof departmentId === 'number') {
-        const stringId = departmentId.toString();
-        if (depObj[stringId]) {
-            return depObj[stringId];
-        }
-    }
-    
-    // Try converting to number if it's a string
-    if (typeof departmentId === 'string') {
-        const numId = parseInt(departmentId);
-        if (depObj[numId]) {
-            return depObj[numId];
-        }
-    }
-    
-    return `Unknown Department (ID: ${departmentId})`;
+    return `Unknown Department`;
+
 }
 
 // Function to validate and get safe image URL
@@ -420,6 +398,8 @@ docFilterTag.addEventListener("change", async (e) => {
 
 // Initialize on page load
 window.addEventListener("load", async (e) => {
+    await loadDepartments();
+
     let deptID = localStorage.getItem("deptID");
     if (deptID) {
         try {
@@ -428,14 +408,13 @@ window.addEventListener("load", async (e) => {
                 headers: getAuthHeaders(),
                 signal: AbortSignal.timeout(10000)
             });
-            
+
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }
-            
             const data = await response.json();
             hideLoading();
-            
+
             if (data.msg) {
                 swal("", `${data.msg}`, "info").then(function() {
                     getdata();
@@ -443,7 +422,6 @@ window.addEventListener("load", async (e) => {
             } else {
                 renderdata(data.doctor);
             }
-            
             localStorage.removeItem("deptID");
         } catch (err) {
             console.error('Department filter error:', err);

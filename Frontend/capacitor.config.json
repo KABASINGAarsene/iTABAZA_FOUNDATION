@@ -1,0 +1,6 @@
+{
+  "appId": "com.itabaza.app",
+  "appName": "itabaza",
+  "webDir": "./",
+  "bundledWebRuntime": false
+}

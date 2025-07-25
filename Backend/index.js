@@ -6,13 +6,20 @@ const nodemailer = require("nodemailer");
 const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
-// Configure CORS for frontend running on port 3000
+// Configure CORS for production frontend on Vercel
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://0.0.0.0:3000'],
+    origin: [
+        'https://itabaza-2qjt.vercel.app',
+        'https://itabaza-2qjt.vercel.app/',
+        // Keep localhost for development
+        'http://localhost:3000', 
+        'http://127.0.0.1:3000', 
+        'http://0.0.0.0:3000'
+    ],
     credentials: true,
     optionsSuccessStatus: 200,
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 }));
 
 const { userRouter } = require("./routers/user.router");

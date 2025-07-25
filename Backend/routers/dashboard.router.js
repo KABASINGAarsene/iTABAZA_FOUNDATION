@@ -301,48 +301,80 @@ router.get('/doctor/:doctorId/appointments', async (req, res) => {
 router.get('/patient/:patientId/appointments', async (req, res) => {
     try {
         const { patientId } = req.params;
-        const { status, page = 1, limit = 10 } = req.query;
+        const { status, page = 1, limit = 100 } = req.query;
 
+        console.log(`[DEBUG] Fetching appointments for patientId: ${patientId}, status: ${status}, page: ${page}, limit: ${limit}`);
+
+        // Simplified query to avoid complex joins that may fail
         let query = supabase
             .from('appointments')
-            .select(`
-                *,
-                doctors:doctor_id (
-                    doctor_name,
-                    qualifications,
-                    department_id
-                ),
-                departments:doctors.department_id (
-                    dept_name
-                )
-            `)
+            .select('*')
             .eq('patient_id', patientId)
-            .order('appointment_date', { ascending: false })
-            .order('created_at', { ascending: false });
+            .order('appointment_date', { ascending: false });
 
         if (status) {
-            query = query.eq('status', status);
+            if (status === 'booked') {
+                query = query.in('status', ['pending', 'confirmed']);
+            } else {
+                query = query.eq('status', status);
+            }
         }
 
-        const { data: appointments, error } = await query
-            .range((page - 1) * limit, page * limit - 1);
+        const { data: appointments, error } = await query;
 
         if (error) {
-            throw error;
+            console.error('[ERROR] Supabase query error:', error);
+            return res.status(500).json({ 
+                success: false,
+                error: 'Failed to fetch appointments', 
+                details: error.message || error 
+            });
         }
+
+        // For each appointment, get doctor info separately if needed
+        const enrichedAppointments = [];
+        
+        for (const appointment of appointments) {
+            let enrichedAppointment = { ...appointment };
+            
+            // Try to get doctor info if doctor_id exists
+            if (appointment.doctor_id) {
+                try {
+                    const { data: doctor, error: doctorError } = await supabase
+                        .from('doctors')
+                        .select('doctor_name, qualifications, department_id')
+                        .eq('id', appointment.doctor_id)
+                        .single();
+                        
+                    if (!doctorError && doctor) {
+                        enrichedAppointment.doctor_info = doctor;
+                    }
+                } catch (doctorErr) {
+                    console.warn(`Failed to fetch doctor info for appointment ${appointment.id}:`, doctorErr);
+                }
+            }
+            
+            enrichedAppointments.push(enrichedAppointment);
+        }
+
+        console.log(`[DEBUG] Successfully fetched ${enrichedAppointments.length} appointments for patient ${patientId}`);
 
         res.json({
             success: true,
-            data: appointments,
+            data: enrichedAppointments,
             pagination: {
                 page: parseInt(page),
                 limit: parseInt(limit),
-                total: appointments.length
+                total: enrichedAppointments.length
             }
         });
     } catch (error) {
-        console.error('Error fetching patient appointments:', error);
-        res.status(500).json({ error: 'Failed to fetch appointments' });
+        console.error('[ERROR] Unexpected error fetching patient appointments:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to fetch appointments', 
+            details: error.message || error.toString()
+        });
     }
 });
 

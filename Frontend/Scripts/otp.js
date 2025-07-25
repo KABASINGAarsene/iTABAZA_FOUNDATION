@@ -75,7 +75,6 @@ let fourth=document.querySelector("#fourth").value;
     
     // OTP is correct, now create the user
     let register_request = await fetch(baseURL+"/user/signup", {
-
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +83,6 @@ let fourth=document.querySelector("#fourth").value;
     })
     .then(res=>res.json())
     .then(data=>  {
-
       console.log(data);
       if(data.msg && data.msg === "Signup Successful"){
         swal("", "Registration successful!", "success").then(function() {
@@ -99,7 +97,6 @@ let fourth=document.querySelector("#fourth").value;
         });
       } else {
         swal("", data.msg || "Registration failed. Please try again.", "error");
-
       }   
 })
     .catch(err=>console.log(err))

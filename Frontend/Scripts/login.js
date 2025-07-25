@@ -81,7 +81,7 @@ form.addEventListener("submit", async (e) => {
                 sessionStorage.setItem("userEmail", data.user.email);
                 
                 swal("", `Welcome, ${data.user.name}!`, "success").then(function() {
-                    window.location.href = "./admin-dashboard-new.html";
+                    window.location.href = "./dashboard.html";
                 });
             }
             

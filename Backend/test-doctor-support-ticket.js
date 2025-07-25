@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 async function testDoctorSupportTicket() {
     try {
-        console.log('🧪 Testing Doctor Support Ticket Functionality...\n');
+        console.log(' Testing Doctor Support Ticket Functionality...\n');
 
         // First, get a real doctor from the database
         const { data: doctors, error: doctorError } = await supabase
@@ -13,12 +13,12 @@ async function testDoctorSupportTicket() {
             .limit(1);
 
         if (doctorError || !doctors || doctors.length === 0) {
-            console.log('❌ No doctors found in database');
+            console.log(' No doctors found in database');
             return;
         }
 
         const doctor = doctors[0];
-        console.log('👨‍⚕️ Found doctor:', {
+        console.log(' Found doctor:', {
             id: doctor.id,
             name: doctor.doctor_name,
             email: doctor.email
@@ -35,10 +35,10 @@ async function testDoctorSupportTicket() {
             { expiresIn: '24h' }
         );
 
-        console.log('🔑 Generated JWT token:', token.substring(0, 50) + '...');
+        console.log(' Generated JWT token:', token.substring(0, 50) + '...');
 
         // Test creating a support ticket
-        console.log('\n📝 Testing support ticket creation...');
+        console.log('\n Testing support ticket creation...');
         
         const { data: ticketId, error: ticketError } = await supabase
             .rpc('create_support_ticket', {
@@ -53,12 +53,12 @@ async function testDoctorSupportTicket() {
             });
 
         if (ticketError) {
-            console.log('❌ Error creating support ticket:', ticketError);
+            console.log(' Error creating support ticket:', ticketError);
             return;
         }
 
-        console.log('✅ Support ticket created successfully!');
-        console.log('🎫 Ticket ID:', ticketId);
+        console.log(' Support ticket created successfully!');
+        console.log(' Ticket ID:', ticketId);
 
         // Query the created ticket
         const { data: tickets, error: queryError } = await supabase
@@ -67,11 +67,11 @@ async function testDoctorSupportTicket() {
             .eq('id', ticketId);
 
         if (queryError) {
-            console.log('❌ Error querying ticket:', queryError);
+            console.log(' Error querying ticket:', queryError);
             return;
         }
 
-        console.log('📋 Ticket details:', tickets[0]);
+        console.log(' Ticket details:', tickets[0]);
 
         // Test querying tickets by user
         console.log('\n🔍 Testing ticket retrieval by user...');
@@ -83,14 +83,14 @@ async function testDoctorSupportTicket() {
             .order('created_at', { ascending: false });
 
         if (userTicketError) {
-            console.log('❌ Error querying user tickets:', userTicketError);
+            console.log(' Error querying user tickets:', userTicketError);
             return;
         }
 
-        console.log(`✅ Found ${userTickets.length} tickets for doctor`);
+        console.log(` Found ${userTickets.length} tickets for doctor`);
 
         // Output instructions for frontend testing
-        console.log('\n🛠️  FOR FRONTEND TESTING:');
+        console.log('\n  FOR FRONTEND TESTING:');
         console.log('1. Store this doctor info in localStorage:');
         console.log(`   localStorage.setItem('doctorInfo', '${JSON.stringify({
             id: doctor.id,
@@ -103,7 +103,7 @@ async function testDoctorSupportTicket() {
         console.log('\n3. Open the doctor dashboard and test support ticket creation');
 
     } catch (error) {
-        console.error('❌ Test failed:', error);
+        console.error(' Test failed:', error);
     }
 }
 

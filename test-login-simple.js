@@ -36,7 +36,6 @@ function makeRequest(path, method, data) {
           });
         }
       });
-      
     });
 
     req.on('error', (error) => {

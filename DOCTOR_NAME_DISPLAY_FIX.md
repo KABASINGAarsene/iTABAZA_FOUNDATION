@@ -51,7 +51,7 @@ Ran `test-doctor-name-fix.js` which confirmed:
 
 ### Test Data Used
 - **Doctor Name**: "Dr. John Smith"
-- **Email**: john.smith@medistar.com  
+- **Email**: john.smith@iTABAZA.com  
 - **Qualifications**: "MD Cardiology, FACC"
 
 ### Manual Testing Available

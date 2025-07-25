@@ -1,7 +1,7 @@
 const { supabase } = require("./config/db");
 
 async function testDoctorEndpoints() {
-    console.log("🧪 Testing Doctor Endpoints...\n");
+    console.log(" Testing Doctor Endpoints...\n");
     
     try {
         // Test 1: Get all doctors
@@ -11,9 +11,9 @@ async function testDoctorEndpoints() {
             .select('*');
         
         if (allError) {
-            console.error("❌ Error getting all doctors:", allError);
+            console.error(" Error getting all doctors:", allError);
         } else {
-            console.log(`✅ Found ${allDoctors.length} total doctors`);
+            console.log(` Found ${allDoctors.length} total doctors`);
         }
         
         // Test 2: Get available doctors
@@ -25,9 +25,9 @@ async function testDoctorEndpoints() {
             .eq('is_available', true);
         
         if (availableError) {
-            console.error("❌ Error getting available doctors:", availableError);
+            console.error(" Error getting available doctors:", availableError);
         } else {
-            console.log(`✅ Found ${availableDoctors.length} available doctors`);
+            console.log(` Found ${availableDoctors.length} available doctors`);
             if (availableDoctors.length > 0) {
                 console.log("   Available doctors:");
                 availableDoctors.forEach(doctor => {
@@ -44,7 +44,7 @@ async function testDoctorEndpoints() {
             .limit(1);
         
         if (deptError) {
-            console.error("❌ Error getting departments:", deptError);
+            console.error(" Error getting departments:", deptError);
         } else if (departments.length > 0) {
             const deptId = departments[0].id;
             const { data: deptDoctors, error: deptDoctorsError } = await supabase
@@ -55,12 +55,12 @@ async function testDoctorEndpoints() {
                 .eq('is_available', true);
             
             if (deptDoctorsError) {
-                console.error("❌ Error getting doctors by department:", deptDoctorsError);
+                console.error(" Error getting doctors by department:", deptDoctorsError);
             } else {
-                console.log(`✅ Found ${deptDoctors.length} available doctors in ${departments[0].dept_name}`);
+                console.log(` Found ${deptDoctors.length} available doctors in ${departments[0].dept_name}`);
             }
         } else {
-            console.log("⚠️  No departments found to test department filtering");
+            console.log("  No departments found to test department filtering");
         }
         
         // Test 4: Check doctor status distribution
@@ -70,7 +70,7 @@ async function testDoctorEndpoints() {
             .select('status, is_available');
         
         if (statusError) {
-            console.error("❌ Error getting status counts:", statusError);
+            console.error(" Error getting status counts:", statusError);
         } else {
             const approved = statusCounts.filter(d => d.status === true).length;
             const available = statusCounts.filter(d => d.is_available === true).length;
@@ -83,7 +83,7 @@ async function testDoctorEndpoints() {
         }
         
     } catch (error) {
-        console.error("❌ Test failed:", error);
+        console.error(" Test failed:", error);
     }
 }
 

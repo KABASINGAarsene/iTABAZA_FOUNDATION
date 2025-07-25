@@ -76,7 +76,49 @@ appointmentRouter.post("/checkSlot/:doctorId", async (req, res) => {
 appointmentRouter.post("/create/:doctorId", authenticate, async (req, res) => {
   let doctorId = req.params.doctorId;
   let patientId = req.body.userID;
+  
+  // Enhanced patient ID validation and recovery
+  if (!patientId) {
+    console.log("[WARNING] Missing userID in request body. Attempting recovery...");
+    console.log("[DEBUG] Full request body:", JSON.stringify(req.body, null, 2));
+    
+    // Try to get patient ID from alternative sources
+    if (req.body.patientId) {
+      patientId = req.body.patientId;
+      console.log("[RECOVERY] Found patientId in request body:", patientId);
+    } else if (req.body.patient_id) {
+      patientId = req.body.patient_id;
+      console.log("[RECOVERY] Found patient_id in request body:", patientId);
+    } else if (req.body.email) {
+      // Try to find patient by email as last resort
+      console.log("[RECOVERY] Attempting to find patient by email:", req.body.email);
+      try {
+        const patient = await UserModel.findByEmail(req.body.email);
+        if (patient) {
+          patientId = patient.id;
+          console.log("[RECOVERY] Found patient by email, ID:", patientId);
+        }
+      } catch (emailError) {
+        console.log("[ERROR] Failed to find patient by email:", emailError.message);
+      }
+    }
+    
+    if (!patientId) {
+      return res.status(400).send({ 
+        msg: "Missing patient identification. Please log in again or contact support.",
+        debug: "No userID, patientId, patient_id, or valid email found in request"
+      });
+    }
+  }
+  
   let patientEmail = req.body.email;
+
+  // Enhanced debug logging
+  console.log("[DEBUG] Enhanced booking request:");
+  console.log("  - Doctor ID:", doctorId);
+  console.log("  - Patient ID:", patientId);
+  console.log("  - Patient Email:", patientEmail);
+  console.log("  - Request body keys:", Object.keys(req.body));
   
   try {
     let docName = await DoctorModel.findById(doctorId);
@@ -363,13 +405,107 @@ appointmentRouter.get("/realtime", async (req, res) => {
 appointmentRouter.post("/create-pending", async (req, res) => {
   try {
     const appointmentData = req.body;
+    
+    // Enhanced debug logging
+    console.log('[DEBUG] Create-pending request body:', JSON.stringify(appointmentData, null, 2));
 
     // Ensure status and payment_status are set for pending
     appointmentData.status = 'pending';
     appointmentData.payment_status = false;
+    
+    // Enhanced patient ID resolution with multiple fallback strategies
+    let patientId = appointmentData.patient_id || appointmentData.patientId || appointmentData.userID;
+    
+    if (!patientId) {
+      console.log('[DEBUG] No direct patient ID found. Attempting resolution...');
+      
+      // Strategy 1: Find by email
+      if (appointmentData.patient_email || appointmentData.email) {
+        const email = appointmentData.patient_email || appointmentData.email;
+        console.log('[DEBUG] Trying to find patient by email:', email);
+        try {
+          const patient = await UserModel.findByEmail(email);
+          if (patient) {
+            patientId = patient.id;
+            appointmentData.patient_id = patientId;
+            console.log('[SUCCESS] Found patient ID by email:', patientId);
+            
+            // Also populate other patient details if missing
+            if (!appointmentData.patient_first_name && patient.first_name) {
+              appointmentData.patient_first_name = patient.first_name;
+            }
+            if (!appointmentData.patient_phone && patient.mobile) {
+              appointmentData.patient_phone = patient.mobile;
+            }
+          } else {
+            console.log('[WARNING] No patient found with email:', email);
+          }
+        } catch (emailError) {
+          console.log('[ERROR] Error finding patient by email:', emailError.message);
+        }
+      }
+      
+      // Strategy 2: Find by phone number
+      if (!patientId && (appointmentData.patient_phone || appointmentData.phone)) {
+        const phone = appointmentData.patient_phone || appointmentData.phone;
+        console.log('[DEBUG] Trying to find patient by phone:', phone);
+        try {
+          const patient = await UserModel.findByMobile(phone);
+          if (patient) {
+            patientId = patient.id;
+            appointmentData.patient_id = patientId;
+            console.log('[SUCCESS] Found patient ID by phone:', patientId);
+            
+            // Populate other details if missing
+            if (!appointmentData.patient_first_name && patient.first_name) {
+              appointmentData.patient_first_name = patient.first_name;
+            }
+            if (!appointmentData.patient_email && patient.email) {
+              appointmentData.patient_email = patient.email;
+            }
+          } else {
+            console.log('[WARNING] No patient found with phone:', phone);
+          }
+        } catch (phoneError) {
+          console.log('[ERROR] Error finding patient by phone:', phoneError.message);
+        }
+      }
+      
+      // Strategy 3: Find by name and other details (last resort)
+      if (!patientId && appointmentData.patient_first_name) {
+        console.log('[DEBUG] Attempting to find patient by name and details...');
+        try {
+          // This is a more complex search - we could implement a fuzzy match
+          // For now, just log that we attempted this strategy
+          console.log('[INFO] Name-based search not implemented, patient_id will be null');
+        } catch (nameError) {
+          console.log('[ERROR] Error in name-based search:', nameError.message);
+        }
+      }
+    } else {
+      appointmentData.patient_id = patientId;
+      console.log('[SUCCESS] Patient ID already available:', patientId);
+    }
+    
+    // Final validation and warning
+    if (!appointmentData.patient_id) {
+      console.log('[WARNING] Creating appointment without patient_id');
+      console.log('[WARNING] Available data keys:', Object.keys(appointmentData));
+      console.log('[WARNING] This appointment will need manual patient linking');
+      
+      // Log that this appointment needs manual attention
+      console.log('[INFO] This appointment will require manual patient linking in admin panel');
+    }
 
     // Save to database
     const created = await AppointmentModel.create(appointmentData);
+    
+    console.log('[DEBUG] Created appointment:', {
+      id: created.id,
+      patient_id: created.patient_id,
+      doctor_id: created.doctor_id,
+      patient_email: created.patient_email
+    });
 
     res.status(201).json({
       message: 'Appointment created and pending payment.',

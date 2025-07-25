@@ -133,7 +133,8 @@ class ProblemDescriptionManager {
         // Ensure doctor object has an 'id' property
         const doctorWithId = {
             ...this.appointmentData.doctor,
-            id: this.appointmentData.doctor.id || this.appointmentData.doctor.docID
+           id: this.appointmentData.doctor.id || this.appointmentData.doctor.docID,
+           userId: sessionStorage.getItem('userId') || localStorage.getItem('userId')
         };
         
         const appointmentDetails = {

@@ -1,7 +1,7 @@
 const { supabase } = require('./config/db');
 
 async function testApiEndpoints() {
-    console.log('🔍 Testing API Endpoints for Document Functionality\n');
+    console.log(' Testing API Endpoints for Document Functionality\n');
     
     try {
         // Get a real user and doctor for testing
@@ -16,7 +16,7 @@ async function testApiEndpoints() {
             .limit(1);
         
         if (!users || users.length === 0 || !doctors || doctors.length === 0) {
-            console.log('❌ No test data available');
+            console.log(' No test data available');
             return;
         }
         

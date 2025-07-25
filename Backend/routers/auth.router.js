@@ -104,7 +104,7 @@ authRouter.post("/login", async (req, res) => {
             }
             user = admin;
             userType = 'admin';
-            dashboardUrl = '/admin-dashboard';
+            dashboardUrl = '/dashboard.html';
           }
         }
       } catch (error) {
@@ -381,7 +381,7 @@ authRouter.get("/user-role", async (req, res) => {
         ? '/patient-dashboard' 
         : decoded.type === 'doctor' 
         ? '/doctor-dashboard' 
-        : '/admin-dashboard'
+        : '/dashboard.html'
     };
 
     // Add user-specific data

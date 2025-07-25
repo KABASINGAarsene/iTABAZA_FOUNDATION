@@ -1,4 +1,4 @@
-# Voice Recording Feature - Medistar Hospital Management System
+# Voice Recording Feature - iTABAZA Hospital Management System
 
 ## Overview
 

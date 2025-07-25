@@ -1,7 +1,7 @@
 const { supabase } = require('./config/db');
 
 async function testDocumentFunctionality() {
-    console.log('🔍 Testing Document Upload and Retrieval Functionality\n');
+    console.log(' Testing Document Upload and Retrieval Functionality\n');
     
     try {
         // First, get a real user ID and doctor ID from existing data
@@ -17,20 +17,20 @@ async function testDocumentFunctionality() {
             .limit(1);
         
         if (userError || !users || users.length === 0) {
-            console.log('❌ No users found in users table');
+            console.log(' No users found in users table');
             return;
         }
         
         if (doctorError || !doctors || doctors.length === 0) {
-            console.log('❌ No doctors found in doctors table');
+            console.log(' No doctors found in doctors table');
             return;
         }
         
         const testUserId = users[0].id;
         const testDoctorId = doctors[0].id;
         
-        console.log(`✅ Found test user: ${users[0].first_name} ${users[0].last_name} (ID: ${testUserId})`);
-        console.log(`✅ Found test doctor: ${doctors[0].doctor_name} (ID: ${testDoctorId})`);
+        console.log(` Found test user: ${users[0].first_name} ${users[0].last_name} (ID: ${testUserId})`);
+        console.log(` Found test doctor: ${doctors[0].doctor_name} (ID: ${testDoctorId})`);
         
         // 2. Test direct document insertion (simulating what the upload endpoint does)
         console.log('\n2. Testing direct document insertion...');
@@ -60,11 +60,11 @@ async function testDocumentFunctionality() {
             .select();
         
         if (insertError) {
-            console.log('❌ Error inserting document:', insertError);
+            console.log(' Error inserting document:', insertError);
             return;
         }
         
-        console.log('✅ Document inserted successfully:', insertedDoc[0].id);
+        console.log(' Document inserted successfully:', insertedDoc[0].id);
         
         // 3. Test document retrieval for the specific patient
         console.log('\n3. Testing document retrieval for specific patient...');
@@ -92,14 +92,14 @@ async function testDocumentFunctionality() {
             .order('uploaded_at', { ascending: false });
         
         if (retrieveError) {
-            console.log('❌ Error retrieving documents:', retrieveError);
+            console.log(' Error retrieving documents:', retrieveError);
             return;
         }
         
-        console.log(`✅ Retrieved ${documents.length} document(s) for patient ${testUserId}`);
+        console.log(` Retrieved ${documents.length} document(s) for patient ${testUserId}`);
         
         if (documents.length > 0) {
-            console.log('📄 Document details:');
+            console.log(' Document details:');
             documents.forEach((doc, index) => {
                 console.log(`   ${index + 1}. ${doc.document_name} (${doc.document_type})`);
                 console.log(`      Category: ${doc.document_category}`);
@@ -131,10 +131,10 @@ async function testDocumentFunctionality() {
                 .eq('is_accessible_to_patient', true);
             
             if (otherRetrieveError) {
-                console.log('❌ Error retrieving other patient documents:', otherRetrieveError);
+                console.log(' Error retrieving other patient documents:', otherRetrieveError);
             } else {
-                console.log(`✅ Other patient (${otherUsers[0].first_name} ${otherUsers[0].last_name}) has ${otherDocuments.length} document(s)`);
-                console.log('✅ Patient isolation is working correctly - each patient sees only their own documents');
+                console.log(` Other patient (${otherUsers[0].first_name} ${otherUsers[0].last_name}) has ${otherDocuments.length} document(s)`);
+                console.log(' Patient isolation is working correctly - each patient sees only their own documents');
             }
         }
         
@@ -166,8 +166,8 @@ async function testDocumentFunctionality() {
             }
         };
         
-        console.log('✅ API response structure is correct');
-        console.log('📋 Sample API response:');
+        console.log(' API response structure is correct');
+        console.log(' Sample API response:');
         console.log(JSON.stringify(apiResponse, null, 2));
         
         // 6. Clean up test data
@@ -179,15 +179,15 @@ async function testDocumentFunctionality() {
             .eq('id', insertedDoc[0].id);
         
         if (deleteError) {
-            console.log('⚠️  Warning: Could not delete test document:', deleteError);
+            console.log('  Warning: Could not delete test document:', deleteError);
         } else {
-            console.log('✅ Test document cleaned up successfully');
+            console.log(' Test document cleaned up successfully');
         }
         
-        console.log('\n🎉 All tests passed! Document functionality is working correctly.');
+        console.log('\n All tests passed! Document functionality is working correctly.');
         
     } catch (error) {
-        console.error('❌ Test failed:', error);
+        console.error(' Test failed:', error);
     }
 }
 

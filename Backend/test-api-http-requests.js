@@ -1,7 +1,7 @@
 const http = require('http');
 
 async function testApiHttpRequests() {
-    console.log('🌐 Testing HTTP API Endpoints...\n');
+    console.log(' Testing HTTP API Endpoints...\n');
     
     const baseURL = 'http://localhost:8080';
     const testPatientId = '7da86db0-3264-4b2a-b09e-e1e986246a6e'; // From our test data
@@ -56,9 +56,9 @@ async function testApiHttpRequests() {
         console.log('1. Testing health endpoint...');
         const healthResponse = await makeRequest('/api/health');
         if (healthResponse.status === 200) {
-            console.log('✅ Health endpoint working');
+            console.log(' Health endpoint working');
         } else {
-            console.log('❌ Health endpoint failed:', healthResponse.status);
+            console.log(' Health endpoint failed:', healthResponse.status);
         }
         
         // Test 2: Patient dashboard data
@@ -68,10 +68,10 @@ async function testApiHttpRequests() {
         
         console.log('Dashboard Response Status:', dashboardResponse.status);
         if (dashboardResponse.status === 200 && dashboardResponse.data.success) {
-            console.log('✅ Dashboard endpoint working');
+            console.log(' Dashboard endpoint working');
             console.log('Dashboard Data:', JSON.stringify(dashboardResponse.data.data, null, 2));
         } else {
-            console.log('❌ Dashboard endpoint failed');
+            console.log(' Dashboard endpoint failed');
             console.log('Response:', dashboardResponse);
         }
         
@@ -82,14 +82,14 @@ async function testApiHttpRequests() {
         
         console.log('Documents Response Status:', documentsResponse.status);
         if (documentsResponse.status === 200 && documentsResponse.data.success) {
-            console.log('✅ Documents endpoint working');
+            console.log(' Documents endpoint working');
             console.log(`Found ${documentsResponse.data.data.length} document(s)`);
             
             if (documentsResponse.data.data.length > 0) {
                 console.log('Sample Document:', JSON.stringify(documentsResponse.data.data[0], null, 2));
             }
         } else {
-            console.log('❌ Documents endpoint failed');
+            console.log(' Documents endpoint failed');
             console.log('Response:', documentsResponse);
         }
         
@@ -100,26 +100,26 @@ async function testApiHttpRequests() {
         
         console.log('Appointments Response Status:', appointmentsResponse.status);
         if (appointmentsResponse.status === 200 && appointmentsResponse.data.success) {
-            console.log('✅ Appointments endpoint working');
+            console.log(' Appointments endpoint working');
             console.log(`Found ${appointmentsResponse.data.data.length} appointment(s)`);
         } else {
-            console.log('❌ Appointments endpoint failed');
+            console.log(' Appointments endpoint failed');
             console.log('Response:', appointmentsResponse);
         }
         
-        console.log('\\n🎉 API HTTP Tests Complete!');
-        console.log('\\n📋 Summary:');
+        console.log('\\n API HTTP Tests Complete!');
+        console.log('\\n Summary:');
         console.log('- All API endpoints are accessible');
         console.log('- Patient-specific data is properly filtered');
         console.log('- Response formats match frontend expectations');
-        console.log('\\n💡 Next Steps:');
+        console.log('\\n Next Steps:');
         console.log('1. Open http://localhost:3000/test-patient-login.html');
         console.log('2. Click \"Setup Test Login\"');
         console.log('3. Click \"Open Dashboard\" to test the patient dashboard');
         console.log('4. Check browser console for any remaining issues');
         
     } catch (error) {
-        console.error('❌ HTTP test failed:', error);
+        console.error(' HTTP test failed:', error);
     }
 }
 
@@ -131,17 +131,17 @@ const testConnection = http.request({
     method: 'GET',
     timeout: 2000
 }, (res) => {
-    console.log('✅ Server is running, starting tests...');
+    console.log(' Server is running, starting tests...');
     testApiHttpRequests();
 });
 
 testConnection.on('error', (error) => {
-    console.log('❌ Server is not running on port 8080');
+    console.log(' Server is not running on port 8080');
     console.log('Please make sure your backend server is running with: npm run server');
 });
 
 testConnection.on('timeout', () => {
-    console.log('❌ Server connection timeout');
+    console.log(' Server connection timeout');
     testConnection.destroy();
 });
 

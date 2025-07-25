@@ -2,7 +2,7 @@ const { supabase } = require("./config/db");
 
 async function addDoctorPasswordColumn() {
   try {
-    console.log("🔄 Adding password_hash column to doctors table...");
+    console.log("Adding password_hash column to doctors table...");
     
     // First check if the column already exists
     const { data: existingDoctors, error: checkError } = await supabase
@@ -11,16 +11,16 @@ async function addDoctorPasswordColumn() {
       .limit(1);
       
     if (checkError) {
-      console.error("❌ Error checking doctors table:", checkError);
+      console.error("Error checking doctors table:", checkError);
       return;
     }
     
     if (existingDoctors && existingDoctors.length > 0 && 'password_hash' in existingDoctors[0]) {
-      console.log("✅ password_hash column already exists in doctors table");
+      console.log("password_hash column already exists in doctors table");
       return;
     }
     
-    console.log("📝 Column doesn't exist, adding it...");
+    console.log("Column doesn't exist, adding it...");
     
     // Since Supabase doesn't support direct ALTER TABLE, we need to use the SQL editor
     // For now, let's create a simple test to see if we can access it
@@ -32,17 +32,17 @@ async function addDoctorPasswordColumn() {
       .limit(1);
       
     if (error) {
-      console.error("❌ Error accessing doctors table:", error);
+      console.error("Error accessing doctors table:", error);
     } else {
-      console.log("✅ Current doctors table accessible");
+      console.log("Current doctors table accessible");
       console.log("Current columns visible:", Object.keys(doctors[0] || {}));
     }
     
-    console.log("⚠️ Note: You need to add the password_hash column manually in Supabase dashboard");
+    console.log("Note: You need to add the password_hash column manually in Supabase dashboard");
     console.log("   or run the SQL: ALTER TABLE doctors ADD COLUMN password_hash VARCHAR(255);");
     
   } catch (error) {
-    console.error("❌ Error:", error.message);
+    console.error("Error:", error.message);
   }
 }
 

@@ -4,7 +4,7 @@ const { supabase } = require("./config/db");
 const sampleDoctors = [
     {
         doctor_name: "Dr. Sarah Johnson",
-        email: "sarah.johnson@medistar.com",
+        email: "sarah.johnson@iTABAZA.com",
         qualifications: "MBBS, MD - Neurology",
         experience: "15 years",
         phone_no: "+250788123456",
@@ -19,7 +19,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. Michael Chen",
-        email: "michael.chen@medistar.com",
+        email: "michael.chen@iTABAZA.com",
         qualifications: "MBBS, MD - Cardiology",
         experience: "12 years",
         phone_no: "+250788123457",
@@ -34,7 +34,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. Emily Rodriguez",
-        email: "emily.rodriguez@medistar.com",
+        email: "emily.rodriguez@iTABAZA.com",
         qualifications: "MBBS, MD - Dermatology",
         experience: "8 years",
         phone_no: "+250788123458",
@@ -49,7 +49,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. David Kim",
-        email: "david.kim@medistar.com",
+        email: "david.kim@iTABAZA.com",
         qualifications: "MBBS, MD - Orthopedics",
         experience: "18 years",
         phone_no: "+250788123459",
@@ -64,7 +64,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. Lisa Wang",
-        email: "lisa.wang@medistar.com",
+        email: "lisa.wang@iTABAZA.com",
         qualifications: "MBBS, MD - Gynecology",
         experience: "10 years",
         phone_no: "+250788123460",
@@ -79,7 +79,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. James Wilson",
-        email: "james.wilson@medistar.com",
+        email: "james.wilson@iTABAZA.com",
         qualifications: "MBBS, MD - General Physician",
         experience: "20 years",
         phone_no: "+250788123461",
@@ -94,7 +94,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. Maria Garcia",
-        email: "maria.garcia@medistar.com",
+        email: "maria.garcia@iTABAZA.com",
         qualifications: "MBBS, MD - ENT",
         experience: "14 years",
         phone_no: "+250788123462",
@@ -109,7 +109,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. Robert Taylor",
-        email: "robert.taylor@medistar.com",
+        email: "robert.taylor@iTABAZA.com",
         qualifications: "MBBS, MD - Gastroenterology",
         experience: "16 years",
         phone_no: "+250788123463",
@@ -124,7 +124,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. Anna Brown",
-        email: "anna.brown@medistar.com",
+        email: "anna.brown@iTABAZA.com",
         qualifications: "MBBS, MD - Dental",
         experience: "9 years",
         phone_no: "+250788123464",
@@ -139,7 +139,7 @@ const sampleDoctors = [
     },
     {
         doctor_name: "Dr. Thomas Anderson",
-        email: "thomas.anderson@medistar.com",
+        email: "thomas.anderson@iTABAZA.com",
         qualifications: "MBBS, MD - Ayurveda",
         experience: "11 years",
         phone_no: "+250788123465",
@@ -275,7 +275,7 @@ async function checkDoctorsStatus() {
 
 // Main execution
 async function main() {
-    console.log("=== Medistar Sample Doctors Setup ===");
+    console.log("=== iTABAZA Sample Doctors Setup ===");
     
     await checkDoctorsStatus();
     await addSampleDoctors();

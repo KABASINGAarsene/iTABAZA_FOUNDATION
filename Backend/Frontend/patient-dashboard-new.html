@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Dashboard - ITABAZA</title>
-    <link rel="icon" href="./Files/Medistar-logo-crop.jpeg">
+    <link rel="icon" href="./Files/iTABAZA-logo-crop.jpeg">
     <link rel="stylesheet" href="./css/all.css">
     <link rel="stylesheet" href="./Styles/responsive.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
@@ -520,7 +520,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="./Files/Medistar-logo-crop.jpeg" alt="Patient Avatar" id="patientAvatar">
+                <img src="./Files/iTABAZA-logo-crop.jpeg" alt="Patient Avatar" id="patientAvatar">
                 <h3 id="patientName">Loading...</h3>
                 <p id="patientEmail">Loading...</p>
             </div>
@@ -701,6 +701,21 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Appointment Details Modal -->
+    <div id="appointmentDetailsModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+      <div class="modal-content" style="background:#fff; border-radius:10px; max-width:500px; width:90%; padding:30px; position:relative;">
+        <span id="closeAppointmentModal" style="position:absolute; top:10px; right:20px; font-size:24px; cursor:pointer;">&times;</span>
+        <h2>Appointment Details</h2>
+        <div id="appointmentDetailsBody">
+          <!-- Populated by JS -->
+        </div>
+        <h3 style="margin-top:24px;">Related Documents</h3>
+        <ul id="appointmentDocumentsList">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
     </div>
 
     <script type="module" src="./Scripts/patient-dashboard-new.js"></script>

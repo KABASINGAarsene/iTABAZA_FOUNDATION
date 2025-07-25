@@ -6,7 +6,7 @@ async function setupStorage() {
 
         // Create storage bucket for audio files
         const { data: bucketData, error: bucketError } = await supabase.storage
-            .createBucket('medistar-audio', {
+            .createBucket('iTABAZA-audio', {
                 public: false,
                 allowedMimeTypes: ['audio/webm', 'audio/mp3', 'audio/wav', 'audio/ogg', 'audio/m4a'],
                 fileSizeLimit: 52428800 // 50MB
@@ -30,7 +30,7 @@ async function setupStorage() {
         const uploadPolicy = `
             CREATE POLICY "Users can upload their own audio files" ON storage.objects
             FOR INSERT WITH CHECK (
-                bucket_id = 'medistar-audio' AND 
+                bucket_id = 'iTABAZA-audio' AND 
                 auth.uid()::text = (storage.foldername(name))[1]
             );
         `;
@@ -39,7 +39,7 @@ async function setupStorage() {
         const selectPolicy = `
             CREATE POLICY "Users can view their own audio files" ON storage.objects
             FOR SELECT USING (
-                bucket_id = 'medistar-audio' AND 
+                bucket_id = 'iTABAZA-audio' AND 
                 auth.uid()::text = (storage.foldername(name))[1]
             );
         `;
@@ -48,7 +48,7 @@ async function setupStorage() {
         const updatePolicy = `
             CREATE POLICY "Users can update their own audio files" ON storage.objects
             FOR UPDATE USING (
-                bucket_id = 'medistar-audio' AND 
+                bucket_id = 'iTABAZA-audio' AND 
                 auth.uid()::text = (storage.foldername(name))[1]
             );
         `;
@@ -57,7 +57,7 @@ async function setupStorage() {
         const deletePolicy = `
             CREATE POLICY "Users can delete their own audio files" ON storage.objects
             FOR DELETE USING (
-                bucket_id = 'medistar-audio' AND 
+                bucket_id = 'iTABAZA-audio' AND 
                 auth.uid()::text = (storage.foldername(name))[1]
             );
         `;

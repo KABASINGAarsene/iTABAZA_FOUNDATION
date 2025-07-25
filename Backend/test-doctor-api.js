@@ -11,9 +11,9 @@ async function testDoctorAPI() {
             .select('*');
             
         if (allError) {
-            console.error("❌ Error fetching all doctors:", allError);
+            console.error(" Error fetching all doctors:", allError);
         } else {
-            console.log(`✅ Successfully fetched ${allDoctors.length} doctors`);
+            console.log(` Successfully fetched ${allDoctors.length} doctors`);
             console.log("   Sample doctors:");
             allDoctors.slice(0, 3).forEach(doctor => {
                 console.log(`   - ${doctor.doctor_name} (${doctor.email})`);
@@ -29,9 +29,9 @@ async function testDoctorAPI() {
             .eq('is_available', true);
             
         if (availableError) {
-            console.error("❌ Error fetching available doctors:", availableError);
+            console.error(" Error fetching available doctors:", availableError);
         } else {
-            console.log(`✅ Successfully fetched ${availableDoctors.length} available doctors`);
+            console.log(` Successfully fetched ${availableDoctors.length} available doctors`);
             if (availableDoctors.length > 0) {
                 console.log("   Available doctors:");
                 availableDoctors.forEach(doctor => {
@@ -49,9 +49,9 @@ async function testDoctorAPI() {
             .ilike('doctor_name', `%${searchTerm}%`);
             
         if (searchError) {
-            console.error("❌ Error searching doctors:", searchError);
+            console.error(" Error searching doctors:", searchError);
         } else {
-            console.log(`✅ Search for "${searchTerm}" returned ${searchResults.length} results`);
+            console.log(` Search for "${searchTerm}" returned ${searchResults.length} results`);
         }
         
         // Test 4: Get doctors by department
@@ -63,9 +63,9 @@ async function testDoctorAPI() {
             .eq('department_id', departmentId);
             
         if (deptError) {
-            console.error("❌ Error fetching doctors by department:", deptError);
+            console.error(" Error fetching doctors by department:", deptError);
         } else {
-            console.log(`✅ Found ${deptDoctors.length} doctors in department ${departmentId}`);
+            console.log(` Found ${deptDoctors.length} doctors in department ${departmentId}`);
         }
         
         // Test 5: Get available doctors by department
@@ -78,9 +78,9 @@ async function testDoctorAPI() {
             .eq('is_available', true);
             
         if (availableDeptError) {
-            console.error("❌ Error fetching available doctors by department:", availableDeptError);
+            console.error(" Error fetching available doctors by department:", availableDeptError);
         } else {
-            console.log(`✅ Found ${availableDeptDoctors.length} available doctors in department ${departmentId}`);
+            console.log(` Found ${availableDeptDoctors.length} available doctors in department ${departmentId}`);
         }
         
         // Test 6: Check doctor data structure
@@ -91,7 +91,7 @@ async function testDoctorAPI() {
             const missingFields = requiredFields.filter(field => !sampleDoctor[field]);
             
             if (missingFields.length === 0) {
-                console.log("✅ Doctor data structure is complete");
+                console.log(" Doctor data structure is complete");
                 console.log("   Sample doctor structure:");
                 console.log(`   - ID: ${sampleDoctor.id}`);
                 console.log(`   - Name: ${sampleDoctor.doctor_name}`);
@@ -99,7 +99,7 @@ async function testDoctorAPI() {
                 console.log(`   - Status: ${sampleDoctor.status}`);
                 console.log(`   - Available: ${sampleDoctor.is_available}`);
             } else {
-                console.log(`❌ Missing fields in doctor data: ${missingFields.join(', ')}`);
+                console.log(` Missing fields in doctor data: ${missingFields.join(', ')}`);
             }
         }
         
@@ -114,16 +114,16 @@ async function testDoctorAPI() {
         const endTime = Date.now();
         
         if (perfError) {
-            console.error("❌ Performance test failed:", perfError);
+            console.error(" Performance test failed:", perfError);
         } else {
             const responseTime = endTime - startTime;
-            console.log(`✅ Performance test completed in ${responseTime}ms`);
+            console.log(` Performance test completed in ${responseTime}ms`);
             if (responseTime < 1000) {
-                console.log("   ✅ Response time is excellent (< 1 second)");
+                console.log("    Response time is excellent (< 1 second)");
             } else if (responseTime < 3000) {
-                console.log("   ⚠️ Response time is acceptable (< 3 seconds)");
+                console.log("    Response time is acceptable (< 3 seconds)");
             } else {
-                console.log("   ❌ Response time is too slow (> 3 seconds)");
+                console.log("    Response time is too slow (> 3 seconds)");
             }
         }
         
@@ -134,15 +134,15 @@ async function testDoctorAPI() {
         console.log(`Doctors with search term "${searchTerm}": ${searchResults?.length || 0}`);
         
         if (availableDoctors && availableDoctors.length > 0) {
-            console.log("\n✅ All tests passed! Doctor API is working correctly.");
-            console.log("🎉 The system is ready for frontend testing.");
+            console.log("\n All tests passed! Doctor API is working correctly.");
+            console.log(" The system is ready for frontend testing.");
         } else {
-            console.log("\n⚠️ Warning: No available doctors found.");
+            console.log("\n Warning: No available doctors found.");
             console.log("   Please run the sample doctors script to add test data.");
         }
         
     } catch (error) {
-        console.error("❌ Test failed with unexpected error:", error);
+        console.error(" Test failed with unexpected error:", error);
     }
 }
 

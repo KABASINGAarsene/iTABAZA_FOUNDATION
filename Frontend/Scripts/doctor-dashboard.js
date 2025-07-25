@@ -61,8 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             if (confirm('Are you sure you want to logout?')) {
-                logoutDoctor();
-                window.location.href = 'http://0.0.0.0:3000/login.html';
+                performCompleteLogout();
             }
         });
     }
@@ -889,6 +888,90 @@ function logoutDoctor() {
     localStorage.removeItem('doctorInfo');
     sessionStorage.removeItem('doctorToken');
     sessionStorage.removeItem('doctorInfo');
+}
+
+// Complete logout function that clears all possible session data
+function performCompleteLogout() {
+    try {
+        // Clear all possible authentication and session data
+        const keysToRemove = [
+            // Doctor-specific keys
+            'doctorToken',
+            'doctorInfo',
+            'doctorId',
+            'doctorSessionId',
+            
+            // General user keys
+            'token',
+            'userToken',
+            'authToken',
+            'accessToken',
+            'userInfo',
+            'userData',
+            'userName',
+            'userEmail',
+            'userId',
+            'sessionToken',
+            'refreshToken',
+            
+            // Admin keys
+            'admin',
+            'adminToken',
+            'adminInfo',
+            
+            // Patient keys
+            'patientToken',
+            'patientInfo',
+            'patientId',
+            
+            // Any other potential session keys
+            'isLoggedIn',
+            'loginTime',
+            'userRole',
+            'userType',
+            'profileImage',
+            'userProfileImage'
+        ];
+        
+        // Clear from localStorage
+        keysToRemove.forEach(key => {
+            localStorage.removeItem(key);
+        });
+        
+        // Clear from sessionStorage
+        keysToRemove.forEach(key => {
+            sessionStorage.removeItem(key);
+        });
+        
+        // Make logout API call to server (if backend supports it)
+        try {
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include' // Include cookies
+            }).catch(e => {
+                console.log('Logout API call failed (this is normal if not implemented):', e);
+            });
+        } catch (e) {
+            console.log('Could not make logout API call:', e);
+        }
+        
+        // Show logout message
+        showAlert('You have been successfully logged out', 'success');
+        
+        // Force reload to clear any cached data and redirect
+        setTimeout(() => {
+            // Clear any remaining data and redirect
+            window.location.replace('http://0.0.0.0:3000/login.html');
+        }, 1000);
+        
+    } catch (error) {
+        console.error('Error during logout:', error);
+        // Even if there's an error, still redirect to login
+        window.location.replace('http://0.0.0.0:3000/login.html');
+    }
 }
 
 // Make functions globally available

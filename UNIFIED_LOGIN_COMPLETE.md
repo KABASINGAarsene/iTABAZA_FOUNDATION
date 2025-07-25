@@ -73,13 +73,13 @@ CREATE INDEX IF NOT EXISTS idx_doctors_password_hash ON doctors(password_hash);
 
 ### 2. Test Admin Login
 - Go to: `http://localhost:3000/login.html`
-- Email: `admin@medistar.com`
+- Email: `admin@iTABAZA.com`
 - Password: [default admin password]
 - Should redirect to admin dashboard
 
 ### 3. Test Doctor Login (after database update)
 - Go to: `http://localhost:3000/login.html`
-- Email: `john.smith@medistar.com`
+- Email: `john.smith@iTABAZA.com`
 - Password: `doctor123`
 - Should redirect to doctor dashboard
 

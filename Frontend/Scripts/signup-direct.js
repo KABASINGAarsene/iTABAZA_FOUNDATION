@@ -63,11 +63,14 @@ form.addEventListener("submit", async (e) => {
                 localStorage.setItem("authToken", data.token);
             }
             
+            if (data && data.user && data.user.id) {
+                localStorage.setItem("userId", data.user.id);
+                sessionStorage.setItem("userId", data.user.id);
+            }
+            
             if (data.user) {
                 localStorage.setItem("userName", data.user.first_name);
-                localStorage.setItem("userId", data.user.id);
                 localStorage.setItem("userEmail", data.user.email);
-                sessionStorage.setItem("userId", data.user.id);
                 sessionStorage.setItem("userEmail", data.user.email);
             }
             

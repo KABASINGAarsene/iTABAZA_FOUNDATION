@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function populateAppointments() {
         try {
-            const response = await fetch(`${baseURL}/api/dashboard/patient/${patientInfo.id}/appointments?limit=10`, {
+            const response = await fetch(`${baseURL}/api/dashboard/patient/${patientInfo.id}/appointments?status=booked&limit=10`, {
                 headers: getPatientAuthHeaders(),
             });
             const data = await handleApiResponse(response);
@@ -108,6 +108,13 @@ document.addEventListener('DOMContentLoaded', function() {
             data.data.forEach(appointment => {
                 const appointmentCard = createAppointmentCard(appointment);
                 appointmentGrid.appendChild(appointmentCard);
+            });
+            // Add event listeners for View buttons
+            document.querySelectorAll('.view-appointment-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const appointmentId = this.getAttribute('data-appointment-id');
+                    await showAppointmentDetailsModal(appointmentId);
+                });
             });
         } catch (error) {
             console.error('Error fetching appointments:', error);
@@ -250,8 +257,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     ${typeBadge}
                 </div>
             </div>
+            <div style="text-align:right; margin-top:10px;">
+                <button class="btn btn-secondary view-appointment-btn" data-appointment-id="${appointment.id}">View</button>
+            </div>
         `;
-
         return card;
     }
 
@@ -332,5 +341,63 @@ document.addEventListener('DOMContentLoaded', function() {
     if (refreshBtn) {
         refreshBtn.addEventListener('click', refreshDashboard);
     }
+
+    // Modal logic
+    async function showAppointmentDetailsModal(appointmentId) {
+        const modal = document.getElementById('appointmentDetailsModal');
+        const body = document.getElementById('appointmentDetailsBody');
+        const docsList = document.getElementById('appointmentDocumentsList');
+        body.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading details...</div>';
+        docsList.innerHTML = '';
+        modal.style.display = 'flex';
+        // Fetch appointment details
+        try {
+            const response = await fetch(`${baseURL}/api/dashboard/patient/${patientInfo.id}/appointments/${appointmentId}`, {
+                headers: getPatientAuthHeaders(),
+            });
+            const data = await handleApiResponse(response);
+            if (!data.success || !data.data) throw new Error('No details found');
+            const appt = data.data;
+            body.innerHTML = `
+                <strong>Date:</strong> ${appt.appointment_date}<br>
+                <strong>Time:</strong> ${appt.slot_time || appt.appointment_time || 'TBD'}<br>
+                <strong>Doctor:</strong> Dr. ${appt.doc_first_name} ${appt.doc_last_name || ''}<br>
+                <strong>Type:</strong> ${appt.consultation_type}<br>
+                <strong>Status:</strong> ${appt.status}<br>
+                <strong>Description:</strong> ${appt.problem_description || ''}<br>
+            `;
+            // Fetch related documents
+            const docsResponse = await fetch(`${baseURL}/api/dashboard/patient/${patientInfo.id}/appointments/${appointmentId}/documents`, {
+                headers: getPatientAuthHeaders(),
+            });
+            const docsData = await handleApiResponse(docsResponse);
+            if (docsData.success && docsData.data && docsData.data.length > 0) {
+                docsList.innerHTML = '';
+                docsData.data.forEach(doc => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="${doc.file_url}" target="_blank">${doc.document_name}</a> (${doc.document_type})`;
+                    docsList.appendChild(li);
+                });
+            } else {
+                docsList.innerHTML = '<li>No documents found for this appointment.</li>';
+            }
+        } catch (err) {
+            body.innerHTML = '<span style="color:red;">Failed to load appointment details.</span>';
+            docsList.innerHTML = '';
+        }
+    }
+    // Modal close logic
+    const closeModalBtn = document.getElementById('closeAppointmentModal');
+    if (closeModalBtn) {
+        closeModalBtn.onclick = function() {
+            document.getElementById('appointmentDetailsModal').style.display = 'none';
+        };
+    }
+    window.onclick = function(event) {
+        const modal = document.getElementById('appointmentDetailsModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
 });
 

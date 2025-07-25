@@ -120,12 +120,15 @@ class PaymentManager {
             window.location.href = 'book.appointment.html';
             return;
         }
-        const userId = this.getCurrentUserId();
-
-        const userEmail = this.getCurrentUserEmail();
-
-        if (!userId || userId === 'temp-user-id') {
+        const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+        if (!userId) {
             alert('You must be logged in to book an appointment.');
+            window.location.href = 'login.html';
+            return;
+        }
+        const userEmail = this.getCurrentUserEmail();
+        if (!userEmail) {
+            alert('Could not retrieve user email. Please log in again.');
             window.location.href = 'login.html';
             return;
         }
@@ -146,13 +149,12 @@ class PaymentManager {
         try {
             // Prepare appointment data for backend
             const appointmentData = {
-
+                userID: userId,
+                email: userEmail,
                 doctorId: doctorId,
-                patientId: userId, // This should come from user session
                 ageOfPatient: this.appointmentDetails.patientAge,
                 gender: this.appointmentDetails.patientGender,
-                address: this.getCurrentUserAddress(), // This should come from user session
-
+                address: this.getCurrentUserAddress(),
                 problemDescription: this.appointmentDetails.problemDescription,
                 appointmentDate: this.appointmentDetails.date,
                 appointmentTime: this.appointmentDetails.slot,
@@ -203,6 +205,8 @@ class PaymentManager {
                     'Authorization': `Bearer ${authToken}`
                 },
                 body: JSON.stringify({
+                    userID: appointmentData.userID,
+                    email: appointmentData.email,
                     ageOfPatient: appointmentData.ageOfPatient,
                     gender: appointmentData.gender,
                     address: appointmentData.address,

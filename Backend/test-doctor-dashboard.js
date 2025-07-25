@@ -3,7 +3,7 @@ const { AppointmentModel } = require('./models/appointment.model');
 const { DoctorModel } = require('./models/doctor.model');
 
 async function testDoctorDashboardConnection() {
-    console.log('🧪 Testing Doctor Dashboard Supabase Connection...\n');
+    console.log(' Testing Doctor Dashboard Supabase Connection...\n');
 
     try {
         // Test 1: Check Supabase connection
@@ -16,23 +16,23 @@ async function testDoctorDashboardConnection() {
         if (testError) {
             throw new Error(`Supabase connection failed: ${testError.message}`);
         }
-        console.log('✅ Supabase connection successful');
+        console.log(' Supabase connection successful');
 
         // Test 2: Get sample doctor
         console.log('\n2. Testing doctor retrieval...');
         const doctors = await DoctorModel.findAll();
         if (!doctors || doctors.length === 0) {
-            console.log('⚠️  No doctors found in database');
+            console.log('  No doctors found in database');
             return;
         }
         
         const sampleDoctor = doctors[0];
-        console.log(`✅ Found doctor: ${sampleDoctor.doctor_name} (ID: ${sampleDoctor.id})`);
+        console.log(` Found doctor: ${sampleDoctor.doctor_name} (ID: ${sampleDoctor.id})`);
 
         // Test 3: Get appointments for doctor
         console.log('\n3. Testing appointment retrieval by doctor...');
         const appointments = await AppointmentModel.findByDoctorId(sampleDoctor.id);
-        console.log(`✅ Found ${appointments.length} appointments for doctor ${sampleDoctor.doctor_name}`);
+        console.log(` Found ${appointments.length} appointments for doctor ${sampleDoctor.doctor_name}`);
 
         // Test 4: Test appointment statistics
         console.log('\n4. Testing appointment statistics...');
@@ -46,9 +46,9 @@ async function testDoctorDashboardConnection() {
                 completed: appointments.filter(app => app.status === 'completed').length,
                 cancelled: appointments.filter(app => app.status === 'cancelled').length
             };
-            console.log('✅ Statistics calculated:', stats);
+            console.log(' Statistics calculated:', stats);
         } else {
-            console.log('ℹ️  No appointments to calculate statistics');
+            console.log('  No appointments to calculate statistics');
         }
 
         // Test 5: Test appointment data structure
@@ -62,7 +62,7 @@ async function testDoctorDashboardConnection() {
             
             const missingFields = requiredFields.filter(field => !(field in sampleAppointment));
             if (missingFields.length === 0) {
-                console.log('✅ All required appointment fields present');
+                console.log(' All required appointment fields present');
                 console.log('Sample appointment data:', {
                     id: sampleAppointment.id,
                     patient_name: sampleAppointment.patient_first_name,
@@ -71,38 +71,38 @@ async function testDoctorDashboardConnection() {
                     payment_status: sampleAppointment.payment_status
                 });
             } else {
-                console.log('❌ Missing required fields:', missingFields);
+                console.log(' Missing required fields:', missingFields);
             }
         }
 
         // Test 6: Create sample data if needed
         console.log('\n6. Checking for test data...');
         if (appointments.length === 0) {
-            console.log('⚠️  No appointments found. Consider creating sample data for testing.');
+            console.log('  No appointments found. Consider creating sample data for testing.');
             console.log('You can use the create-sample-appointments.js script to add test data.');
         }
 
-        console.log('\n🎉 All tests completed successfully!');
+        console.log('\n All tests completed successfully!');
         console.log('\nNext steps:');
         console.log('1. Start your backend server: node index.js');
         console.log('2. Open the doctor dashboard: doctor-dashboard-complete.html');
         console.log('3. Login with a doctor account to test the connection');
 
     } catch (error) {
-        console.error('❌ Test failed:', error.message);
+        console.error(' Test failed:', error.message);
         console.error('Full error:', error);
     }
 }
 
 // Create sample appointments for testing
 async function createSampleAppointments() {
-    console.log('\n📝 Creating sample appointments for testing...');
+    console.log('\n Creating sample appointments for testing...');
     
     try {
         // Get first doctor
         const doctors = await DoctorModel.findAll();
         if (!doctors || doctors.length === 0) {
-            console.log('❌ No doctors found. Please add doctors first.');
+            console.log(' No doctors found. Please add doctors first.');
             return;
         }
 
@@ -119,7 +119,7 @@ async function createSampleAppointments() {
         }
 
         if (!users || users.length === 0) {
-            console.log('❌ No users (patients) found. Please add users first.');
+            console.log(' No users (patients) found. Please add users first.');
             return;
         }
 
@@ -163,13 +163,13 @@ async function createSampleAppointments() {
 
         for (const appointmentData of sampleAppointments) {
             const appointment = await AppointmentModel.create(appointmentData);
-            console.log(`✅ Created appointment: ${appointment.id}`);
+            console.log(` Created appointment: ${appointment.id}`);
         }
 
-        console.log(`\n🎉 Successfully created ${sampleAppointments.length} sample appointments!`);
+        console.log(`\n Successfully created ${sampleAppointments.length} sample appointments!`);
 
     } catch (error) {
-        console.error('❌ Error creating sample appointments:', error.message);
+        console.error(' Error creating sample appointments:', error.message);
     }
 }
 
@@ -182,7 +182,7 @@ async function runTests() {
     if (args.includes('--create-sample')) {
         await createSampleAppointments();
     } else {
-        console.log('\n💡 Tip: Run with --create-sample flag to create test appointments');
+        console.log('\n Tip: Run with --create-sample flag to create test appointments');
         console.log('Example: node test-doctor-dashboard.js --create-sample');
     }
     

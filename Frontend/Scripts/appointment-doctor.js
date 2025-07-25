@@ -6,61 +6,61 @@ let doctorsCache = null;
 let lastFetchTime = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes cache
 
-let depObj = {
-    1: "Neurology",
-    2: "Dermatology", 
-    3: "Dental",
-    4: "Ayurveda",
-    5: "Gastroenterology",
-    6: "Gynaecology",
-    7: "ENT",
-    8: "General Physician",
-    9: "Orthopedic",
-    10: "Cardiology",
-    // String versions
-    "1": "Neurology",
-    "2": "Dermatology", 
-    "3": "Dental",
-    "4": "Ayurveda",
-    "5": "Gastroenterology",
-    "6": "Gynaecology",
-    "7": "ENT",
-    "8": "General Physician",
-    "9": "Orthopedic",
-    "10": "Cardiology"
+// Department cache object - will be populated from API
+let depObj = {};
+let departmentsLoaded = false;
+
+// Load departments from API and cache them
+async function loadDepartments() {
+    if (departmentsLoaded) return;
+    
+    try {
+        const response = await fetch(`${baseURL}/department/all`, {
+            method: 'GET',
+            headers: getAuthHeaders()
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('Departments loaded:', data);
+        
+        // Clear existing departments and populate with real data
+        depObj = {};
+        if (data.departments && Array.isArray(data.departments)) {
+            data.departments.forEach(dept => {
+                depObj[dept.id] = dept.dept_name;
+            });
+        }
+        
+        departmentsLoaded = true;
+        console.log('Department mapping created:', depObj);
+        
+    } catch (error) {
+        console.error('Error loading departments:', error);
+        // Fallback to hardcoded departments if API fails
+        depObj = {
+            1: "Neurology",
+            2: "Dermatology", 
+            3: "Dental",
+            4: "Ayurveda",
+            5: "Gastroenterology",
+            6: "Gynaecology",
+            7: "ENT",
+            8: "General Physician",
+            9: "Orthopedic",
+            10: "Cardiology"
+        };
+        departmentsLoaded = true;
+    }
 }
 
-// Function to get department name with fallback
+// Fast synchronous function to get department name from cache
 function getDepartmentName(departmentId) {
     if (!departmentId) return 'Unknown Department';
-    
-    // Handle the specific UUID department ID found in the database
-    if (departmentId === 'dfae69ef-60b3-49eb-8d9c-76e682e1ebd3') {
-        return 'Cardiology'; // Based on the qualifications showing "cardilogy"
-    }
-    
-    // Try exact match first
-    if (depObj[departmentId]) {
-        return depObj[departmentId];
-    }
-    
-    // Try converting to string if it's a number
-    if (typeof departmentId === 'number') {
-        const stringId = departmentId.toString();
-        if (depObj[stringId]) {
-            return depObj[stringId];
-        }
-    }
-    
-    // Try converting to number if it's a string
-    if (typeof departmentId === 'string') {
-        const numId = parseInt(departmentId);
-        if (depObj[numId]) {
-            return depObj[numId];
-        }
-    }
-    
-    return `Unknown Department (ID: ${departmentId})`;
+    return depObj[departmentId] || `Unknown Department (ID: ${departmentId})`;
 }
 
 // Function to validate and get safe image URL
@@ -140,6 +140,9 @@ function showNoDoctors(message = "No doctors available at the moment.") {
 async function getdata(retryCount = 0) {
     if (isLoading) return;
     
+    // Load departments first if not already loaded
+    await loadDepartments();
+    
     const now = Date.now();
     
     // Use cached data if available and not expired
@@ -199,12 +202,20 @@ function renderdata(arr) {
     }
 
     const isRowView = docsCont.classList.contains('row-view');
-    docsCont.innerHTML = arr.map((elem, index) => {
+    
+    // Process doctors with department names (now synchronous)
+    const validDoctors = arr.filter(elem => {
         if (!elem || !elem.doctor_name) {
             console.warn('Invalid doctor data:', elem);
-            return '';
+            return false;
         }
-        const departmentName = getDepartmentName(elem.department_id);
+        
+        // Add department name to each doctor
+        elem.departmentName = getDepartmentName(elem.department_id);
+        return true;
+    });
+
+    docsCont.innerHTML = validDoctors.map((elem, index) => {
         const isAvailable = elem.status && elem.is_available;
 
         if (isRowView) {
@@ -214,7 +225,7 @@ function renderdata(arr) {
                     <div class="doc-img"><img alt="doc-pfp" src="${getSafeImageUrl(elem.image)}" /></div>
                     <div class="row-info">
                         <div class="row-name">${elem.doctor_name}</div>
-                        <div class="row-dept">Department: ${departmentName}</div>
+                        <div class="row-dept">Department: ${elem.departmentName}</div>
                         <div class="row-exp">Experience: ${elem.experience || 'Not specified'} years</div>
                         <div class="row-qual">Qualification: ${elem.qualifications || 'Not specified'}</div>
                         <div class="row-fee">Rs.1,000 Consultation Fee</div>
@@ -238,7 +249,7 @@ function renderdata(arr) {
                             </div>
                             <div class="doc-desc">
                                 <h2>${elem.doctor_name}</h2>
-                                <h4>Department: ${departmentName}</h4>
+                                <h4>Department: ${elem.departmentName}</h4>
                                 <p>Experience: ${elem.experience || 'Not specified'} years</p>
                                 <h4>Qualification: ${elem.qualifications || 'Not specified'}</h4>
                                 <p style="color:white; display: none;">${elem._id || elem.id}</p>
@@ -300,9 +311,9 @@ function renderdata(arr) {
         rowCards.forEach((row, idx) => {
             const bookBtn = row.querySelector('.row-book-btn');
             // Book button click
-            bookBtn.addEventListener('click', (e) => {
+            bookBtn.addEventListener('click', async (e) => {
                 e.stopPropagation();
-                const elem = arr[idx];
+                const elem = validDoctors[idx];
                 if (!elem) return;
                 
                 // Check if user is logged in
@@ -317,7 +328,7 @@ function renderdata(arr) {
                 const doctorInfo = {
                     img: getSafeImageUrl(elem.image),
                     name: elem.doctor_name,
-                    dept: getDepartmentName(elem.department_id),
+                    dept: elem.departmentName,
                     exp: (elem.experience || 'Not specified') + ' years',
                     qual: elem.qualifications || 'Not specified',
                     docID: elem._id || elem.id

@@ -1,8 +1,8 @@
-# Supabase Integration Guide for Medistar Hospital Management System
+# Supabase Integration Guide for iTABAZA Hospital Management System
 
 ## Overview
 
-This guide explains how to integrate Supabase (PostgreSQL database with real-time features) to replace MongoDB in the Medistar Hospital Management System. Supabase provides:
+This guide explains how to integrate Supabase (PostgreSQL database with real-time features) to replace MongoDB in the iTABAZA Hospital Management System. Supabase provides:
 
 - **PostgreSQL Database**: Robust, scalable database
 - **Real-time Subscriptions**: Live updates across the application
@@ -24,7 +24,7 @@ This guide explains how to integrate Supabase (PostgreSQL database with real-tim
 2. Click "New Project"
 3. Choose your organization
 4. Enter project details:
-   - **Name**: `medistar-hospital`
+   - **Name**: `iTABAZA-hospital`
    - **Database Password**: Choose a strong password
    - **Region**: Select closest to your users
 5. Click "Create new project"
@@ -171,9 +171,9 @@ If you have existing MongoDB data:
 
 1. Export data from MongoDB:
    ```bash
-   mongoexport --db medistar --collection users --out users.json
-   mongoexport --db medistar --collection doctors --out doctors.json
-   mongoexport --db medistar --collection appointments --out appointments.json
+   mongoexport --db iTABAZA --collection users --out users.json
+   mongoexport --db iTABAZA --collection doctors --out doctors.json
+   mongoexport --db iTABAZA --collection appointments --out appointments.json
    ```
 
 2. Transform data to match Supabase schema

@@ -1,7 +1,7 @@
 const { supabase } = require('./config/db');
 
 async function testDocumentSystem() {
-    console.log('🧪 Testing Document System Setup...\n');
+    console.log(' Testing Document System Setup...\n');
     
     try {
         // Test 1: Check if patient_documents table exists and is accessible
@@ -12,10 +12,10 @@ async function testDocumentSystem() {
             .limit(1);
         
         if (tableError) {
-            console.error('❌ Table access failed:', tableError.message);
+            console.error(' Table access failed:', tableError.message);
             return;
         } else {
-            console.log('✅ patient_documents table is accessible');
+            console.log(' patient_documents table is accessible');
         }
         
         // Test 2: Test direct insert (fallback method)
@@ -42,10 +42,10 @@ async function testDocumentSystem() {
             .select();
         
         if (insertError) {
-            console.error('❌ Direct insert failed:', insertError.message);
+            console.error(' Direct insert failed:', insertError.message);
             console.log('This might mean some columns are missing. Please run the SQL script.');
         } else {
-            console.log('✅ Direct insert successful');
+            console.log(' Direct insert successful');
             console.log('Document ID:', insertData[0]?.id);
             
             // Clean up test data
@@ -72,10 +72,10 @@ async function testDocumentSystem() {
                 });
             
             if (funcError) {
-                console.log('⚠️  Function not available:', funcError.message);
+                console.log(' Function not available:', funcError.message);
                 console.log('Will use fallback method (direct insert)');
             } else {
-                console.log('✅ upload_patient_document function works');
+                console.log(' upload_patient_document function works');
                 console.log('Document ID from function:', funcData);
                 
                 // Clean up
@@ -85,7 +85,7 @@ async function testDocumentSystem() {
                     .eq('id', funcData);
             }
         } catch (error) {
-            console.log('⚠️  Function not available, will use fallback');
+            console.log(' Function not available, will use fallback');
         }
         
         // Test 4: Test the get documents function (if available)
@@ -99,14 +99,14 @@ async function testDocumentSystem() {
                 });
             
             if (getDocsError) {
-                console.log('⚠️  Function not available:', getDocsError.message);
+                console.log(' Function not available:', getDocsError.message);
                 console.log('Will use fallback method (direct query)');
             } else {
-                console.log('✅ get_patient_documents function works');
+                console.log(' get_patient_documents function works');
                 console.log('Returned documents:', getDocsData?.length || 0);
             }
         } catch (error) {
-            console.log('⚠️  Function not available, will use fallback');
+            console.log('  Function not available, will use fallback');
         }
         
         // Test 5: Test API endpoints
@@ -116,21 +116,21 @@ async function testDocumentSystem() {
         console.log('- POST /api/dashboard/doctor/:doctorId/documents/upload');
         console.log('- GET /api/dashboard/patient/:patientId/dashboard');
         
-        console.log('\n🎉 Document system setup verification completed!');
-        console.log('\n📋 Summary:');
+        console.log('\n Document system setup verification completed!');
+        console.log('\n Summary:');
         console.log('- Table exists and is accessible');
         console.log('- Direct insert/query methods work (fallback)');
         console.log('- API endpoints have fallback mechanisms');
         console.log('- Frontend dashboard should work with current setup');
         
         if (insertError || funcError) {
-            console.log('\n💡 Recommendations:');
+            console.log('\n Recommendations:');
             console.log('- Run the fix-patient-documents.sql script to add missing columns and functions');
             console.log('- The system will work with fallback methods in the meantime');
         }
         
     } catch (error) {
-        console.error('❌ Test failed:', error);
+        console.error(' Test failed:', error);
     }
 }
 

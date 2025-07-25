@@ -18,27 +18,45 @@ async function loadDepartments() {
         if (response.ok) {
             const data = await response.json();
             depObj = {};
+            
+            // Build department mapping
             data.departments.forEach(dept => {
                 depObj[dept.id] = dept.dept_name;
             });
+            
+            // Populate the department dropdown
+            const departmentSelect = document.querySelector('#doc-sf-right select');
+            if (departmentSelect) {
+                // Clear existing options except 'All'
+                departmentSelect.innerHTML = '<option value="">All</option>';
+                
+                // Add departments from API
+                data.departments.forEach(dept => {
+                    const option = document.createElement('option');
+                    option.value = dept.id;
+                    option.textContent = dept.dept_name;
+                    departmentSelect.appendChild(option);
+                });
+            }
+            
             departmentsLoaded = true;
         } else {
             console.error('Failed to fetch departments:', response.status);
+            // Fallback: keep existing HTML options if API fails
         }
     } catch (err) {
         console.error('Error loading departments:', err);
+        // Fallback: keep existing HTML options if API fails
     }
 }
 
 // Function to get department name with fallback
 function getDepartmentName(departmentId) {
     if (!departmentId) return 'Unknown Department';
-
     if (depObj[departmentId]) {
         return depObj[departmentId];
     }
     return `Unknown Department`;
-
 }
 
 // Function to validate and get safe image URL
@@ -399,7 +417,6 @@ docFilterTag.addEventListener("change", async (e) => {
 // Initialize on page load
 window.addEventListener("load", async (e) => {
     await loadDepartments();
-
     let deptID = localStorage.getItem("deptID");
     if (deptID) {
         try {
@@ -408,13 +425,11 @@ window.addEventListener("load", async (e) => {
                 headers: getAuthHeaders(),
                 signal: AbortSignal.timeout(10000)
             });
-
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }
             const data = await response.json();
             hideLoading();
-
             if (data.msg) {
                 swal("", `${data.msg}`, "info").then(function() {
                     getdata();

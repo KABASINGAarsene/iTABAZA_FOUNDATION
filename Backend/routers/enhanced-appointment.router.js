@@ -10,11 +10,41 @@ const enhancedAppointmentRouter = require("express").Router();
 // Enhanced appointment creation with all new fields
 enhancedAppointmentRouter.post("/create/:doctorId", authenticate, async (req, res) => {
   let doctorId = req.params.doctorId;
-  let patientId = req.body.userID || req.body.patientId;
+  let patientId = req.body.userID || req.body.patientId || req.body.patient_id;
   let patientEmail = req.body.email;
 
-  // Log the IDs for debugging
-  console.log('Booking appointment for patientId:', patientId, 'doctorId:', doctorId);
+  // Enhanced patient ID validation and recovery (similar to regular appointment router)
+  if (!patientId) {
+    console.log("[WARNING] Missing userID in enhanced booking. Attempting recovery...");
+    console.log("[DEBUG] Enhanced booking request body:", JSON.stringify(req.body, null, 2));
+    
+    // Try to find patient by email as fallback
+    if (req.body.email) {
+      console.log("[RECOVERY] Attempting to find patient by email:", req.body.email);
+      try {
+        const patient = await UserModel.findByEmail(req.body.email);
+        if (patient) {
+          patientId = patient.id;
+          console.log("[RECOVERY] Found patient by email, ID:", patientId);
+        }
+      } catch (emailError) {
+        console.log("[ERROR] Failed to find patient by email:", emailError.message);
+      }
+    }
+    
+    if (!patientId) {
+      return res.status(400).send({ 
+        msg: "Missing patient identification. Please log in again or contact support.",
+        debug: "No userID, patientId, patient_id, or valid email found in enhanced booking request"
+      });
+    }
+  }
+
+  // Enhanced logging for debugging
+  console.log('[DEBUG] Enhanced booking appointment:');
+  console.log('  - Patient ID:', patientId);
+  console.log('  - Doctor ID:', doctorId);
+  console.log('  - Patient Email:', patientEmail);
 
   // Validate IDs
   if (!patientId || typeof patientId !== 'string' || patientId.length < 10) {

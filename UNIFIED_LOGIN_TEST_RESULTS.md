@@ -15,14 +15,14 @@
 ##  Detailed Test Results
 
 ### 1. Doctor Authentication  WORKING
-- **Dr. John Smith** (`john.smith@medistar.com`)
+- **Dr. John Smith** (`john.smith@iTABAZA.com`)
   - Password: `doctor123` 
   - User Type: `doctor` 
   - Dashboard URL: `/doctor-dashboard` 
   - Token Generation: 
   - Data Storage: Compatible with existing doctor dashboard 
 
-- **Dr. Sarah Johnson** (`sarah.johnson@medistar.com`)
+- **Dr. Sarah Johnson** (`sarah.johnson@iTABAZA.com`)
   - Password: `password123` 
   - User Type: `doctor` 
   - Dashboard URL: `/doctor-dashboard` 
@@ -37,12 +37,12 @@
     - `john.doe@example.com` (Password: `password123` confirmed)
 
 ### 3. Admin Authentication  NEEDS VERIFICATION
-- **Test Account:** `admin@medistar.com`
+- **Test Account:** `admin@iTABAZA.com`
   - Status: Failed with current password
   - Available Accounts Found:
-    - `admin@medistar.com` (Super Admin)
-    - `hospital@medistar.com` (Hospital Admin)
-    - `system@medistar.com` (System Admin)
+    - `admin@iTABAZA.com` (Super Admin)
+    - `hospital@iTABAZA.com` (Hospital Admin)
+    - `system@iTABAZA.com` (System Admin)
 
 ##  Manual Testing Instructions
 
@@ -54,10 +54,10 @@
 
 ####  Doctor Login (CONFIRMED WORKING)
 ```
-Email: john.smith@medistar.com
+Email: john.smith@iTABAZA.com
 Password: doctor123
 
-Email: sarah.johnson@medistar.com  
+Email: sarah.johnson@iTABAZA.com  
 Password: password123
 ```
 
@@ -70,7 +70,7 @@ Password: password123
 
 ####  Admin Login (NEEDS PASSWORD)
 ```
-Email: admin@medistar.com
+Email: admin@iTABAZA.com
 Password: [NEEDS TO BE DETERMINED]
 ```
 

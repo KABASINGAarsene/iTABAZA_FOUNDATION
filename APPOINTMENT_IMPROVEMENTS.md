@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the comprehensive improvements made to the Medistar Hospital Management System's appointment booking functionality. The enhancements include a modern, user-friendly booking flow with support for both in-person and video-call consultations, enhanced patient data collection, and integrated payment processing.
+This document outlines the comprehensive improvements made to the iTABAZA Hospital Management System's appointment booking functionality. The enhancements include a modern, user-friendly booking flow with support for both in-person and video-call consultations, enhanced patient data collection, and integrated payment processing.
 
 ## Key Improvements
 
@@ -247,4 +247,4 @@ For technical support or questions about the implementation, please refer to:
 
 ## Conclusion
 
-These improvements transform the Medistar Hospital Management System into a modern, comprehensive appointment booking platform that provides an excellent user experience for both patients and healthcare providers. The system now supports multiple consultation types, comprehensive patient data collection, secure payment processing, and enhanced administrative capabilities. 
+These improvements transform the iTABAZA Hospital Management System into a modern, comprehensive appointment booking platform that provides an excellent user experience for both patients and healthcare providers. The system now supports multiple consultation types, comprehensive patient data collection, secure payment processing, and enhanced administrative capabilities. 

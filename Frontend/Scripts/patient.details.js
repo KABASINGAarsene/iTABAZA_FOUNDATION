@@ -50,6 +50,7 @@ patientForm.addEventListener("submit",async(e)=>{
     e.preventDefault();
     console.log(docObj);
     let obj={
+        userID: localStorage.getItem("userId") || sessionStorage.getItem("userId"),
         patientFirstName:patientForm.name.value,
         docFirstName:docObj.name,
         ageOfPatient:patientForm.age.value,
@@ -60,6 +61,7 @@ patientForm.addEventListener("submit",async(e)=>{
         slotTime:formObj.slot,
         date:formObj.date
     };
+    console.log("[DEBUG] Booking object to send:", obj);
     console.log(localStorage.getItem("token"));
 
     try{

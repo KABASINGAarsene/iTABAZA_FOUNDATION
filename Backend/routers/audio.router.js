@@ -40,7 +40,7 @@ audioRouter.post('/upload-voice-recording', authenticate, upload.single('audio')
 
         // Upload to Supabase storage
         const { data, error } = await supabase.storage
-            .from('medistar-audio')
+            .from('iTABAZA-audio')
             .upload(fileName, req.file.buffer, {
                 contentType: req.file.mimetype,
                 cacheControl: '3600',
@@ -58,7 +58,7 @@ audioRouter.post('/upload-voice-recording', authenticate, upload.single('audio')
 
         // Get public URL
         const { data: urlData } = supabase.storage
-            .from('medistar-audio')
+            .from('iTABAZA-audio')
             .getPublicUrl(fileName);
 
         // Store recording metadata in database
@@ -166,7 +166,7 @@ audioRouter.delete('/delete-recording/:id', authenticate, async (req, res) => {
 
         // Delete from Supabase storage
         const { error: storageError } = await supabase.storage
-            .from('medistar-audio')
+            .from('iTABAZA-audio')
             .remove([recording.file_name]);
 
         if (storageError) {

@@ -1,4 +1,4 @@
-# Doctor Visibility Fixes - Medistar Hospital Management System
+# Doctor Visibility Fixes - iTABAZA Hospital Management System
 
 ## Issues Fixed
 

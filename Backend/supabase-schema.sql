@@ -1,4 +1,4 @@
--- Supabase Database Schema for Medistar Hospital Management System
+-- Supabase Database Schema for iTABAZA Hospital Management System
 
 -- Enable necessary extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -181,7 +181,7 @@ INSERT INTO departments (dept_name, about, image) VALUES
 
 -- Insert sample admin
 INSERT INTO admins (name, email, password) VALUES
-('Admin User', 'admin@medistar.com', '$2b$10$hashedpasswordhere');
+('Admin User', 'admin@iTABAZA.com', '$2b$10$hashedpasswordhere');
 
 -- Add voice_recording_id foreign key to appointments table
 ALTER TABLE appointments 

@@ -15,7 +15,7 @@ async function testUnifiedLogin() {
     },
     {
       name: "Admin Login", 
-      email: "admin@medistar.com",
+      email: "admin@iTABAZA.com",
       password: "admin123", // Default admin password
       expectedType: "admin"
     },

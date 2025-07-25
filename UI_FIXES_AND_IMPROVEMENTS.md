@@ -1,4 +1,4 @@
-# UI Fixes and Improvements - Medistar Hospital Management System
+# UI Fixes and Improvements - iTABAZA Hospital Management System
 
 ##  **Material Symbols Icon Issues Fixed**
 

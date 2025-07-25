@@ -1,7 +1,7 @@
 const { supabase } = require('./config/db');
 
 async function addPasswordColumn() {
-    console.log('🔧 Adding password_hash column to doctors table...\n');
+    console.log('Adding password_hash column to doctors table...\n');
 
     try {
         // Use raw SQL to add the column
@@ -23,7 +23,7 @@ async function addPasswordColumn() {
         });
 
         if (error) {
-            console.log('⚠️  RPC method not available. Trying direct query...');
+            console.log('RPC method not available. Trying direct query...');
             
             // Alternative method: Direct query execution
             const result = await supabase
@@ -32,8 +32,8 @@ async function addPasswordColumn() {
                 .limit(1);
             
             if (result.error && result.error.message.includes('password_hash')) {
-                console.log('❌ password_hash column does not exist and cannot be added via API');
-                console.log('📋 Manual steps required:');
+                console.log('password_hash column does not exist and cannot be added via API');
+                console.log('Manual steps required:');
                 console.log('1. Go to your Supabase dashboard');
                 console.log('2. Open the Table Editor');
                 console.log('3. Select the "doctors" table');
@@ -47,16 +47,16 @@ async function addPasswordColumn() {
                 console.log('ALTER TABLE doctors ADD COLUMN password_hash TEXT;');
                 return false;
             } else {
-                console.log('✅ password_hash column already exists');
+                console.log('password_hash column already exists');
                 return true;
             }
         } else {
-            console.log('✅ password_hash column operation completed');
+            console.log('password_hash column operation completed');
             return true;
         }
 
     } catch (error) {
-        console.error('❌ Error adding password column:', error.message);
+        console.error('Error adding password column:', error.message);
         return false;
     }
 }
@@ -66,7 +66,7 @@ async function main() {
     const success = await addPasswordColumn();
     
     if (success) {
-        console.log('\n🎉 Ready to set up doctor credentials!');
+        console.log('\nReady to set up doctor credentials!');
         console.log('Run: node setup-doctor-credentials.js');
     }
     

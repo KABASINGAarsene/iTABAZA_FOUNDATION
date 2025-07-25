@@ -2,10 +2,10 @@ const { spawn } = require('child_process');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 async function testFrontendBackendIntegration() {
-    console.log('🧪 Testing Frontend-Backend Integration Issues\n');
+    console.log(' Testing Frontend-Backend Integration Issues\n');
     
     // Start the server
-    console.log('1️⃣ Starting server...');
+    console.log(' Starting server...');
     const server = spawn('node', ['index.js'], { stdio: 'pipe' });
     
     // Wait for server to start
@@ -15,7 +15,7 @@ async function testFrontendBackendIntegration() {
     server.stdout.on('data', (data) => {
         const output = data.toString();
         if (output.includes('Server listening')) {
-            console.log('✅ Server started successfully');
+            console.log(' Server started successfully');
             serverStarted = true;
         }
     });
@@ -30,7 +30,7 @@ async function testFrontendBackendIntegration() {
     
     try {
         // Test 1: User Registration Flow
-        console.log('\n2️⃣ Testing User Registration Flow...');
+        console.log('\n Testing User Registration Flow...');
         
         // Step 1: Email verification (what signup.js does first)
         const emailVerifyData = {
@@ -49,14 +49,14 @@ async function testFrontendBackendIntegration() {
             });
             
             const emailVerifyResult = await emailVerifyResponse.json();
-            console.log('   📧 Email verification:', emailVerifyResponse.ok ? '✅ Success' : '❌ Failed');
+            console.log('    Email verification:', emailVerifyResponse.ok ? ' Success' : ' Failed');
             if (!emailVerifyResponse.ok) {
                 console.log('   Error:', emailVerifyResult.msg || emailVerifyResult.error);
             } else {
                 console.log('   OTP generated for testing');
             }
         } catch (error) {
-            console.log('   ❌ Email verification failed:', error.message);
+            console.log('    Email verification failed:', error.message);
         }
         
         // Step 2: User signup (what otp.js does after OTP verification)
@@ -68,18 +68,18 @@ async function testFrontendBackendIntegration() {
             });
             
             const signupResult = await signupResponse.json();
-            console.log('   👤 User signup:', signupResponse.ok ? '✅ Success' : '❌ Failed');
+            console.log('    User signup:', signupResponse.ok ? ' Success' : ' Failed');
             if (!signupResponse.ok) {
                 console.log('   Error:', signupResult.msg || signupResult.error);
             } else {
                 console.log('   User ID:', signupResult.user?.id);
             }
         } catch (error) {
-            console.log('   ❌ User signup failed:', error.message);
+            console.log('    User signup failed:', error.message);
         }
         
         // Test 2: User Login Flow  
-        console.log('\n3️⃣ Testing User Login Flow...');
+        console.log('\n Testing User Login Flow...');
         
         try {
             const loginResponse = await fetch('http://localhost:8080/user/signin', {
@@ -92,14 +92,14 @@ async function testFrontendBackendIntegration() {
             });
             
             const loginResult = await loginResponse.json();
-            console.log('   🔐 User login:', loginResponse.ok ? '✅ Success' : '❌ Failed');
+            console.log('    User login:', loginResponse.ok ? ' Success' : ' Failed');
             if (!loginResponse.ok) {
                 console.log('   Error:', loginResult.msg || loginResult.error);
             } else {
                 console.log('   Token generated for user:', loginResult.id);
                 
                 // Test 3: Enhanced Appointment Creation (what payment.js does)
-                console.log('\n4️⃣ Testing Enhanced Appointment Creation...');
+                console.log('\n Testing Enhanced Appointment Creation...');
                 
                 // First get a doctor
                 const doctorsResponse = await fetch('http://localhost:8080/doctor/availableDoctors', {
@@ -110,7 +110,7 @@ async function testFrontendBackendIntegration() {
                     const doctorsData = await doctorsResponse.json();
                     if (doctorsData.doctor && doctorsData.doctor.length > 0) {
                         const testDoctor = doctorsData.doctor[0];
-                        console.log('   👨‍⚕️ Doctor found:', testDoctor.doctor_name);
+                        console.log('    Doctor found:', testDoctor.doctor_name);
                         
                         // Create enhanced appointment (simulating payment.js)
                         const appointmentData = {
@@ -148,29 +148,29 @@ async function testFrontendBackendIntegration() {
                             });
                             
                             const appointmentResult = await appointmentResponse.json();
-                            console.log('   📅 Enhanced appointment creation:', appointmentResponse.ok ? '✅ Success' : '❌ Failed');
+                            console.log('    Enhanced appointment creation:', appointmentResponse.ok ? '✅ Success' : '❌ Failed');
                             if (!appointmentResponse.ok) {
                                 console.log('   Error:', appointmentResult.msg || appointmentResult.error);
                             } else {
                                 console.log('   Appointment ID:', appointmentResult.appointment?.id);
                             }
                         } catch (error) {
-                            console.log('   ❌ Appointment creation failed:', error.message);
+                            console.log('    Appointment creation failed:', error.message);
                         }
                         
                     } else {
-                        console.log('   ❌ No doctors available for testing');
+                        console.log('    No doctors available for testing');
                     }
                 } else {
-                    console.log('   ❌ Failed to fetch doctors');
+                    console.log('    Failed to fetch doctors');
                 }
             }
         } catch (error) {
-            console.log('   ❌ User login failed:', error.message);
+            console.log('    User login failed:', error.message);
         }
         
         // Test 4: Check common frontend issues
-        console.log('\n5️⃣ Checking Common Frontend Issues...');
+        console.log('\n Checking Common Frontend Issues...');
         
         // Check CORS
         try {
@@ -178,13 +178,13 @@ async function testFrontendBackendIntegration() {
                 method: 'GET',
                 headers: { 'Origin': 'http://localhost:3000' }
             });
-            console.log('   🌐 CORS test:', corsTestResponse.ok ? '✅ Working' : '❌ Issue detected');
+            console.log('    CORS test:', corsTestResponse.ok ? ' Working' : ' Issue detected');
         } catch (error) {
-            console.log('   ❌ CORS test failed:', error.message);
+            console.log('    CORS test failed:', error.message);
         }
         
         // Test 5: Missing authentication errors
-        console.log('\n6️⃣ Testing Authentication Requirements...');
+        console.log('\n Testing Authentication Requirements...');
         
         try {
             const noAuthResponse = await fetch('http://localhost:8080/enhanced-appointment/create/test-id', {
@@ -194,22 +194,22 @@ async function testFrontendBackendIntegration() {
             });
             
             const noAuthResult = await noAuthResponse.json();
-            console.log('   🔒 Auth protection:', !noAuthResponse.ok ? '✅ Working (rejected unauthorized)' : '❌ Not protected');
+            console.log('    Auth protection:', !noAuthResponse.ok ? ' Working (rejected unauthorized)' : '❌ Not protected');
             if (!noAuthResponse.ok) {
                 console.log('   Error message:', noAuthResult.msg);
             }
         } catch (error) {
-            console.log('   ❌ Auth test failed:', error.message);
+            console.log('    Auth test failed:', error.message);
         }
         
     } catch (error) {
-        console.log('❌ Integration test failed:', error.message);
+        console.log(' Integration test failed:', error.message);
     } finally {
         // Stop the server
-        console.log('\n🛑 Stopping server...');
+        console.log('\n Stopping server...');
         server.kill();
         
-        console.log('\n📋 DIAGNOSIS SUMMARY:');
+        console.log('\n DIAGNOSIS SUMMARY:');
         console.log('=====================================');
         console.log('Check the results above:');
         console.log('1. If email verification fails → Check EMAIL_USER and EMAIL_PASS in .env');
@@ -218,7 +218,7 @@ async function testFrontendBackendIntegration() {
         console.log('4. If appointment creation fails → Check authentication middleware');
         console.log('5. If CORS fails → Check frontend is using correct baseURL');
         console.log('6. If auth protection fails → Check authenticate middleware');
-        console.log('\n🔧 COMMON FIXES:');
+        console.log('\n COMMON FIXES:');
         console.log('- Ensure server is running on port 8080');
         console.log('- Check frontend baseURL points to http://localhost:8080');
         console.log('- Verify user is logged in and token is stored in localStorage');

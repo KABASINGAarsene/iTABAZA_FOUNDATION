@@ -140,7 +140,7 @@ async function createTestDoctor() {
         // Create test doctor
         const testDoctorData = {
             doctor_name: 'Dr. John Smith',
-            email: 'doctor@medistar.com',
+            email: 'doctor@iTABAZA.com',
             password: 'doctor123', // Will be hashed automatically
             qualifications: 'MD Cardiology, FACC',
             experience: '15 years',

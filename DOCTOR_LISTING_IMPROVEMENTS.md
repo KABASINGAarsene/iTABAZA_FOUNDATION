@@ -1,7 +1,7 @@
-# Doctor Listing Improvements - Medistar Hospital Management System
+# Doctor Listing Improvements - iTABAZA Hospital Management System
 
 ## Overview
-This document outlines the comprehensive improvements made to fix doctor listing issues and enhance the overall performance and user experience of the Medistar Hospital Management System.
+This document outlines the comprehensive improvements made to fix doctor listing issues and enhance the overall performance and user experience of the iTABAZA Hospital Management System.
 
 ## Issues Identified and Fixed
 

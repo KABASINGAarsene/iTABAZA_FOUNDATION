@@ -38,7 +38,7 @@ async function debugAppointmentCreation() {
             symptoms: ['test'],
             medical_history: 'None',
             medications: 'None',
-            status: false,  // Use 'status' instead of 'appointment_status'
+            status: 'pending',
             payment_status: true,
             payment_transaction_id: 'DEBUG123',
             payment_simcard_holder: 'Debug Test',

@@ -1,7 +1,7 @@
 const { supabase } = require('./config/db');
 
 async function testApiEndpoints() {
-    console.log('🔍 Testing API Endpoints for Document Functionality\n');
+    console.log(' Testing API Endpoints for Document Functionality\n');
     
     try {
         // Get a real user and doctor for testing
@@ -16,7 +16,7 @@ async function testApiEndpoints() {
             .limit(1);
         
         if (!users || users.length === 0 || !doctors || doctors.length === 0) {
-            console.log('❌ No test data available');
+            console.log(' No test data available');
             return;
         }
         
@@ -52,14 +52,14 @@ async function testApiEndpoints() {
             .select();
         
         if (insertError) {
-            console.log('❌ Error inserting test document:', insertError);
+            console.log(' Error inserting test document:', insertError);
             return;
         }
         
-        console.log('✅ Test document inserted for API testing');
+        console.log(' Test document inserted for API testing');
         
         // Test the API endpoint logic (simulating what the router does)
-        console.log('\n🔍 Testing Patient Documents API Endpoint Logic...');
+        console.log('\n Testing Patient Documents API Endpoint Logic...');
         
         // Test 1: Get patient dashboard data
         console.log('\n1. Testing patient dashboard data endpoint...');
@@ -88,7 +88,7 @@ async function testApiEndpoints() {
             support_tickets: 0
         };
         
-        console.log('✅ Dashboard data retrieved successfully:');
+        console.log(' Dashboard data retrieved successfully:');
         console.log(JSON.stringify(dashboardData, null, 2));
         
         // Test 2: Get patient documents
@@ -120,9 +120,9 @@ async function testApiEndpoints() {
             .order('uploaded_at', { ascending: false });
         
         if (docsError) {
-            console.log('❌ Error retrieving patient documents:', docsError);
+            console.log(' Error retrieving patient documents:', docsError);
         } else {
-            console.log(`✅ Retrieved ${patientDocuments.length} document(s) for patient`);
+            console.log(` Retrieved ${patientDocuments.length} document(s) for patient`);
             
             const apiResponse = {
                 success: true,
@@ -148,7 +148,7 @@ async function testApiEndpoints() {
                 }
             };
             
-            console.log('📄 API Response Structure:');
+            console.log(' API Response Structure:');
             console.log(JSON.stringify(apiResponse, null, 2));
         }
         
@@ -171,15 +171,15 @@ async function testApiEndpoints() {
                 .eq('status', 'active')
                 .eq('is_accessible_to_patient', true);
             
-            console.log(`✅ Other patient (${otherUsers[0].first_name} ${otherUsers[0].last_name}) has ${otherPatientDocs.length} document(s)`);
-            console.log('✅ Patient isolation verified - no cross-contamination');
+            console.log(` Other patient (${otherUsers[0].first_name} ${otherUsers[0].last_name}) has ${otherPatientDocs.length} document(s)`);
+            console.log(' Patient isolation verified - no cross-contamination');
         }
         
         // Test 4: Test frontend JavaScript compatibility
         console.log('\n4. Testing frontend JavaScript compatibility...');
         
-        console.log('✅ Frontend JavaScript compatibility verified');
-        console.log('📋 Response matches expected format for:');
+        console.log(' Frontend JavaScript compatibility verified');
+        console.log(' Response matches expected format for:');
         console.log('   - Document table rendering');
         console.log('   - View/Download button functionality');
         console.log('   - Patient-specific document filtering');
@@ -193,21 +193,21 @@ async function testApiEndpoints() {
             .eq('id', insertedDoc[0].id);
         
         if (deleteError) {
-            console.log('⚠️  Warning: Could not delete test document:', deleteError);
+            console.log('  Warning: Could not delete test document:', deleteError);
         } else {
-            console.log('✅ Test document cleaned up successfully');
+            console.log(' Test document cleaned up successfully');
         }
         
-        console.log('\n🎉 All API endpoint tests passed!');
-        console.log('\n📋 Summary:');
-        console.log('   ✅ Documents are stored in the correct table (patient_documents)');
-        console.log('   ✅ Patient isolation is working correctly');
-        console.log('   ✅ API responses match frontend expectations');
-        console.log('   ✅ Document retrieval is patient-specific');
-        console.log('   ✅ Database queries are efficient and secure');
+        console.log('\n All API endpoint tests passed!');
+        console.log('\n Summary:');
+        console.log('    Documents are stored in the correct table (patient_documents)');
+        console.log('    Patient isolation is working correctly');
+        console.log('    API responses match frontend expectations');
+        console.log('    Document retrieval is patient-specific');
+        console.log('    Database queries are efficient and secure');
         
     } catch (error) {
-        console.error('❌ API endpoint test failed:', error);
+        console.error(' API endpoint test failed:', error);
     }
 }
 

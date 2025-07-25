@@ -1,7 +1,7 @@
 const { supabase } = require('./config/db');
 
 async function createPatientSession() {
-    console.log('🔐 Creating Patient Session for Dashboard Testing...\n');
+    console.log(' Creating Patient Session for Dashboard Testing...\n');
 
     try {
         // Get the test patient
@@ -12,14 +12,14 @@ async function createPatientSession() {
             .limit(1);
 
         if (patientError || !patients.length) {
-            console.error('❌ Test patient not found');
+            console.error(' Test patient not found');
             return;
         }
 
         const patient = patients[0];
-        console.log('✅ Found test patient:', patient.first_name, patient.last_name);
-        console.log('📋 Patient ID:', patient.id);
-        console.log('📧 Email:', patient.email);
+        console.log(' Found test patient:', patient.first_name, patient.last_name);
+        console.log(' Patient ID:', patient.id);
+        console.log(' Email:', patient.email);
 
         // Create session data that the frontend expects
         const patientInfo = {
@@ -29,7 +29,7 @@ async function createPatientSession() {
             email: patient.email
         };
 
-        console.log('\n📝 To test the client dashboard:');
+        console.log('\n To test the client dashboard:');
         console.log('\n**Option A - Frontend served by Backend (Port 8080):**');
         console.log('1A. Open your browser to: http://localhost:8080/client-dashboard.html');
         console.log('\n**Option B - Separate Frontend Server (Port 3000):**');
@@ -48,7 +48,7 @@ async function createPatientSession() {
         console.log('6. The page will reload and you should see the patient data');
         console.log('7. Click on "Documents" in the sidebar to see the documents');
         
-        console.log('\n🔍 Expected documents for this patient:');
+        console.log('\n Expected documents for this patient:');
         const { data: docs, error: docsError } = await supabase
             .from('patient_documents')
             .select(`
@@ -70,11 +70,11 @@ async function createPatientSession() {
         }
 
     } catch (error) {
-        console.error('❌ Error:', error.message);
+        console.error(' Error:', error.message);
     }
 }
 
 createPatientSession().then(() => {
-    console.log('\n✅ Session setup instructions provided!');
+    console.log('\n Session setup instructions provided!');
     process.exit(0);
 });

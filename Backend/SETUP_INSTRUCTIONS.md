@@ -35,11 +35,11 @@ CREATE INDEX IF NOT EXISTS idx_doctors_password_hash ON doctors(password_hash);
 - **Password:** [your existing password]
 
 #### Doctor Login (after adding password_hash column):
-- **Email:** john.smith@medistar.com
+- **Email:** john.smith@iTABAZA.com
 - **Password:** doctor123
 
 #### Admin Login:
-- **Email:** admin@medistar.com  
+- **Email:** admin@iTABAZA.com  
 - **Password:** [default admin password]
 
 ### Test Page:

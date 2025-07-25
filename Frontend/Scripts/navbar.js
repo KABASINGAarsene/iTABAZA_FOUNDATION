@@ -5,9 +5,7 @@ document.querySelector("#navbar").innerHTML = `
     </div>
     <div data-aos="zoom-out" data-aos-duration="1000" id="nav-logo">
         <div id="nav-img">
-
                         <img alt="Logo" src="./Files/iTABAZA-logo.png"/>
-
         </div>
     </div>
     <div data-aos="zoom-out" data-aos-duration="1000" id="nav-menu">
@@ -15,9 +13,6 @@ document.querySelector("#navbar").innerHTML = `
         <li id="find-doc">Find Doctors</li>
         <li id="appointment-link">Appointment</li>
         <li id="security-link">Security & Help</li>
-        <li id="ctt">Chat</li>
-
-
     </div>
     <div data-aos="zoom-out" data-aos-duration="1000" id="nav-user-details">
         <button id="nav-login">Login</button>
@@ -46,7 +41,6 @@ document.querySelector("#navbar").innerHTML = `
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 `
@@ -58,12 +52,6 @@ const homeLink=document.getElementById("home-link");
 const appointmentLink=document.getElementById("appointment-link");
 const find_doc=document.getElementById("find-doc");
 const securityLink=document.getElementById("security-link");
-const ctt=document.getElementById("ctt");
-
-// if(localStorage.getItem("token")){
-//     loginbtn.innerText=localStorage.getItem("userName");
-//     signupbtn.innerText="Log Out";
-// }else{
 
 let loginbtn=document.getElementById("nav-login");
 let signupbtn=document.getElementById("nav-reg");
@@ -141,11 +129,6 @@ securityLink.addEventListener("click",()=>{
     window.location.href="./security.html";
 })
 
-ctt.addEventListener("click",()=>{
-    window.location.href="../chatroom/public/index.html";
-})
-
-
 const hamburger=document.getElementById("hamb");
 const navbar_menu=document.getElementById("nav-menu");
 
@@ -201,24 +184,9 @@ if(isUserLoggedIn()){
     
     if(logoutLink) {
         logoutLink.addEventListener("click", () => {
-            const userRole = getUserRole();
-            
-            // Clear all possible user data
-            localStorage.clear();
-            sessionStorage.clear();
-            
-            // Redirect to appropriate login page based on user type
-            switch(userRole) {
-                case 'admin':
-                    window.location.href = "./admin.login.html";
-                    break;
-                case 'doctor':
-                    window.location.href = "./unified-login.html";
-                    break;
-                case 'patient':
-                default:
-                    window.location.href = "./index.html";
-                    break;
+            // Confirm logout
+            if (confirm('Are you sure you want to logout?')) {
+                performCompleteLogout();
             }
         });
     }
@@ -309,6 +277,135 @@ function updateProfileImage(imageUrl) {
     } else {
         profileImage.style.display = "none";
         profileInitials.style.display = "block";
+    }
+}
+
+// Complete logout function that clears all possible session data
+function performCompleteLogout() {
+    try {
+        // Get user role before clearing to determine redirect
+        const userRole = getUserRole();
+        
+        // Clear all possible authentication and session data
+        const keysToRemove = [
+            // Doctor-specific keys
+            'doctorToken',
+            'doctorInfo', 
+            'doctorId',
+            'doctorSessionId',
+            
+            // General user keys
+            'token',
+            'userToken',
+            'authToken', 
+            'accessToken',
+            'userInfo',
+            'userData',
+            'userName',
+            'userEmail',
+            'userId',
+            'sessionToken',
+            'refreshToken',
+            
+            // Admin keys
+            'admin',
+            'adminToken',
+            'adminInfo',
+            
+            // Patient keys  
+            'patientToken',
+            'patientInfo',
+            'patientId',
+            
+            // Profile and UI state
+            'userProfileImage',
+            'profileImage',
+            'isLoggedIn',
+            'loginTime',
+            'userRole',
+            'userType',
+            
+            // Any other potential session keys that might exist
+            'sessionId',
+            'authState',
+            'loginStatus',
+            'currentUser'
+        ];
+        
+        // Clear from localStorage
+        keysToRemove.forEach(key => {
+            localStorage.removeItem(key);
+        });
+        
+        // Clear from sessionStorage  
+        keysToRemove.forEach(key => {
+            sessionStorage.removeItem(key);
+        });
+        
+        // Make logout API call to server if available
+        try {
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            }).catch(e => {
+                console.log('Logout API call failed (this is normal if not implemented):', e);
+            });
+        } catch (e) {
+            console.log('Could not make logout API call:', e);
+        }
+        
+        // Force clear any remaining authentication cookies
+        document.cookie.split(";").forEach(function(c) { 
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+        });
+        
+        // Clear any IndexedDB or WebSQL data if used by the app
+        try {
+            if (window.indexedDB) {
+                // This would need to be customized based on your app's specific IndexedDB usage
+                console.log('IndexedDB detected - manual cleanup may be needed');
+            }
+        } catch (e) {
+            console.log('Error checking IndexedDB:', e);
+        }
+        
+        // Update UI immediately to show logged out state
+        const loginBtn = document.getElementById("nav-login");
+        const signupBtn = document.getElementById("nav-reg"); 
+        const profileContainer = document.getElementById("profile-container");
+        
+        if (loginBtn && signupBtn && profileContainer) {
+            loginBtn.style.display = "block";
+            signupBtn.style.display = "block";
+            profileContainer.style.display = "none";
+        }
+        
+        // Show success message
+        console.log('Logout successful - all session data cleared');
+        
+        // Determine redirect URL based on user role
+        let redirectUrl;
+        switch(userRole) {
+            case 'admin':
+            case 'doctor':
+            case 'patient':
+                redirectUrl = './login.html';
+                break;
+            default:
+                redirectUrl = './index.html';
+                break;
+        }
+        
+        // Force redirect with cache busting to ensure fresh page load
+        window.location.replace(redirectUrl + '?t=' + Date.now());
+        
+    } catch (error) {
+        console.error('Error during logout process:', error);
+        // Even if there's an error, still try to redirect to safety
+        window.location.replace('./index.html');
     }
 }
 

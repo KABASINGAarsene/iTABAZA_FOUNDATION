@@ -1,5 +1,5 @@
 -- =====================================================
--- MEDISTAR HOSPITAL MANAGEMENT SYSTEM - COMPLETE SUPABASE SCHEMA
+-- iTABAZA HOSPITAL MANAGEMENT SYSTEM - COMPLETE SUPABASE SCHEMA
 -- =====================================================
 -- This schema includes all necessary tables for the hospital management system
 -- with proper admin functionality, enhanced appointment features, and RLS policies
@@ -371,9 +371,9 @@ ON CONFLICT (dept_name) DO NOTHING;
 
 -- Insert sample admin (password should be hashed in production)
 INSERT INTO admins (name, email, password, role) VALUES
-('Super Admin', 'admin@medistar.com', '$2b$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYTa', 'super_admin'),
-('Hospital Admin', 'hospital@medistar.com', '$2b$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYTa', 'admin'),
-('System Admin', 'system@medistar.com', '$2b$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYTa', 'admin')
+('Super Admin', 'admin@iTABAZA.com', '$2b$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYTa', 'super_admin'),
+('Hospital Admin', 'hospital@iTABAZA.com', '$2b$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYTa', 'admin'),
+('System Admin', 'system@iTABAZA.com', '$2b$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYTa', 'admin')
 ON CONFLICT (email) DO NOTHING;
 
 -- Insert sample doctors (get department IDs first)
@@ -396,13 +396,13 @@ BEGIN
     
     -- Insert sample doctors
     INSERT INTO doctors (doctor_name, email, qualifications, experience, phone_no, city, department_id, status, is_available, image) VALUES
-    ('Dr. John Smith', 'john.smith@medistar.com', 'MD Cardiology, FACC', '15 years', '+250788123456', 'Kigali', cardiology_id, TRUE, TRUE, 'https://example.com/dr-john.jpg'),
-    ('Dr. Sarah Johnson', 'sarah.johnson@medistar.com', 'MD Neurology, PhD', '12 years', '+250788123457', 'Kigali', neurology_id, TRUE, TRUE, 'https://example.com/dr-sarah.jpg'),
-    ('Dr. Michael Brown', 'michael.brown@medistar.com', 'MD Orthopedics, MS', '10 years', '+250788123458', 'Butare', orthopedics_id, TRUE, TRUE, 'https://example.com/dr-michael.jpg'),
-    ('Dr. Emily Davis', 'emily.davis@medistar.com', 'MD Pediatrics, FAAP', '8 years', '+250788123459', 'Kigali', pediatrics_id, TRUE, TRUE, 'https://example.com/dr-emily.jpg'),
-    ('Dr. David Wilson', 'david.wilson@medistar.com', 'MD Dermatology, AAD', '6 years', '+250788123460', 'Musanze', dermatology_id, TRUE, TRUE, 'https://example.com/dr-david.jpg'),
-    ('Dr. Lisa Anderson', 'lisa.anderson@medistar.com', 'MD General Medicine, MBBS', '14 years', '+250788123461', 'Kigali', general_id, TRUE, TRUE, 'https://example.com/dr-lisa.jpg'),
-    ('Dr. Robert Taylor', 'robert.taylor@medistar.com', 'MD Cardiology, FACC', '20 years', '+250788123462', 'Kigali', cardiology_id, FALSE, FALSE, 'https://example.com/dr-robert.jpg')
+    ('Dr. John Smith', 'john.smith@iTABAZA.com', 'MD Cardiology, FACC', '15 years', '+250788123456', 'Kigali', cardiology_id, TRUE, TRUE, 'https://example.com/dr-john.jpg'),
+    ('Dr. Sarah Johnson', 'sarah.johnson@iTABAZA.com', 'MD Neurology, PhD', '12 years', '+250788123457', 'Kigali', neurology_id, TRUE, TRUE, 'https://example.com/dr-sarah.jpg'),
+    ('Dr. Michael Brown', 'michael.brown@iTABAZA.com', 'MD Orthopedics, MS', '10 years', '+250788123458', 'Butare', orthopedics_id, TRUE, TRUE, 'https://example.com/dr-michael.jpg'),
+    ('Dr. Emily Davis', 'emily.davis@iTABAZA.com', 'MD Pediatrics, FAAP', '8 years', '+250788123459', 'Kigali', pediatrics_id, TRUE, TRUE, 'https://example.com/dr-emily.jpg'),
+    ('Dr. David Wilson', 'david.wilson@iTABAZA.com', 'MD Dermatology, AAD', '6 years', '+250788123460', 'Musanze', dermatology_id, TRUE, TRUE, 'https://example.com/dr-david.jpg'),
+    ('Dr. Lisa Anderson', 'lisa.anderson@iTABAZA.com', 'MD General Medicine, MBBS', '14 years', '+250788123461', 'Kigali', general_id, TRUE, TRUE, 'https://example.com/dr-lisa.jpg'),
+    ('Dr. Robert Taylor', 'robert.taylor@iTABAZA.com', 'MD Cardiology, FACC', '20 years', '+250788123462', 'Kigali', cardiology_id, FALSE, FALSE, 'https://example.com/dr-robert.jpg')
     ON CONFLICT (email) DO NOTHING;
 END $$;
 

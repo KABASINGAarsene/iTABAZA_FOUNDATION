@@ -14,12 +14,12 @@ function getDepartmentName(departmentId) {
     return depObj[departmentId] || 'Unknown Department';
 }
 
-// Temporarily disable admin auth check for testing
-// TODO: Re-enable after fixing login flow
+// Admin authentication check
+// TODO: Re-enable this when admin auth is needed
 /*
-if(!localStorage.getItem("admin")){
-    swal("", "Please Login!", "warning").then(function() {
-        window.location.href="./admin.login.html";
+if(!localStorage.getItem("token") || !localStorage.getItem("userType") || localStorage.getItem("userType") !== 'admin'){
+    swal("", "Please Login as Admin!", "warning").then(function() {
+        window.location.href="./login.html";
     });
 }
 */
@@ -454,7 +454,6 @@ async function addDoc(){
     let docObj={
         doctorName: docForm.name.value,
         email: docForm.email.value,
-
         password: docForm.password.value,
         qualifications: docForm.qual.value,
         experience: docForm.exp.value,
@@ -688,9 +687,19 @@ async function approveApp(id){
 
 //Logout
 document.getElementById("menu-logout").addEventListener("click",(e)=>{
+    // Clear all admin-related storage
     localStorage.removeItem("admin");
+    localStorage.removeItem("token");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userType");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("adminId");
+    localStorage.removeItem("userEmail");
+    sessionStorage.removeItem("adminId");
+    sessionStorage.removeItem("userEmail");
+    
     swal("", `Logged out successfully`, "success").then(function(){
-        window.location.href="./admin.login.html";
+        window.location.href="./login.html";
     });
 })
 

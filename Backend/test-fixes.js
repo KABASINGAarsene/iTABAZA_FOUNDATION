@@ -2,10 +2,10 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const { spawn } = require('child_process');
 
 async function testFixes() {
-    console.log('🧪 Testing the fixes for appointment creation\n');
+    console.log(' Testing the fixes for appointment creation\n');
     
     // Start the server
-    console.log('1️⃣ Starting server...');
+    console.log(' Starting server...');
     const server = spawn('node', ['index.js'], { stdio: 'pipe' });
     
     // Wait for server to start
@@ -28,7 +28,7 @@ async function testFixes() {
             body: JSON.stringify(userData)
         });
         const signupResult = await signupResponse.json();
-        console.log('✅ User created:', signupResult.user?.id);
+        console.log(' User created:', signupResult.user?.id);
         
         // Sign in
         const loginResponse = await fetch('http://localhost:8080/user/signin', {
@@ -40,16 +40,16 @@ async function testFixes() {
             })
         });
         const loginResult = await loginResponse.json();
-        console.log('✅ User logged in, token:', loginResult.token ? 'Generated' : 'Missing');
+        console.log(' User logged in, token:', loginResult.token ? 'Generated' : 'Missing');
         
         // Get doctor
         const doctorsResponse = await fetch('http://localhost:8080/doctor/availableDoctors');
         const doctorsData = await doctorsResponse.json();
         const testDoctor = doctorsData.doctor[0];
-        console.log('✅ Doctor found:', testDoctor.doctor_name);
+        console.log(' Doctor found:', testDoctor.doctor_name);
         
         // Test appointment creation with correct slot format
-        console.log('\n2️⃣ Testing fixed appointment creation...');
+        console.log('\n Testing fixed appointment creation...');
         
         const appointmentData = {
             userID: loginResult.id,
@@ -87,15 +87,15 @@ async function testFixes() {
         const appointmentResult = await appointmentResponse.json();
         
         if (appointmentResponse.ok) {
-            console.log('🎉 SUCCESS! Appointment created:', appointmentResult.appointment?.id);
-            console.log('✅ Payment status:', appointmentResult.appointment?.payment_status);
-            console.log('✅ Consultation type:', appointmentResult.appointment?.consultation_type);
+            console.log(' SUCCESS! Appointment created:', appointmentResult.appointment?.id);
+            console.log(' Payment status:', appointmentResult.appointment?.payment_status);
+            console.log(' Consultation type:', appointmentResult.appointment?.consultation_type);
         } else {
-            console.log('❌ FAILED! Error:', appointmentResult.msg);
+            console.log(' FAILED! Error:', appointmentResult.msg);
         }
         
         // Test with another time slot
-        console.log('\n3️⃣ Testing another time slot...');
+        console.log('\n Testing another time slot...');
         const appointmentData2 = {
             ...appointmentData,
             appointmentTime: '14:00', // This should map to '2-3' slot
@@ -117,24 +117,24 @@ async function testFixes() {
         const appointmentResult2 = await appointmentResponse2.json();
         
         if (appointmentResponse2.ok) {
-            console.log('🎉 SUCCESS! Second appointment created:', appointmentResult2.appointment?.id);
+            console.log(' SUCCESS! Second appointment created:', appointmentResult2.appointment?.id);
         } else {
-            console.log('❌ FAILED! Error:', appointmentResult2.msg);
+            console.log(' FAILED! Error:', appointmentResult2.msg);
         }
         
     } catch (error) {
-        console.log('❌ Test failed:', error.message);
+        console.log(' Test failed:', error.message);
     } finally {
-        console.log('\n🛑 Stopping server...');
+        console.log('\n Stopping server...');
         server.kill();
         
-        console.log('\n📋 SUMMARY:');
+        console.log('\n SUMMARY:');
         console.log('================');
-        console.log('✅ User registration: Working');
-        console.log('✅ User login: Working');
-        console.log('✅ Authentication: Working');
-        console.log('✅ Slot validation: Fixed');
-        console.log('✅ Appointment creation: Should be working now!');
+        console.log(' User registration: Working');
+        console.log(' User login: Working');
+        console.log(' Authentication: Working');
+        console.log(' Slot validation: Fixed');
+        console.log(' Appointment creation: Should be working now!');
         
         process.exit(0);
     }

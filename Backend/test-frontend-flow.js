@@ -2,7 +2,7 @@ const baseURL = 'http://localhost:8080';
 
 async function testFrontendFlow() {
     const { default: fetch } = await import('node-fetch');
-    console.log('🧪 Testing exact frontend OTP flow...\n');
+    console.log(' Testing exact frontend OTP flow...\n');
     
     // Simulate user data from frontend form
     const userDetails = {
@@ -15,7 +15,7 @@ async function testFrontendFlow() {
     
     try {
         // STEP 1: Simulate signup.js - Send OTP
-        console.log('1️⃣ Simulating signup.js - Sending OTP...');
+        console.log(' Simulating signup.js - Sending OTP...');
         const otpResponse = await fetch(`${baseURL}/user/emailVerify`, {
             method: 'POST',
             headers: {
@@ -25,13 +25,13 @@ async function testFrontendFlow() {
         });
         
         const otpData = await otpResponse.json();
-        console.log('✅ OTP Response:', otpData);
+        console.log(' OTP Response:', otpData);
         
         // Simulate localStorage.setItem(\"userDetails\", JSON.stringify(userDetails));
         // Simulate localStorage.setItem(\"otp\", otpData.otp);
         
         // STEP 2: Simulate otp.js - Verify OTP and create user
-        console.log('\n2️⃣ Simulating otp.js - Verifying OTP and creating user...');
+        console.log('\n Simulating otp.js - Verifying OTP and creating user...');
         
         // This simulates the OTP verification process
         const enteredOTP = otpData.otp; // User enters correct OTP
@@ -44,7 +44,7 @@ async function testFrontendFlow() {
         });
         
         if (enteredOTP === storedOTP) {
-            console.log('✅ OTP matches, proceeding with signup...');
+            console.log(' OTP matches, proceeding with signup...');
             
             // This is the actual signup call from otp.js
             const signupResponse = await fetch(`${baseURL}/user/signup`, {
@@ -56,10 +56,10 @@ async function testFrontendFlow() {
             });
             
             const signupData = await signupResponse.json();
-            console.log('✅ Signup Response:', signupData);
+            console.log(' Signup Response:', signupData);
             
             // STEP 3: Verify user was created in database
-            console.log('\n3️⃣ Verifying user was created in database...');
+            console.log('\n Verifying user was created in database...');
             
             // Try to login with the created user
             const loginResponse = await fetch(`${baseURL}/user/signin`, {
@@ -77,20 +77,20 @@ async function testFrontendFlow() {
             console.log('Login Response:', loginData);
             
             if (loginData.message === 'Login Successful') {
-                console.log('✅ SUCCESS: User was created and can login!');
+                console.log(' SUCCESS: User was created and can login!');
                 console.log('   User ID:', loginData.id);
                 console.log('   Name:', loginData.name);
                 console.log('   Email:', loginData.email);
             } else {
-                console.log('❌ PROBLEM: User cannot login after successful signup');
+                console.log(' PROBLEM: User cannot login after successful signup');
                 console.log('   Error:', loginData.msg);
             }
         } else {
-            console.log('❌ OTP does not match');
+            console.log(' OTP does not match');
         }
         
     } catch (error) {
-        console.error('❌ Test failed:', error.message);
+        console.error(' Test failed:', error.message);
     }
 }
 

@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="./Styles/footer.css"/>
     <link rel="stylesheet" href="./Styles/responsive.css"/>
     <link rel="stylesheet" href="./css/all.css">
-    <title>Payment - Medistar</title>
-    <link rel="icon" href="./Files/Medistar-logo-crop.jpeg">
+    <title>Payment - iTABAZA</title>
+    <link rel="icon" href="./Files/iTABAZA-logo-crop.jpeg">
     <style>
         .payment-container {
             min-height: 80vh;
@@ -407,8 +407,8 @@
                         <div class="payment-instructions">
                             <h4><i class="fas fa-info-circle me-2"></i>How to Complete Payment</h4>
                             <ol class="payment-steps">
-                                <li>Dial the USSD code: <strong>*182*8*1*1043577#</strong></li>
-                                <li>Follow the prompts to transfer <strong>10,000 RWF</strong></li>
+                                <li>Dial the USSD code: <strong>*182*8*1*245328#</strong></li>
+                                <li>Follow the prompts to transfer <strong>100 RWF</strong></li>
                                 <li>Complete the transaction and get your Transaction ID</li>
                                 <li>Fill in the payment details below with your transaction information</li>
                             </ol>
@@ -418,22 +418,21 @@
                             <div class="payment-method selected" data-method="mtn">
                                 <i class="fas fa-mobile-alt"></i>
                                 <h4>MTN Mobile Money</h4>
-                                <p>*182*8*1*1043577#</p>
+                                <p>*182*8*1*245328#</p>
                             </div>
                             <div class="payment-method" data-method="airtel">
                                 <i class="fas fa-mobile-alt"></i>
                                 <h4>Airtel Money</h4>
-                                <p>*182*8*1*1043577#</p>
+                                <p>*182*8*1*245328#</p>
                             </div>
                             <div class="payment-method" data-method="tigo">
                                 <i class="fas fa-mobile-alt"></i>
                                 <h4>Tigo Cash</h4>
-                                <p>*182*8*1*1043577#</p>
+                                <p>*182*8*1*245328#</p>
                             </div>
                         </div>
                     </div>
                     
-
                     <div class="text-center">
                         <button type="submit" class="btn btn-danger btn-lg" id="confirm-payment-btn">
                             <i class="fas fa-lock me-2"></i>Confirm Payment & Book Appointment
@@ -487,12 +486,10 @@
                     <span class="summary-value">${patientData.firstName} ${patientData.lastName}</span>
                 </div>
                 <div class="summary-item">
-
                     <span class="summary-label">Email:</span>
                     <span class="summary-value">${patientData.email}</span>
                 </div>
                 <div class="summary-item">
-
                     <span class="summary-label">Appointment Date:</span>
                     <span class="summary-value">${problemData.preferredDate}</span>
                 </div>
@@ -518,7 +515,7 @@
                     </div>
                 `;
             }
-            // Add symptoms if available
+            
             // Add text description if available
             if (problemData.description && problemData.description.trim()) {
                 summaryHTML += `
@@ -610,7 +607,6 @@
         // Handle form submission
         document.getElementById('payment-form').addEventListener('submit', function(e) {
             e.preventDefault();
-
 
             const docObj = JSON.parse(localStorage.getItem('docObj'));
             const patientData = JSON.parse(localStorage.getItem('patientData'));

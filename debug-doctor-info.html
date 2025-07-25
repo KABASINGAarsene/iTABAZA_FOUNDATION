@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Doctor Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .debug-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .info-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .info-section h3 {
+            margin: 0 0 10px 0;
+            color: #007bff;
+        }
+        .info-content {
+            background: #fff;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            border: 1px solid #ddd;
+        }
+        .no-data {
+            color: #dc3545;
+            font-style: italic;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1> Doctor Dashboard Debug Tool</h1>
+        
+        <div class="info-section">
+            <h3>Doctor Token (localStorage)</h3>
+            <div class="info-content" id="doctorTokenLS"></div>
+        </div>
+        
+        <div class="info-section">
+            <h3>Doctor Token (sessionStorage)</h3>
+            <div class="info-content" id="doctorTokenSS"></div>
+        </div>
+        
+        <div class="info-section">
+            <h3>Doctor Info (localStorage)</h3>
+            <div class="info-content" id="doctorInfoLS"></div>
+        </div>
+        
+        <div class="info-section">
+            <h3>Doctor Info (sessionStorage)</h3>
+            <div class="info-content" id="doctorInfoSS"></div>
+        </div>
+        
+        <div class="info-section">
+            <h3>Parsed Doctor Name</h3>
+            <div class="info-content" id="parsedName"></div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <button class="btn" onclick="refreshDebugInfo()"> Refresh Data</button>
+            <button class="btn btn-danger" onclick="clearAllData()"> Clear All Data</button>
+            <button class="btn" onclick="setTestData()"> Set Test Data</button>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a href="doctor-dashboard.html" class="btn"> Go to Dashboard</a>
+            <a class="btn"> Go to Login</a>
+        </div>
+    </div>
+
+    <script>
+        function refreshDebugInfo() {
+            // Get data from localStorage
+            const doctorTokenLS = localStorage.getItem('doctorToken');
+            const doctorInfoLS = localStorage.getItem('doctorInfo');
+            
+            // Get data from sessionStorage
+            const doctorTokenSS = sessionStorage.getItem('doctorToken');
+            const doctorInfoSS = sessionStorage.getItem('doctorInfo');
+            
+            // Display tokens
+            document.getElementById('doctorTokenLS').textContent = doctorTokenLS || '(No data)';
+            document.getElementById('doctorTokenSS').textContent = doctorTokenSS || '(No data)';
+            document.getElementById('doctorTokenLS').className = doctorTokenLS ? 'info-content' : 'info-content no-data';
+            document.getElementById('doctorTokenSS').className = doctorTokenSS ? 'info-content' : 'info-content no-data';
+            
+            // Display doctor info
+            document.getElementById('doctorInfoLS').textContent = doctorInfoLS ? JSON.stringify(JSON.parse(doctorInfoLS), null, 2) : '(No data)';
+            document.getElementById('doctorInfoSS').textContent = doctorInfoSS ? JSON.stringify(JSON.parse(doctorInfoSS), null, 2) : '(No data)';
+            document.getElementById('doctorInfoLS').className = doctorInfoLS ? 'info-content' : 'info-content no-data';
+            document.getElementById('doctorInfoSS').className = doctorInfoSS ? 'info-content' : 'info-content no-data';
+            
+            // Parse and display the name that would be used
+            let parsedName = 'No doctor info available';
+            const doctorInfo = doctorInfoLS || doctorInfoSS;
+            
+            if (doctorInfo) {
+                try {
+                    const parsed = JSON.parse(doctorInfo);
+                    parsedName = parsed.doctor_name || 
+                               parsed.name || 
+                               (parsed.first_name ? (parsed.first_name + ' ' + (parsed.last_name || '')) : null) ||
+                               parsed.fullName ||
+                               'Dr. Unknown';
+                               
+                    parsedName += '\n\nParsing logic:\n';
+                    parsedName += `- doctor_name: ${parsed.doctor_name || '(not found)'}\n`;
+                    parsedName += `- name: ${parsed.name || '(not found)'}\n`;
+                    parsedName += `- first_name + last_name: ${parsed.first_name ? (parsed.first_name + ' ' + (parsed.last_name || '')) : '(not found)'}\n`;
+                    parsedName += `- fullName: ${parsed.fullName || '(not found)'}`;
+                } catch (e) {
+                    parsedName = 'Error parsing doctor info: ' + e.message;
+                }
+            }
+            
+            document.getElementById('parsedName').textContent = parsedName;
+        }
+        
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all doctor data?')) {
+                localStorage.removeItem('doctorToken');
+                localStorage.removeItem('doctorInfo');
+                sessionStorage.removeItem('doctorToken');
+                sessionStorage.removeItem('doctorInfo');
+                refreshDebugInfo();
+                alert('All data cleared!');
+            }
+        }
+        
+        function setTestData() {
+            const testDoctorInfo = {
+                id: 'test-doctor-123',
+                doctor_name: 'Dr. Test Doctor',
+                name: 'Dr. Test Doctor',
+                first_name: 'Test',
+                last_name: 'Doctor',
+                email: 'test.doctor@example.com',
+                qualifications: 'MBBS, MD',
+                specialty: 'Cardiology'
+            };
+            
+            localStorage.setItem('doctorToken', 'test-token-12345');
+            localStorage.setItem('doctorInfo', JSON.stringify(testDoctorInfo));
+            
+            refreshDebugInfo();
+            alert('Test data set! You can now go to the dashboard to see if the name displays correctly.');
+        }
+        
+        // Load data on page load
+        refreshDebugInfo();
+    </script>
+</body>
+</html>

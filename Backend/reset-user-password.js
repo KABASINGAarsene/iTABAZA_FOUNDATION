@@ -14,6 +14,7 @@ async function resetUserPassword() {
     console.log(` Password hashed successfully`);
     
     // Update the user's password in the database
+    // Note: This assumes the user exists and has a password column
     const { data, error } = await supabase
       .from('users')
       .update({ password: hashedPassword })

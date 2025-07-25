@@ -1,4 +1,4 @@
-
+// Footer script to dynamically generate footer content
 document.querySelector("#footer").innerHTML=`
 <div id="footer-cont">
     <div data-aos="fade-right" data-aos-duration="1000" id="footer-left">

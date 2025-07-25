@@ -10,6 +10,7 @@ async function testDoctorLogin() {
         const doctorsData = await doctorsResponse.json();
         
         // Check different possible response formats
+        //
         let doctors = [];
         if (doctorsData.doctor) {
             doctors = doctorsData.doctor;

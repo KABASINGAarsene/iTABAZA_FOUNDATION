@@ -15,6 +15,7 @@ async function createUser() {
     }
 
     // Hash the password
+    //
     const hashedPassword = await bcrypt.hash(password, 5);
     
     // Create user data

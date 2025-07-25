@@ -73,6 +73,7 @@ app.get('/test-supabase', async (req, res) => {
     }
 
     // Fetch a real doctor ID
+    // Fetch a real doctor ID
     const { data: doctors, error: doctorError } = await supabase
       .from('doctors')
       .select('id')

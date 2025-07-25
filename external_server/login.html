@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Successful - iTABAZA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 500px;
+            width: 100%;
+            margin: 1rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            margin: 0 0.5rem;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: rgba(76, 175, 80, 0.8);
+            border-color: #4CAF50;
+        }
+
+        .btn-primary:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+
+        .countdown {
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">iTZ</div>
+        <div class="success-icon">✅</div>
+        <h1>Logout Successful!</h1>
+        <p>You have been successfully logged out of your doctor dashboard. All session data has been cleared for your security.</p>
+        
+        <div>
+            <a href="../Frontend/unified-login.html" class="btn btn-primary">Login Again</a>
+            <a href="../Frontend/index.html" class="btn">Go to Homepage</a>
+        </div>
+        
+        <div class="countdown" id="countdown">
+            Redirecting to login page in <span id="timer">10</span> seconds...
+        </div>
+    </div>
+
+    <script>
+        // Clear any remaining session data
+        try {
+            localStorage.clear();
+            sessionStorage.clear();
+        } catch (e) {
+            console.log('Storage clear failed:', e);
+        }
+
+        // Countdown timer for automatic redirect
+        let timeLeft = 10;
+        const timer = document.getElementById('timer');
+        const countdown = document.getElementById('countdown');
+
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            timer.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = '../Frontend/unified-login.html';
+            }
+        }, 1000);
+
+        // Allow user to cancel auto-redirect by moving mouse
+        let userActive = false;
+        document.addEventListener('mousemove', () => {
+            if (!userActive) {
+                userActive = true;
+                clearInterval(countdownInterval);
+                countdown.style.display = 'none';
+            }
+        });
+
+        // Also cancel on any key press
+        document.addEventListener('keydown', () => {
+            if (!userActive) {
+                userActive = true;
+                clearInterval(countdownInterval);
+                countdown.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

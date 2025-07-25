@@ -64,6 +64,6 @@ async function fixDoctorStatus() {
         console.error(" Error fixing doctor status:", error);
     }
 }
-
+// Export the function for use in other scripts
 // Run the fix
 fixDoctorStatus(); 

@@ -10,6 +10,7 @@ const urlsToCache = [
 ];
 
 // Install service worker
+// This will cache the specified files
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))

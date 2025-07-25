@@ -85,6 +85,7 @@ async function applyMigration() {
     console.log('\nMigration application completed!');
     
     // Verify the migration worked
+    // Check if the password column exists in the doctors table
     console.log('\nVerifying migration...');
     const { data: testData, error: testError } = await supabase
       .from('doctors')
@@ -92,7 +93,7 @@ async function applyMigration() {
       .limit(1);
     
     if (testError) {
-      console.error('Verification failed:', testError);
+      console.error(' Verification failed:', testError);
     } else {
       console.log('✓ Migration verified successfully');
       console.log('Sample doctor record:', testData);

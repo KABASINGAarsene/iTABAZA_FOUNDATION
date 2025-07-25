@@ -6,6 +6,7 @@ console.log("Final test: Complete appointment booking flow...\n");
 async function testCompleteAppointmentFlow() {
   try {
     // Get test user and doctor
+    // Fetch a real user ID
     const { data: users } = await supabase
       .from('users')
       .select('id, first_name, last_name, email, mobile')

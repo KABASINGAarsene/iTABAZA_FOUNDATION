@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> 
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Doctor Documents - ITABAZA</title>
+    <link rel="icon" href="./Files/Medistar-logo-crop.jpeg">   
+    <link rel="stylesheet" href="./css/all.css">
+    <link rel="stylesheet" href="./Styles/doctor-dashboard.css">
+    <link rel="stylesheet" href="./Styles/responsive.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+</head>
+<body>
+     <!-- Doctor Dashboard Navigation -->
+    <nav class="doctor-nav">
+         <div class="nav-brand">
+            <img src="./Files/Medistar-logo-crop.jpeg" alt="ITABAZA" class="nav-logo">
+             <span class="nav-title">ITABAZA - Doctor Portal</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                 <a href="./doctor-dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i> Dashboard
+                 </a>
+            </li>
+            <li class="nav-item">
+                <a href="./doctor.appointments.html" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i> Appointments
+                </a>
+             </li>
+            <li class="nav-item active"> 
+                 <a href="./doctor.uploads.html" class="nav-link">
+                    <i class="fas fa-upload"></i> Documents
+                </a>
+            </li>   
+            <li class="nav-item">
+                <a href="./doctor.support.html" class="nav-link">
+                    <i class="fas fa-headset"></i> Support Request
+                </a>
+            </li>
+        </ul>    
+        <div class="nav-profile">
+            <div class="profile-info">
+                <span class="doctor-name" id="doctorName">Dr. Loading...</span>
+                <span class="doctor-email" id="doctorEmail">loading@email.com</span>
+            </div>
+            <button class="logout-btn" id="logoutBtn">    
+                  <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>   
+    
+    <!-- Main Documents Content -->
+    <main class="dashboard-main">
+        <!-- Documents Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Document Management</h1>
+                <p class="header-subtitle">Upload and manage your medical documents</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="uploadNewBtn">
+                     <i class="fas fa-plus"></i> Upload New Document
+                </button>
+            </div>
+        </header>    
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-cloud-upload-alt"></i> Upload Documents</h2>
+                </div>
+                <div class="card-content">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3>Drag and drop files here</h3> 
+                        <p>or <button class="upload-browse-btn" id="browseBtn">browse files</button></p>
+                        <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display: none;">   
+                        <div class="upload-info">
+                            <small>Supported formats: PDF, DOC, DOCX, JPG, JPEG, PNG (Max size: 10MB)</small>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </section>      
+
+        <!-- Documents List Section -->
+        <section class="documents-section">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-folder-open"></i> Your Documents</h2>
+                    <div class="document-filters">
+                        <select id="filterType" class="filter-select">
+                            <option value="all">All
+                            Documents</option>
+                            <option value="pdf">PDF Files</option>
+                            <option value="image">Images</option> 
+                            <option value="document">Documents</option>
+                        </select>  
+                     </div>
+                </div>    
+                <div class="card-content">
+                    <div class="documents-grid" id="documentsGrid">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i> Loading documents...
+                        </div>
+                    </div>
+                </div>  
+             </div>
+        </section>    
+        
+         <!-- Patient Documents Section -->
+        <section class="patient-documents-section">
+             <div class="content-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-user-md"></i> Patient Documents</h2>
+                    <div class="patient-search">
+                        <input type="text" id="patientSearch" placeholder="Search patient..." class="search-input">
+                        <button class="search-btn" id="searchPatientBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                     </div>
+                </div> 
+                <div class="card-content">
+                    <div class="patient-documents-list" id="patientDocumentsList">
+                        <div class="empty-state">
+                            <i class="fas fa-search"></i>
+                            <p>Search for a patient and view their documents</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <p>&copy; 2024 ITABAZA Medical Platform. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="./Scripts/doctor.uploads.js"></script>
+</body>
+</html>         

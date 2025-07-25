@@ -1,3 +1,4 @@
+/* Responsiveness */
 @media all and (min-width:1200px){
     #nav-menu{
         display: flex;

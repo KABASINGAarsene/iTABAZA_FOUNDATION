@@ -8,6 +8,7 @@ async function createAdminUser() {
         const adminName = 'ITABAZA Admin';
 
         // Check if admin already exists
+        // Fetch existing admin user
         const { data: existingAdmin, error: fetchError } = await supabase
             .from('admins')
             .select('*')

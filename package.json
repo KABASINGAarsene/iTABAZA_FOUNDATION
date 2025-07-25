@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@capacitor/android": "^7.4.2",
+    "@capacitor/cli": "^7.4.2",
+    "@capacitor/core": "^7.4.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}

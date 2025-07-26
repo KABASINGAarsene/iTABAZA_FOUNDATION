@@ -290,3 +290,9 @@ router.patch('/doctors/:id/toggle-status', async (req, res) => {
         if (updateError) throw updateError;
 
         res.json({
+            success: true,
+            message: `Doctor ${updatedDoctor.status ? 'approved' : 'suspended'} successfully`,
+            data: updatedDoctor
+        });
+    } catch (error) {
+        console.error('Error toggling doctor status:', error);

@@ -3,3 +3,8 @@ import { logoutDoctor, getCurrentDoctor, isDoctorAuthenticated } from './doctor.
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check authentication
+    if (!isDoctorAuthenticated()) {
+            window.location.href = './unified-login.html';
+            return;
+        }
+    

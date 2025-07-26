@@ -113,7 +113,7 @@ function hideLoading() {
 function showError(message) {
     docsCont.innerHTML = `
         <div class="error-container" style="text-align: center; padding: 50px;">
-            <div style="color: #dc3545; font-size: 48px; margin-bottom: 20px;"></div>
+            <div style="color: #dc3545; font-size: 48px; margin-bottom: 20px;">⚠️</div>
             <h3 style="color: #dc3545; margin-bottom: 10px;">Oops! Something went wrong</h3>
             <p style="color: #666; margin-bottom: 20px;">${message}</p>
             <button onclick="location.reload()" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px;">
@@ -126,7 +126,7 @@ function showError(message) {
 function showNoDoctors(message = "No doctors available at the moment.") {
     docsCont.innerHTML = `
         <div class="no-doctors-container" style="text-align: center; padding: 50px;">
-            <div style="color: #6c757d; font-size: 48px; margin-bottom: 20px;"></div>
+            <div style="color: #6c757d; font-size: 48px; margin-bottom: 20px;">👨‍⚕️</div>
             <h3 style="color: #6c757d; margin-bottom: 10px;">No Doctors Found</h3>
             <p style="color: #666; margin-bottom: 20px;">${message}</p>
             <button onclick="getdata()" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px;">

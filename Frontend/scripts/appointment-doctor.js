@@ -178,3 +178,13 @@ async function getdata(retryCount = 0) {
         
         hideLoading();
         renderdata(data.doctor);
+            
+    } catch (error) {
+        console.error('Error fetching doctors:', error);
+        hideLoading();
+        
+        // Retry logic for network errors
+        if (retryCount < 3 && (error.name === 'TypeError' || error.name === 'AbortError')) {
+            console.log(`Retrying... Attempt ${retryCount + 1}`);
+            setTimeout(() => getdata(retryCount + 1), 2000 * (retryCount + 1));
+            return;

@@ -268,3 +268,8 @@ async function searchPatientDocuments() {
     
     if (!searchTerm) {
         swal("Error", "Please enter a patient name to search", "error");
+        return;
+    }
+
+    try {
+        swal("Searching...", "Looking for patient documents", "info", {

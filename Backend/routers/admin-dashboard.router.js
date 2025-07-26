@@ -170,3 +170,9 @@ router.post('/doctors', async (req, res) => {
             doctor_name, 
             email, 
             password,    
+             qualifications, 
+            experience, 
+            phone_no, 
+            city, 
+            department_id,
+            image 

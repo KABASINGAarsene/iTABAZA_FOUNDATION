@@ -194,3 +194,9 @@ router.post('/doctors', async (req, res) => {
                 department_id,
                 image,
                 status: true, // Auto-approve admin-created doctors
+                 is_available: true
+            }])
+            .select()
+            .single();
+
+        if (error) throw error;

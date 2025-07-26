@@ -206,3 +206,9 @@ router.post('/doctors', async (req, res) => {
             message: 'Doctor added successfully',
             data: doctor
         });
+    } catch (error) {
+        console.error('Error adding doctor:', error);
+        res.status(500).json({ error: 'Failed to add doctor' });
+    }
+});
+    

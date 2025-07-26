@@ -168,3 +168,13 @@ async function getdata(retryCount = 0) {
         
         if (!data.doctor || data.doctor.length === 0) {
             hideLoading();
+            showNoDoctors("No available doctors found. Please check back later.");
+            return;
+        }
+        
+        // Cache the successful response
+        doctorsCache = data.doctor;
+        lastFetchTime = now;
+        
+        hideLoading();
+        renderdata(data.doctor);

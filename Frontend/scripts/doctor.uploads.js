@@ -213,3 +213,8 @@ function displayDocuments(documents) {
             </div>
         `;
         return;
+        }
+
+    container.innerHTML = documents.map(doc => `
+        <div class="document-card" data-type="${doc.type}">
+            <div class="document-icon">

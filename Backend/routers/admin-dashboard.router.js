@@ -410,3 +410,9 @@ router.delete('/patients/:id', async (req, res) => {
     }
 });
     
+// =====================================================
+// APPOINTMENTS MANAGEMENT
+// =====================================================
+
+// Get all appointments
+router.get('/appointments', async (req, res) => {

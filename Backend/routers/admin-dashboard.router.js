@@ -464,3 +464,9 @@ router.patch('/appointments/:id/status', async (req, res) => {
 
         res.json({
             success: true,
+             message: 'Appointment status updated successfully',
+            data: appointment
+        });
+    } catch (error) {
+        console.error('Error updating appointment status:', error);
+        res.status(500).json({ error: 'Failed to update appointment status' });

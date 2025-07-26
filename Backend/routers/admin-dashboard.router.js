@@ -494,3 +494,9 @@ router.delete('/appointments/:id', async (req, res) => {
         res.status(500).json({ error: 'Failed to delete appointment' });
     }
 });      
+
+// =====================================================
+// DEPARTMENTS MANAGEMENT
+// =====================================================
+
+// Get all departments

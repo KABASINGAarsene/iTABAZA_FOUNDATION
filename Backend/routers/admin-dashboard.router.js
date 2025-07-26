@@ -308,3 +308,8 @@ router.patch('/doctors/:id/toggle-status', async (req, res) => {
 router.get('/patients', async (req, res) => {
     try {
         const { data: patients, error } = await supabase 
+            .from('users')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;

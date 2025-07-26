@@ -427,3 +427,14 @@ docFilterTag.addEventListener("change", async (e) => {
         showError(`Filter failed: ${error.message}`);
     }
 });
+
+// Initialize on page load
+window.addEventListener("load", async (e) => {
+    let deptID = localStorage.getItem("deptID");
+    if (deptID) {
+        try {
+            showLoading();
+            const response = await fetch(`${baseURL}/doctor/availableDoctors/${deptID}`, {
+                headers: getAuthHeaders(),
+                signal: AbortSignal.timeout(10000)
+            });

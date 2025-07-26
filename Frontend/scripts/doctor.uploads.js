@@ -283,3 +283,8 @@ async function searchPatientDocuments() {
             {
                 patientName: searchTerm,
                 documents: [
+                       { name: 'Medical_History.pdf', date: '2024-01-10' },
+                    { name: 'Lab_Results.pdf', date: '2024-01-08' },
+                    { name: 'Prescription.pdf', date: '2024-01-05' }
+                ]
+            }

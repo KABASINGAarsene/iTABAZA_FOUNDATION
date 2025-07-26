@@ -328,3 +328,8 @@ function displayPatientDocuments(patientData) {
                         <div class="document-actions">
                             <button class="action-btn view-btn">
                                 <i class="fas fa-eye"></i>
+                                </button>
+                            <button class="action-btn download-btn">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>

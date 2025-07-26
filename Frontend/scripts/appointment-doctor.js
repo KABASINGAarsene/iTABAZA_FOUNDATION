@@ -398,3 +398,13 @@ docFilterTag.addEventListener("change", async (e) => {
         getdata();
         return;
     }
+    
+        try {
+            showLoading();
+            const response = await fetch(`${baseURL}/doctor/availableDoctors/${filterValue}`, {
+                headers: getAuthHeaders(),
+                signal: AbortSignal.timeout(5000)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);

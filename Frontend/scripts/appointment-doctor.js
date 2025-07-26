@@ -198,3 +198,13 @@ async function getdata(retryCount = 0) {
 function renderdata(arr) {
     if (!Array.isArray(arr) || arr.length === 0) {
         showNoDoctors();
+        return;
+    }
+
+    const isRowView = docsCont.classList.contains('row-view');
+    
+    // Process doctors with department names (now synchronous)
+    const validDoctors = arr.filter(elem => {
+        if (!elem || !elem.doctor_name) {
+            console.warn('Invalid doctor data:', elem);
+            return false;

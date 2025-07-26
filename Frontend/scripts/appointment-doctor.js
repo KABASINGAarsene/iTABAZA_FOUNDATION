@@ -328,3 +328,13 @@ function renderdata(arr) {
                 const doctorInfo = {
                     img: getSafeImageUrl(elem.image),
                     name: elem.doctor_name,
+                    dept: elem.departmentName,
+                    exp: (elem.experience || 'Not specified') + ' years',
+                    qual: elem.qualifications || 'Not specified',
+                    docID: elem._id || elem.id
+                };
+                localStorage.setItem("docObj", JSON.stringify(doctorInfo));
+                window.location.href = "./patient_details.html";
+            });
+            // Row click for future details
+            row.addEventListener('click', (e) => {

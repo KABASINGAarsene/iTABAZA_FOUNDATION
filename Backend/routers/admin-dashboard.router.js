@@ -500,3 +500,9 @@ router.delete('/appointments/:id', async (req, res) => {
 // =====================================================
 
 // Get all departments
+router.get('/departments', async (req, res) => {
+    try {
+        const { data: departments, error } = await supabase
+            .from('departments')
+            .select('*')
+            .order('dept_name', { ascending: true });

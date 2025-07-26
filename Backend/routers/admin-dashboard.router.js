@@ -70,3 +70,9 @@ router.post('/login', async (req, res) => {
 
 // Get dashboard statistics
 router.get('/dashboard/stats', async (req, res) => {
+     try {
+        // Get all counts in parallel
+        const [
+            { count: totalUsers },
+            { count: totalDoctors },
+            { count: totalAppointments },

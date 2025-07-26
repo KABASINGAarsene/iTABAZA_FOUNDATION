@@ -38,3 +38,8 @@ function setupEventListeners() {
                     }).then((willLogout) => {
                         if (willLogout) {
                             logoutDoctor();
+                            }
+        });
+    });
+
+    // Upload area interactions

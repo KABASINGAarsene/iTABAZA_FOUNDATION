@@ -105,3 +105,9 @@ router.get('/dashboard/stats', async (req, res) => {
         res.json({
             success: true,
             data: {
+                 overview: {
+                    totalUsers,
+                    totalDoctors,
+                    totalAppointments,
+                    totalDepartments,
+                    totalRevenue

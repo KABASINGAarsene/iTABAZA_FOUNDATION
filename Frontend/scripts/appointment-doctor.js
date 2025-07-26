@@ -228,3 +228,13 @@ function renderdata(arr) {
                         <div class="row-dept">Department: ${elem.departmentName}</div>
                         <div class="row-exp">Experience: ${elem.experience || 'Not specified'} years</div>
                         <div class="row-qual">Qualification: ${elem.qualifications || 'Not specified'}</div>
+                        <div class="row-fee">Rs.1,000 Consultation Fee</div>
+                        <div class="row-available">${isAvailable ? 'Available' : 'Not Available'}</div>
+                    </div>
+                    <div class="row-action">
+                        <button class="row-book-btn" ${!isAvailable ? 'disabled style="opacity:0.5;pointer-events:none;"' : ''}>Book Appointment</button>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Clean, minimal card view (no date/slot selection)

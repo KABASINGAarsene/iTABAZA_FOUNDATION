@@ -296,3 +296,9 @@ router.patch('/doctors/:id/toggle-status', async (req, res) => {
         });
     } catch (error) {
         console.error('Error toggling doctor status:', error);
+ res.status(500).json({ error: 'Failed to toggle doctor status' });
+    }
+});
+
+// =====================================================
+// PATIENTS MANAGEMENT        

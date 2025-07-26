@@ -571,4 +571,10 @@ router.put('/departments/:id', async (req, res) => {
 
 // Delete department
 router.delete('/departments/:id', async (req, res) => {
-    try {    
+    try { 
+         const { id } = req.params;
+
+        const { error } = await supabase
+            .from('departments')
+            .delete()
+            .eq('id', id);   

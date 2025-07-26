@@ -318,3 +318,13 @@ function renderdata(arr) {
                 
                 // Check if user is logged in
                 if (!localStorage.getItem("token")) {
+                    swal("", "Please Login!", "warning").then(function() {
+                        window.location.href = "./login.html";
+                    });
+                    return;
+                }
+                
+                // Prepare full doctor info for booking
+                const doctorInfo = {
+                    img: getSafeImageUrl(elem.image),
+                    name: elem.doctor_name,

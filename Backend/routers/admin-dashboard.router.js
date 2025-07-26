@@ -111,3 +111,9 @@ router.get('/dashboard/stats', async (req, res) => {
                     totalAppointments,
                     totalDepartments,
                     totalRevenue
+                },
+                doctors: {
+                    total: totalDoctors,
+                    approved: approvedDoctors,
+                    pending: pendingDoctors,
+                    available: availableDoctors    

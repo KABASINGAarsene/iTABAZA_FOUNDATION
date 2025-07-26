@@ -158,3 +158,13 @@ async function getdata(retryCount = 0) {
                     method: 'GET',
                     headers: getAuthHeaders(),
                     signal: AbortSignal.timeout(10000) // 10 second timeout
+                    });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data.doctor || data.doctor.length === 0) {
+            hideLoading();

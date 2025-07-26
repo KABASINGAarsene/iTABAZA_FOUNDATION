@@ -73,3 +73,8 @@ function setupEventListeners() {
 }
 
 function handleDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {

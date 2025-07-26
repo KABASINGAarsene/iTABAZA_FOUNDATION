@@ -248,3 +248,8 @@ function getDocumentIcon(type) {
         default: return 'fa-file';
     }
 }
+
+function filterDocuments() {
+    const filterValue = document.getElementById('filterType').value;
+    const documentCards = document.querySelectorAll('.document-card');
+    

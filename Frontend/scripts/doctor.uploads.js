@@ -228,3 +228,8 @@ function displayDocuments(documents) {
             <div class="document-actions">
                 <button class="action-btn view-btn" onclick="viewDocument('${doc.id}')">
                     <i class="fas fa-eye"></i>
+                     </button>
+                <button class="action-btn download-btn" onclick="downloadDocument('${doc.id}')">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button class="action-btn delete-btn" onclick="deleteDocument('${doc.id}')">

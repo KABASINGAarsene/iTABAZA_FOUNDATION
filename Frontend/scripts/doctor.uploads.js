@@ -323,3 +323,8 @@ function displayPatientDocuments(patientData) {
                             <span>${doc.name}</span>
                         </div>
                         <div class="document-date">
+                        ${doc.date}
+                        </div>
+                        <div class="document-actions">
+                            <button class="action-btn view-btn">
+                                <i class="fas fa-eye"></i>

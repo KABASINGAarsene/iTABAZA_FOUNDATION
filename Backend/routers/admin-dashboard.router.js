@@ -517,4 +517,9 @@ router.get('/departments', async (req, res) => {
         console.error('Error fetching departments:', error);
         res.status(500).json({ error: 'Failed to fetch departments' });
     }
-});       
+});    
+
+// Add new department
+router.post('/departments', async (req, res) => {
+    try {
+        const { dept_name, about, image } = req.body;

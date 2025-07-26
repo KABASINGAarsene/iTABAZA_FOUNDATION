@@ -422,3 +422,9 @@ router.get('/appointments', async (req, res) => {
             .select(`
                 *,
                 users:patient_id (
+                    first_name,
+                    last_name,
+                    email,
+                    mobile
+                ),
+                doctors:doctor_id (

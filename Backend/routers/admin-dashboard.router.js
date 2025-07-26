@@ -355,4 +355,10 @@ router.post('/patients', async (req, res) => {
         console.error('Error adding patient:', error);
         res.status(500).json({ error: 'Failed to add patient' });
     }
-});      
+}); 
+
+// Update patient
+router.put('/patients/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateData = { ...req.body };

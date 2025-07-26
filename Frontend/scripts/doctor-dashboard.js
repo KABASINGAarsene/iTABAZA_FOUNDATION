@@ -371,7 +371,7 @@ function loadRecentAppointments(appointments) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="5" class="empty-state">
-                    <div class="icon"></div>
+                    <div class="icon">📅</div>
                     <h3>No Recent Appointments</h3>
                     <p>You don't have any recent appointments.</p>
                 </td>
@@ -437,7 +437,7 @@ async function loadAppointments() {
         tbody.innerHTML = `
             <tr>
                 <td colspan="6" class="empty-state">
-                    <div class="icon"></div>
+                    <div class="icon">📅</div>
                     <h3>No Appointments Found</h3>
                     <p>Unable to load appointments. Please try again.</p>
                 </td>
@@ -455,7 +455,7 @@ function renderAppointments(appointments) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="6" class="empty-state">
-                    <div class="icon"></div>
+                    <div class="icon">📅</div>
                     <h3>No Appointments</h3>
                     <p>You don't have any appointments matching the current filter.</p>
                 </td>
@@ -549,7 +549,7 @@ async function uploadDocument() {
     try {
         const uploadBtn = document.getElementById('uploadBtn');
         uploadBtn.disabled = true;
-        uploadBtn.innerHTML = ' Uploading...';
+        uploadBtn.innerHTML = '⏳ Uploading...';
         
         const formData = new FormData();
         formData.append('document', documentFile);
@@ -586,7 +586,7 @@ async function uploadDocument() {
     } finally {
         const uploadBtn = document.getElementById('uploadBtn');
         uploadBtn.disabled = false;
-        uploadBtn.innerHTML = ' Upload Document';
+        uploadBtn.innerHTML = '📤 Upload Document';
     }
 }
 
@@ -614,7 +614,7 @@ async function loadDocuments() {
         tbody.innerHTML = `
             <tr>
                 <td colspan="5" class="empty-state">
-                    <div class="icon"></div>
+                    <div class="icon">📄</div>
                     <h3>No Documents Found</h3>
                     <p>Unable to load documents. Please try again.</p>
                 </td>
@@ -632,7 +632,7 @@ function renderDocuments(documents) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="5" class="empty-state">
-                    <div class="icon"></div>
+                    <div class="icon">📄</div>
                     <h3>No Documents</h3>
                     <p>No documents have been uploaded yet.</p>
                 </td>
@@ -674,7 +674,7 @@ async function createSupportTicket() {
     try {
         const supportBtn = document.getElementById('supportBtn');
         supportBtn.disabled = true;
-        supportBtn.innerHTML = 'Creating...';
+        supportBtn.innerHTML = '⏳ Creating...';
         
         const doctorInfo = getCurrentDoctorFromStorage();
         const ticketData = {
@@ -736,7 +736,7 @@ async function createSupportTicket() {
     } finally {
         const supportBtn = document.getElementById('supportBtn');
         supportBtn.disabled = false;
-        supportBtn.innerHTML = ' Create Ticket';
+        supportBtn.innerHTML = '🎫 Create Ticket';
     }
 }
 
@@ -766,7 +766,7 @@ async function loadSupportTickets() {
         tbody.innerHTML = `
             <tr>
                 <td colspan="7" class="empty-state">
-                    <div class="icon"></div>
+                    <div class="icon">🎫</div>
                     <h3>No Support Tickets</h3>
                     <p>You haven't created any support tickets yet.</p>
                 </td>
@@ -784,7 +784,7 @@ function renderSupportTickets(tickets) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="7" class="empty-state">
-                    <div class="icon"></div>
+                    <div class="icon">🎫</div>
                     <h3>No Support Tickets</h3>
                     <p>You haven't created any support tickets yet.</p>
                 </td>

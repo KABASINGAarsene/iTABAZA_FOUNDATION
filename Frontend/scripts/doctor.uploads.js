@@ -298,7 +298,13 @@ async function searchPatientDocuments() {
         swal("Error", "Failed to search patient documents", "error");
     }
 }
+
 function displayPatientDocuments(patientData) {
     const container = document.getElementById('patientDocumentsList');
     
     if (!patientData || patientData.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-search"></i>
+                <p>No documents found for this patient</p>
+            </div>

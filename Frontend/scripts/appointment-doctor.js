@@ -58,3 +58,13 @@ async function loadDepartments() {
 }
 
 // Fast synchronous function to get department name from cache
+function getDepartmentName(departmentId) {
+    if (!departmentId) return 'Unknown Department';
+    return depObj[departmentId] || `Unknown Department (ID: ${departmentId})`;
+}
+
+// Function to validate and get safe image URL
+function getSafeImageUrl(imageUrl) {
+    const defaultImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjVGNUY1Ii8+Cjx0ZXh0IHg9Ijc1IiB5PSI3NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjY2NjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RG9jdG9yPC90ZXh0Pgo8L3N2Zz4K';
+    
+    // If no image URL provided, return default

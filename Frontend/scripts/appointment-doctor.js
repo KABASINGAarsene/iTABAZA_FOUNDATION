@@ -217,3 +217,14 @@ function renderdata(arr) {
 
     docsCont.innerHTML = validDoctors.map((elem, index) => {
         const isAvailable = elem.status && elem.is_available;
+
+        if (isRowView) {
+            // Full info row: image, name, department, experience, qualification, fee, availability, and Book button
+            return `
+                <div class="doc-card minimal-row">
+                    <div class="doc-img"><img alt="doc-pfp" src="${getSafeImageUrl(elem.image)}" /></div>
+                    <div class="row-info">
+                        <div class="row-name">${elem.doctor_name}</div>
+                        <div class="row-dept">Department: ${elem.departmentName}</div>
+                        <div class="row-exp">Experience: ${elem.experience || 'Not specified'} years</div>
+                        <div class="row-qual">Qualification: ${elem.qualifications || 'Not specified'}</div>

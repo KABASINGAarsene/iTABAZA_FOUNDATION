@@ -113,3 +113,8 @@ async function uploadFiles(files) {
 
             const formData = new FormData();
             formData.append('file', file);
+            formData.append('doctorId', doctor.id);
+                        formData.append('fileName', file.name);
+                        formData.append('fileType', file.type);
+            
+                        const response = await fetch(`${baseURL}/doctor/upload-document`, {

@@ -58,3 +58,9 @@ router.post('/login', async (req, res) => {
                 role: admin.role
             }
         });
+    } catch (error) {
+        console.error('Admin login error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+    

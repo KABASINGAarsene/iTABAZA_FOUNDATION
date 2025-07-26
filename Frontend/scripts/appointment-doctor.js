@@ -388,3 +388,13 @@ docInputTag.addEventListener("input", async (e) => {
         }
     }, 300);
 });
+
+// Enhanced department filtering
+let docFilterTag = document.querySelector("#doc-sf-right>select");
+docFilterTag.addEventListener("change", async (e) => {
+    const filterValue = docFilterTag.value;
+    
+    if (!filterValue) {
+        getdata();
+        return;
+    }

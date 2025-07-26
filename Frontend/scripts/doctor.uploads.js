@@ -308,3 +308,8 @@ function displayPatientDocuments(patientData) {
                 <i class="fas fa-search"></i>
                 <p>No documents found for this patient</p>
             </div>
+            `;
+        return;
+    }
+
+    container.innerHTML = patientData.map(patient => `

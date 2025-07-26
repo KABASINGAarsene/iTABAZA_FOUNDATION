@@ -130,3 +130,7 @@ router.get('/dashboard/stats', async (req, res) => {
         });
     } catch (error) {
         console.error('Error fetching dashboard stats:', error);  
+         res.status(500).json({ error: 'Failed to fetch dashboard statistics' });
+    }
+});
+

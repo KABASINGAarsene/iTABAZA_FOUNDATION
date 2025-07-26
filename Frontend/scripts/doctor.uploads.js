@@ -233,3 +233,8 @@ function displayDocuments(documents) {
                     <i class="fas fa-download"></i>
                 </button>
                 <button class="action-btn delete-btn" onclick="deleteDocument('${doc.id}')">
+                <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');

@@ -146,4 +146,10 @@ router.get('/doctors', async (req, res) => {
             .select(`
                 *,
                 departments:department_id (
-                
+                 dept_name
+                )
+            `)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+

@@ -554,3 +554,9 @@ router.put('/departments/:id', async (req, res) => {
             .update({ dept_name, about, image })
             .eq('id', id)
             .select()
+            .single();
+
+        if (error) throw error;
+
+        res.json({
+            success: true,

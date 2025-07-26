@@ -288,3 +288,13 @@ function renderdata(arr) {
                     const doctorCard = btn.closest('.doc-card');
                     const doctorInfo = {
                         img: doctorCard.querySelector('.doc-img img').src,
+                        name: doctorCard.querySelector('.doc-desc h2').textContent,
+                        dept: doctorCard.querySelector('.doc-desc h4').textContent,
+                        exp: doctorCard.querySelector('.doc-desc p').textContent,
+                        qual: doctorCard.querySelector('.doc-desc h4:nth-of-type(2)').textContent,
+                        docID: doctorCard.querySelector('.doc-desc p[style*="color:white"]').textContent
+                    };
+                    
+                    // Store doctor info and redirect to patient details
+                    localStorage.setItem("docObj", JSON.stringify(doctorInfo));
+                    window.location.href = "./patient_details.html";

@@ -88,3 +88,13 @@ function getSafeImageUrl(imageUrl) {
     // Return the original URL if it seems valid
     return imageUrl;
 }
+
+// Loading state management
+function showLoading() {
+    isLoading = true;
+    docsCont.innerHTML = `
+        <div class="loading-container" style="text-align: center; padding: 50px;">
+            <div class="spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #28a745; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+            <p style="color: #666; font-size: 16px;">Loading doctors...</p>
+        </div>
+        <style>

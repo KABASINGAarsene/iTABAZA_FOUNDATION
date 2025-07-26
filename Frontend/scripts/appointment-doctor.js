@@ -368,3 +368,13 @@ docInputTag.addEventListener("input", async (e) => {
                     signal: AbortSignal.timeout(5000)
                 });
                 
+                if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const data = await response.json();
+            hideLoading();
+            
+            if (!data || data.length === 0) {
+                showNoDoctors(`No doctors found matching "${searchVal}"`);
+            } else {

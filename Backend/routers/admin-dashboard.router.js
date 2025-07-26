@@ -343,3 +343,10 @@ router.post('/patients', async (req, res) => {
             }])
             .select()
             .single();
+
+         if (error) throw error;
+
+        res.json({
+            success: true,
+            message: 'Patient added successfully',
+            data: patient    

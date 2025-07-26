@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Appointments - ITABAZA</title>
+    <link rel="icon" href="./Files/iTABAZA-logo-crop.jpeg">
+    <link rel="stylesheet" href="./css/all.css">
+    <link rel="stylesheet" href="./Styles/doctor-dashboard.css">
+    <link rel="stylesheet" href="./Styles/responsive.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+</head>
+<body>
+    <!-- Doctor Dashboard Navigation -->
+    <nav class="doctor-nav">
+        <div class="nav-brand">
+            <img src="./Files/iTABAZA-logo-crop.jpeg" alt="ITABAZA" class="nav-logo">
+            <span class="nav-title">ITABAZA - Doctor Portal</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="./doctor-dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="./doctor.appointments.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i> Appointments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="./doctor.uploads.html" class="nav-link">
+                    <i class="fas fa-upload"></i> Documents
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="./doctor.support.html" class="nav-link">
+                    <i class="fas fa-headset"></i> Support Request
+                </a>
+            </li>
+        </ul>
+        <div class="nav-profile">
+            <div class="profile-info">
+                <span class="doctor-name" id="doctorName">Dr. Loading...</span>
+                <span class="doctor-email" id="doctorEmail">loading@email.com</span>
+            </div>
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Appointments Content -->
+    <main class="dashboard-main">
+        <!-- Appointments Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Your Appointments</h1>
+                <p class="header-subtitle">Review and manage your patient appointments</p>
+            </div>
+        </header>
+
+        <!-- Appointments List -->
+        <section class="appointments-list-section">
+            <div class="appointments-list" id="appointmentsList">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i> Loading appointments...
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <p>© 2024 ITABAZA Medical Platform. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="./Scripts/doctor.appointments.js"></script>
+</body>
+</html>

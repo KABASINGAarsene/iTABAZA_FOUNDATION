@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #007bff;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background: #333;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .sidebar.active {
+            transform: translateX(0);
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #555;
+        }
+        .sidebar ul li:hover {
+            background: #555;
+            padding-left: 10px;
+        }
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .main-content {
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+        .main-content.shifted {
+            margin-left: 250px;
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰ Menu</button>
+    
+    <div class="sidebar" id="sidebar">
+        <h3>Doctor Dashboard</h3>
+        <ul>
+            <li onclick="showSection('dashboard')"> Dashboard</li>
+            <li onclick="showSection('appointments')"> Appointments</li>
+            <li onclick="showSection('patients')"> Patients</li>
+            <li onclick="showSection('documents')"> Documents</li>
+            <li onclick="showSection('profile')"> Profile</li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="container">
+            <div class="header">
+                <h1>Welcome to Doctor Dashboard</h1>
+                <p>Current time: <span id="currentTime"></span></p>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div>Today's Appointments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div>Total Patients</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">42</div>
+                    <div>Documents</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div>Pending Reviews</div>
+                </div>
+            </div>
+
+            <div id="content">
+                <h2>Dashboard Overview</h2>
+                <p>This is a test version of the doctor dashboard. Click the menu button to toggle the sidebar.</p>
+                <p>Status: <span style="color: green;"> Page loaded successfully</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('shifted');
+        }
+
+        function showSection(section) {
+            const content = document.getElementById('content');
+            content.innerHTML = `<h2>${section.charAt(0).toUpperCase() + section.slice(1)}</h2><p>This is the ${section} section.</p>`;
+        }
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                sidebar.classList.remove('active');
+                document.getElementById('mainContent').classList.remove('shifted');
+            }
+        });
+
+        console.log('Doctor Dashboard loaded successfully');
+    </script>
+</body>
+</html>

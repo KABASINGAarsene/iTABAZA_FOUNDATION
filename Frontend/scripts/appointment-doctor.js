@@ -18,3 +18,13 @@ async function loadDepartments() {
         const response = await fetch(`${baseURL}/department/all`, {
             method: 'GET',
             headers: getAuthHeaders()
+            });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('Departments loaded:', data);
+        
+        // Clear existing departments and populate with real data

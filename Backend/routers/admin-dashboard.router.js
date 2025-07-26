@@ -511,4 +511,10 @@ router.get('/departments', async (req, res) => {
 
         res.json({
             success: true,
-            data: departments    
+            data: departments 
+        });
+    } catch (error) {
+        console.error('Error fetching departments:', error);
+        res.status(500).json({ error: 'Failed to fetch departments' });
+    }
+});       

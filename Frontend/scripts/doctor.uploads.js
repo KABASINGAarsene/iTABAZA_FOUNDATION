@@ -223,3 +223,8 @@ function displayDocuments(documents) {
             <div class="document-info">
                 <h4>${doc.name}</h4>
                 <p>Size: ${doc.size}</p>
+                 <p>Uploaded: ${doc.uploadDate}</p>
+            </div>
+            <div class="document-actions">
+                <button class="action-btn view-btn" onclick="viewDocument('${doc.id}')">
+                    <i class="fas fa-eye"></i>

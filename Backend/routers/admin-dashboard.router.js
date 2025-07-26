@@ -266,3 +266,9 @@ router.delete('/doctors/:id', async (req, res) => {
 });
 
 // Toggle doctor status
+router.patch('/doctors/:id/toggle-status', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Get current status
+        const { data: doctor, error: fetchError } = await supabase

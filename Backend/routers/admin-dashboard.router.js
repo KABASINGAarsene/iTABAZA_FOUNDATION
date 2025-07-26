@@ -362,3 +362,8 @@ router.put('/patients/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const updateData = { ...req.body };
+        
+        // If password is being updated, hash it
+        if (updateData.password) {
+            updateData.password = await bcrypt.hash(updateData.password, 10);
+        }

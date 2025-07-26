@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - iTABAZA Hospital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .signup-options {
+            padding: 30px;
+        }
+        
+        .option-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        .option-card.active {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .option-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .option-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .option-pros {
+            color: #28a745;
+            font-size: 0.85rem;
+        }
+        
+        .option-cons {
+            color: #dc3545;
+            font-size: 0.85rem;
+        }
+        
+        .form-container {
+            display: none;
+            padding: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .form-container.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert.info {
+            background: #cce7ff;
+            color: #004085;
+            border: 1px solid #b8d4f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Create Account</h1>
+            <p>Choose your preferred registration method</p>
+        </div>
+        
+        <div class="signup-options">
+            <div class="option-card" data-option="direct">
+                <div class="option-title"> Quick Registration</div>
+                <div class="option-description">Create your account instantly without email verification</div>
+                <div class="option-pros"> Instant access •  No email verification needed</div>
+            </div>
+            
+            <div class="option-card" data-option="otp">
+                <div class="option-title"> Secure Registration</div>
+                <div class="option-description">Create your account with email verification for enhanced security</div>
+                <div class="option-pros"> Enhanced security •  Email verified account</div>
+                <div class="option-cons"> Requires email verification step</div>
+            </div>
+        </div>
+        
+        <!-- Direct Registration Form -->
+        <div class="form-container" id="direct-form">
+            <div class="alert" id="direct-alert"></div>
+            <form id="directSignupForm">
+                <div class="form-group">
+                    <label for="direct_first_name">First Name</label>
+                    <input type="text" id="direct_first_name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="direct_last_name">Last Name</label>
+                    <input type="text" id="direct_last_name" name="last_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="direct_email">Email</label>
+                    <input type="email" id="direct_email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="direct_mobile">Mobile Number</label>
+                    <input type="tel" id="direct_mobile" name="mobile" placeholder="+250..." required>
+                </div>
+                <div class="form-group">
+                    <label for="direct_password">Password</label>
+                    <input type="password" id="direct_password" name="password" minlength="6" required>
+                </div>
+                <button type="submit" class="btn">Create Account Instantly</button>
+            </form>
+        </div>
+        
+        <!-- OTP Registration Form -->
+        <div class="form-container" id="otp-form">
+            <div class="alert" id="otp-alert"></div>
+            <form id="otpSignupForm">
+                <div class="form-group">
+                    <label for="otp_first_name">First Name</label>
+                    <input type="text" id="otp_first_name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="otp_last_name">Last Name</label>
+                    <input type="text" id="otp_last_name" name="last_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="otp_email">Email</label>
+                    <input type="email" id="otp_email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="otp_mobile">Mobile Number</label>
+                    <input type="tel" id="otp_mobile" name="mobile" placeholder="+250..." required>
+                </div>
+                <div class="form-group">
+                    <label for="otp_password">Password</label>
+                    <input type="password" id="otp_password" name="password" minlength="6" required>
+                </div>
+                <button type="submit" class="btn">Send Verification Code</button>
+            </form>
+        </div>
+        
+        <div class="login-link">
+            Already have an account? <a href="./login.html">Login here</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { baseURL } from './Scripts/baseURL.js';
+        
+        // Option selection
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove active class from all cards
+                document.querySelectorAll('.option-card').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('.form-container').forEach(f => f.classList.remove('active'));
+                
+                // Add active class to clicked card
+                card.classList.add('active');
+                
+                // Show corresponding form
+                const option = card.dataset.option;
+                document.getElementById(`${option}-form`).classList.add('active');
+            });
+        });
+        
+        // Default selection
+        document.querySelector('[data-option="direct"]').click();
+        
+        // Direct signup form
+        document.getElementById('directSignupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const userData = Object.fromEntries(formData);
+            const submitBtn = e.target.querySelector('.btn');
+            const alert = document.getElementById('direct-alert');
+            
+            // Validate form
+            if (!userData.first_name || !userData.last_name || !userData.email || !userData.mobile || !userData.password) {
+                showAlert('direct-alert', 'Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (userData.password.length < 6) {
+                showAlert('direct-alert', 'Password must be at least 6 characters long', 'error');
+                return;
+            }
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Creating Account...';
+                
+                const response = await fetch(`${baseURL}/user/signup-direct`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Store user data and token
+                    if (result.token) {
+                        localStorage.setItem('token', result.token);
+                        localStorage.setItem('authToken', result.token);
+                    }
+                    
+                    if (result.user) {
+                        localStorage.setItem('userName', result.user.first_name);
+                        localStorage.setItem('userId', result.user.id);
+                        localStorage.setItem('userEmail', result.user.email);
+                        sessionStorage.setItem('userId', result.user.id);
+                        sessionStorage.setItem('userEmail', result.user.email);
+                    }
+                    
+                    showAlert('direct-alert', 'Account created successfully! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = './book.appointment.html';
+                    }, 2000);
+                } else {
+                    showAlert('direct-alert', result.msg || 'Registration failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert('direct-alert', 'Network error. Please check your connection and try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Account Instantly';
+            }
+        });
+        
+        // OTP signup form
+        document.getElementById('otpSignupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const userData = Object.fromEntries(formData);
+            const submitBtn = e.target.querySelector('.btn');
+            
+            // Validate form
+            if (!userData.first_name || !userData.last_name || !userData.email || !userData.mobile || !userData.password) {
+                showAlert('otp-alert', 'Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (userData.password.length < 6) {
+                showAlert('otp-alert', 'Password must be at least 6 characters long', 'error');
+                return;
+            }
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending Code...';
+                
+                const response = await fetch(`${baseURL}/user/emailVerify`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: userData.email })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Store user data and OTP
+                    localStorage.setItem('userDetails', JSON.stringify(userData));
+                    localStorage.setItem('otp', result.otp);
+                    
+                    showAlert('otp-alert', 'Verification code sent to your email! Check your inbox and spam folder.', 'success');
+                    setTimeout(() => {
+                        window.location.href = './otp.html';
+                    }, 2000);
+                } else {
+                    showAlert('otp-alert', result.msg || 'Failed to send verification code. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('OTP error:', error);
+                showAlert('otp-alert', 'Network error. Please check your connection and try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Verification Code';
+            }
+        });
+        
+        function showAlert(alertId, message, type) {
+            const alert = document.getElementById(alertId);
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+            
+            // Hide alert after 5 seconds
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

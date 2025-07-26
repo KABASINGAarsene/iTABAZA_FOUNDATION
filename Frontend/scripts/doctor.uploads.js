@@ -333,3 +333,8 @@ function displayPatientDocuments(patientData) {
                                 <i class="fas fa-download"></i>
                             </button>
                         </div>
+                        </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');

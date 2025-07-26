@@ -78,3 +78,8 @@ function handleDragOver(e) {
 }
 
 function handleDragLeave(e) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+}
+
+function handleDrop(e) {

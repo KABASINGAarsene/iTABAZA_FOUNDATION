@@ -468,3 +468,12 @@ window.addEventListener("load", async (e) => {
 // Add refresh functionality
 window.addEventListener('focus', () => {
     // Refresh data when user returns to the tab (if cache is expired)
+    const now = Date.now();
+    if (!doctorsCache || (now - lastFetchTime) >= CACHE_DURATION) {
+        getdata();
+    }
+});
+
+// View toggle logic
+const cardViewBtn = document.getElementById('card-view-btn');
+const rowViewBtn = document.getElementById('row-view-btn');

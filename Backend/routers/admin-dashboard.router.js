@@ -28,3 +28,9 @@ router.post('/login', async (req, res) => {
         if (error || !admin) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
+        
+        // Verify password
+        const isValidPassword = await bcrypt.compare(password, admin.password);
+        if (!isValidPassword) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }

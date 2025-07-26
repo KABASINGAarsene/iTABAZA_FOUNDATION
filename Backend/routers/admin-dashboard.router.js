@@ -278,3 +278,9 @@ router.patch('/doctors/:id/toggle-status', async (req, res) => {
             .single();
 
         if (fetchError) throw fetchError;
+
+        // Toggle status
+        const { data: updatedDoctor, error: updateError } = await supabase
+            .from('doctors')
+            .update({ status: !doctor.status })
+            .eq('id', id)

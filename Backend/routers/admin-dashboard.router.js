@@ -386,3 +386,9 @@ router.put('/patients/:id', async (req, res) => {
         console.error('Error updating patient:', error);
         res.status(500).json({ error: 'Failed to update patient' });
     }   
+});
+
+// Delete patient
+router.delete('/patients/:id', async (req, res) => {
+    try {
+        const { id } = req.params;    

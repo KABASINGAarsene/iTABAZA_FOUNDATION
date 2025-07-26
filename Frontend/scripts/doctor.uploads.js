@@ -338,3 +338,8 @@ function displayPatientDocuments(patientData) {
             </div>
         </div>
     `).join('');
+    }
+
+// Global functions for document actions
+window.viewDocument = function(docId) {
+    swal("View Document", "Document viewer coming soon!", "info");

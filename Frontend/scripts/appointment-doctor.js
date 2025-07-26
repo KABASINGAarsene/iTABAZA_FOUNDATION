@@ -258,3 +258,12 @@ function renderdata(arr) {
                             </div>
                         </div>
                         <div class="doc-book" style="display: flex; align-items: center; justify-content: center;">
+                        <button class="clean-book-btn" style="padding:12px 24px;background:#28a745;color:#fff;border:none;border-radius:8px;cursor:pointer;${!isAvailable ? 'opacity:0.5;pointer-events:none;' : ''}">
+                                Book Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }).join("");

@@ -108,3 +108,8 @@ async function uploadFiles(files) {
             swal("Uploading...", `Uploading ${file.name}`, "info", {
                 buttons: false,
                 closeOnEsc: false,
+                closeOnClickOutside: false,
+            });
+
+            const formData = new FormData();
+            formData.append('file', file);

@@ -173,3 +173,8 @@ async function loadDocuments() {
             },
             {
                 id: 2,
+                name: 'Patient_Report.docx',
+                type: 'document',
+                size: '1.2 MB',
+                uploadDate: '2024-01-14',
+                url: '#'

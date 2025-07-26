@@ -313,3 +313,8 @@ function displayPatientDocuments(patientData) {
     }
 
     container.innerHTML = patientData.map(patient => `
+        <div class="patient-section">
+            <h3>Documents for ${patient.patientName}</h3>
+            <div class="patient-documents">
+                ${patient.documents.map(doc => `
+                    <div class="patient-document-item">

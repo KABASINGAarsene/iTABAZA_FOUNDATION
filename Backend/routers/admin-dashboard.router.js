@@ -416,3 +416,9 @@ router.delete('/patients/:id', async (req, res) => {
 
 // Get all appointments
 router.get('/appointments', async (req, res) => {
+     try {
+        const { data: appointments, error } = await supabase
+            .from('appointments')
+            .select(`
+                *,
+                users:patient_id (

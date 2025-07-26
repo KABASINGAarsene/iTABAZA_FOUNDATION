@@ -267,3 +267,14 @@ function renderdata(arr) {
             `;
         }
     }).join("");
+
+    // Only attach form listeners in card view
+    if (!isRowView) {
+        // Attach booking button listeners for clean card view
+        let bookBtns = document.querySelectorAll('.clean-book-btn');
+        bookBtns.forEach((btn, idx) => {
+            btn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                
+                // Check if user is logged in
+                if (!localStorage.getItem("token")) {

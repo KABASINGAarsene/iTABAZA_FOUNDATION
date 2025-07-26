@@ -542,3 +542,9 @@ router.post('/departments', async (req, res) => {
         res.status(500).json({ error: 'Failed to add department' });
     }
 });    
+
+// Update department
+router.put('/departments/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { dept_name, about, image } = req.body;

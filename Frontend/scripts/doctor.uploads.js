@@ -318,3 +318,8 @@ function displayPatientDocuments(patientData) {
             <div class="patient-documents">
                 ${patient.documents.map(doc => `
                     <div class="patient-document-item">
+                    <div class="document-info">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>${doc.name}</span>
+                        </div>
+                        <div class="document-date">

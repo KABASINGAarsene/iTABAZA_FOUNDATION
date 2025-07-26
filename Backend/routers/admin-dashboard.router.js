@@ -523,3 +523,9 @@ router.get('/departments', async (req, res) => {
 router.post('/departments', async (req, res) => {
     try {
         const { dept_name, about, image } = req.body;
+
+        const { data: department, error } = await supabase
+            .from('departments')
+            .insert([{ dept_name, about, image }])
+            .select()
+            .single();

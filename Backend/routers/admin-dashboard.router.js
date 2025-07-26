@@ -536,3 +536,9 @@ router.post('/departments', async (req, res) => {
             success: true,
             message: 'Department added successfully',
             data: department
+         });
+    } catch (error) {
+        console.error('Error adding department:', error);
+        res.status(500).json({ error: 'Failed to add department' });
+    }
+});    

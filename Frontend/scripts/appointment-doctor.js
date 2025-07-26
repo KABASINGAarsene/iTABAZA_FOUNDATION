@@ -28,3 +28,13 @@ async function loadDepartments() {
         console.log('Departments loaded:', data);
         
         // Clear existing departments and populate with real data
+        depObj = {};
+        if (data.departments && Array.isArray(data.departments)) {
+            data.departments.forEach(dept => {
+                depObj[dept.id] = dept.dept_name;
+            });
+        }
+        
+        departmentsLoaded = true;
+        console.log('Department mapping created:', depObj);
+        

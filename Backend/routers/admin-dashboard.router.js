@@ -482,3 +482,9 @@ router.delete('/appointments/:id', async (req, res) => {
             .from('appointments')
             .delete()
             .eq('id', id);  
+        
+        if (error) throw error;
+
+        res.json({
+            success: true,
+            message: 'Appointment deleted successfully'    

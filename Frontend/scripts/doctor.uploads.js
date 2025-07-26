@@ -243,3 +243,8 @@ function displayDocuments(documents) {
 function getDocumentIcon(type) {
     switch (type) {
         case 'pdf': return 'fa-file-pdf';
+         case 'document': return 'fa-file-word';
+        case 'image': return 'fa-file-image';
+        default: return 'fa-file';
+    }
+}

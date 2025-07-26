@@ -64,7 +64,6 @@ li{
 }
 #nav-user-details{
     /* border:1px solid black; */
-
     width:25%;
     display: flex;
     align-items: center;
@@ -172,7 +171,6 @@ li{
 }
 .nav-active{
     color:red;
-
 }
 
 /* Responsive styles for profile icon */

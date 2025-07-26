@@ -99,3 +99,9 @@ router.get('/dashboard/stats', async (req, res) => {
         const todayAppointments = appointments?.filter(a => a.appointment_date === today).length || 0;
 
         const totalRevenue = appointments?.reduce((sum, a) => {
+             return sum + (a.payment_status && a.payment_amount ? parseFloat(a.payment_amount) : 0);
+        }, 0) || 0;
+
+        res.json({
+            success: true,
+            data: {

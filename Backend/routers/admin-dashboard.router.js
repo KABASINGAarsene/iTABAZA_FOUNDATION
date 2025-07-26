@@ -367,3 +367,10 @@ router.put('/patients/:id', async (req, res) => {
         if (updateData.password) {
             updateData.password = await bcrypt.hash(updateData.password, 10);
         }
+
+        const { data: patient, error } = await supabase
+            .from('users')
+            .update(updateData)
+            .eq('id', id)
+            .select()
+            .single();

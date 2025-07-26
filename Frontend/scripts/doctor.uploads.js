@@ -8,3 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
     
+    // Initialize the page
+    initializePage();
+    
+    // Set up event listeners
+    setupEventListeners();

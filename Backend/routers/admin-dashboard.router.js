@@ -224,3 +224,9 @@ router.put('/doctors/:id', async (req, res) => {
         }
 
         const { data: doctor, error } = await supabase
+           .from('doctors')
+            .update(updateData)
+            .eq('id', id)
+            .select()
+            .single(); 
+            

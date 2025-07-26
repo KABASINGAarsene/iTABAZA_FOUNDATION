@@ -293,3 +293,8 @@ async function searchPatientDocuments() {
         swal.close();
         displayPatientDocuments(samplePatientDocs);
         
+        } catch (error) {
+        console.error('Error searching patient documents:', error);
+        swal("Error", "Failed to search patient documents", "error");
+    }
+}

@@ -58,3 +58,13 @@ function setupEventListeners() {
     // Drag and drop
     uploadArea.addEventListener('dragover', handleDragOver);
     uploadArea.addEventListener('dragleave', handleDragLeave);
+    uploadArea.addEventListener('drop', handleDrop);
+
+    // Filter documents
+    document.getElementById('filterType').addEventListener('change', filterDocuments);
+
+    // Patient search
+    document.getElementById('searchPatientBtn').addEventListener('click', searchPatientDocuments);
+    document.getElementById('patientSearch').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchPatientDocuments();

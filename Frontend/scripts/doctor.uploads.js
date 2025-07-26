@@ -118,3 +118,8 @@ async function uploadFiles(files) {
                         formData.append('fileType', file.type);
             
                         const response = await fetch(`${baseURL}/doctor/upload-document`, {
+                            method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('doctorToken')}`
+                },
+                body: formData

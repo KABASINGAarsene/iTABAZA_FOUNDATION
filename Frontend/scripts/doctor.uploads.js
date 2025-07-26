@@ -262,3 +262,9 @@ function filterDocuments() {
         }
     });
 }
+
+async function searchPatientDocuments() {
+    const searchTerm = document.getElementById('patientSearch').value.trim();
+    
+    if (!searchTerm) {
+        swal("Error", "Please enter a patient name to search", "error");

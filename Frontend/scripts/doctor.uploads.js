@@ -152,3 +152,9 @@ function validateFile(file) {
         swal("Error", `File type ${file.type} is not supported.`, "error");
         return false;
     }
+
+      return true;
+}
+
+async function loadDocuments() {
+    try {

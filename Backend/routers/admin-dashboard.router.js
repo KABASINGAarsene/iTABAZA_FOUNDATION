@@ -326,3 +326,8 @@ router.get('/patients', async (req, res) => {
 
 // Add new patient
 router.post('/patients', async (req, res) => {
+     try {
+        const { first_name, last_name, email, mobile, password } = req.body;
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);

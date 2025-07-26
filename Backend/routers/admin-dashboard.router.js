@@ -260,3 +260,9 @@ router.delete('/doctors/:id', async (req, res) => {
             message: 'Doctor deleted successfully'
         });
     } catch (error) {
+        console.error('Error deleting doctor:', error);
+        res.status(500).json({ error: 'Failed to delete doctor' });
+    }
+});
+
+// Toggle doctor status

@@ -81,4 +81,9 @@ router.get('/dashboard/stats', async (req, res) => {
             supabase.from('users').select('*', { count: 'exact', head: true }),
             supabase.from('doctors').select('*', { count: 'exact', head: true }),
             supabase.from('appointments').select('*', { count: 'exact', head: true }),
-            supabase.from('departments').select('*', { count: 'exact', head: true })    
+            supabase.from('departments').select('*', { count: 'exact', head: true }) 
+               ]);
+
+        // Get detailed statistics
+        const { data: doctors } = await supabase.from('doctors').select('*');
+        const { data: appointments } = await supabase.from('appointments').select('*');

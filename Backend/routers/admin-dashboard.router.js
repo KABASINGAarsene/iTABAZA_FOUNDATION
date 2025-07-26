@@ -374,3 +374,9 @@ router.put('/patients/:id', async (req, res) => {
             .eq('id', id)
             .select()
             .single();
+        
+        if (error) throw error;
+
+        res.json({
+            success: true,
+            message: 'Patient updated successfully',    

@@ -176,3 +176,9 @@ router.post('/doctors', async (req, res) => {
             city, 
             department_id,
             image 
+        } = req.body;
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const { data: doctor, error } = await supabase    

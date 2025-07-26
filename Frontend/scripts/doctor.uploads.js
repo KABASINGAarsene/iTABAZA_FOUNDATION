@@ -343,3 +343,8 @@ function displayPatientDocuments(patientData) {
 // Global functions for document actions
 window.viewDocument = function(docId) {
     swal("View Document", "Document viewer coming soon!", "info");
+    };
+
+window.downloadDocument = function(docId) {
+    swal("Download", "Document download starting...", "success", { timer: 1500 });
+};

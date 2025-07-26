@@ -33,3 +33,8 @@ function setupEventListeners() {
             title: "Are you sure?",
             text: "You will be logged out of your account",
             icon: "warning",
+            buttons: true,
+                        dangerMode: true,
+                    }).then((willLogout) => {
+                        if (willLogout) {
+                            logoutDoctor();

@@ -353,3 +353,8 @@ window.deleteDocument = function(docId) {
     swal({
         title: "Are you sure?",
         text: "This document will be permanently deleted",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {

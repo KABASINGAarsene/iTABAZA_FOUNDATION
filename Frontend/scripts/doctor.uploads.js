@@ -348,3 +348,8 @@ window.viewDocument = function(docId) {
 window.downloadDocument = function(docId) {
     swal("Download", "Document download starting...", "success", { timer: 1500 });
 };
+
+window.deleteDocument = function(docId) {
+    swal({
+        title: "Are you sure?",
+        text: "This document will be permanently deleted",

@@ -22,3 +22,9 @@ router.post('/login', async (req, res) => {
             .from('admins')
             .select('*')
             .eq('email', email)
+            .eq('is_active', true)
+            .single();
+
+        if (error || !admin) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }

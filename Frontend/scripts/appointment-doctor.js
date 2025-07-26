@@ -448,3 +448,13 @@ window.addEventListener("load", async (e) => {
             
             if (data.msg) {
                 swal("", `${data.msg}`, "info").then(function() {
+                    getdata();
+                });
+            } else {
+                renderdata(data.doctor);
+            }
+            
+            localStorage.removeItem("deptID");
+        } catch (err) {
+            console.error('Department filter error:', err);
+            hideLoading();

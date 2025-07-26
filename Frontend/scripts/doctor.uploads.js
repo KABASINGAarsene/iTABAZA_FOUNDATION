@@ -258,3 +258,7 @@ function filterDocuments() {
         if (filterValue === 'all' || cardType === filterValue) {
             card.style.display = 'block';
         } else {
+             card.style.display = 'none';
+        }
+    });
+}

@@ -40,3 +40,9 @@ router.post('/login', async (req, res) => {
             { adminId: admin.id, email: admin.email, role: admin.role },
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
+        );
+
+        // Update last login
+        await supabase
+            .from('admins')
+            .update({ last_login: new Date() })    

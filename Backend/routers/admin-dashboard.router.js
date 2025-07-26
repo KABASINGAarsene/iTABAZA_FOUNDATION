@@ -181,4 +181,10 @@ router.post('/doctors', async (req, res) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const { data: doctor, error } = await supabase    
+        const { data: doctor, error } = await supabase
+            .from('doctors')
+            .insert([{
+                doctor_name,
+                email,
+                password: hashedPassword,
+                qualifications,

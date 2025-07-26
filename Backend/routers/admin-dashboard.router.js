@@ -577,4 +577,10 @@ router.delete('/departments/:id', async (req, res) => {
         const { error } = await supabase
             .from('departments')
             .delete()
-            .eq('id', id);   
+            .eq('id', id); 
+            
+        if (error) throw error;
+
+        res.json({
+            success: true,
+            message: 'Department deleted successfully'  

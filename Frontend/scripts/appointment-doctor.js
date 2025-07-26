@@ -188,3 +188,13 @@ async function getdata(retryCount = 0) {
             console.log(`Retrying... Attempt ${retryCount + 1}`);
             setTimeout(() => getdata(retryCount + 1), 2000 * (retryCount + 1));
             return;
+            }
+        
+        showError(`Failed to load doctors: ${error.message}. Please check your internet connection and try again.`);
+    }
+}
+
+// Enhanced rendering with better error handling
+function renderdata(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+        showNoDoctors();

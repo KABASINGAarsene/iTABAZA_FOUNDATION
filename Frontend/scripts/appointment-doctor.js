@@ -308,3 +308,13 @@ function renderdata(arr) {
     } else {
         // Attach row view listeners: Book button and row click
         let rowCards = document.querySelectorAll('.doc-card.minimal-row');
+        rowCards.forEach((row, idx) => {
+            const bookBtn = row.querySelector('.row-book-btn');
+            // Book button click
+            bookBtn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const elem = validDoctors[idx];
+                if (!elem) return;
+                
+                // Check if user is logged in
+                if (!localStorage.getItem("token")) {

@@ -475,4 +475,10 @@ router.patch('/appointments/:id/status', async (req, res) => {
 
 // Delete appointment
 router.delete('/appointments/:id', async (req, res) => {
-    try {    
+    try {  
+         const { id } = req.params;
+
+        const { error } = await supabase
+            .from('appointments')
+            .delete()
+            .eq('id', id);  

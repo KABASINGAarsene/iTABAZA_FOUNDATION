@@ -188,3 +188,8 @@ async function loadDocuments() {
                 url: '#'
             }
         ];
+        
+        displayDocuments(sampleDocuments);
+        
+    } catch (error) {
+        console.error('Error loading documents:', error);

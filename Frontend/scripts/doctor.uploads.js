@@ -133,3 +133,8 @@ async function uploadFiles(files) {
             loadDocuments();
             
         } catch (error) {
+            console.error('Upload error:', error);
+            swal("Error", `Failed to upload ${file.name}`, "error");
+        }
+    }
+}

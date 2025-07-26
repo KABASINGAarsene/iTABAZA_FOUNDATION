@@ -123,4 +123,10 @@ router.get('/dashboard/stats', async (req, res) => {
                     total: totalAppointments,
                     pending: pendingAppointments,
                     confirmed: confirmedAppointments,
-                    completed: completedAppointments,    
+                    completed: completedAppointments,  
+                        today: todayAppointments
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching dashboard stats:', error);  

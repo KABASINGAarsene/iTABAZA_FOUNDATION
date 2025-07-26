@@ -160,3 +160,13 @@ router.get('/doctors', async (req, res) => {
     } catch (error) {
         console.error('Error fetching doctors:', error);
         res.status(500).json({ error: 'Failed to fetch doctors' });
+    }
+});
+
+// Add new doctor
+router.post('/doctors', async (req, res) => {
+    try {
+        const { 
+            doctor_name, 
+            email, 
+            password,    

@@ -64,3 +64,9 @@ router.post('/login', async (req, res) => {
     }
 });
     
+// =====================================================
+// DASHBOARD OVERVIEW
+// =====================================================
+
+// Get dashboard statistics
+router.get('/dashboard/stats', async (req, res) => {

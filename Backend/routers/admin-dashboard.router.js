@@ -560,3 +560,9 @@ router.put('/departments/:id', async (req, res) => {
 
         res.json({
             success: true,
+             message: 'Department updated successfully',
+            data: department
+        });
+    } catch (error) {
+        console.error('Error updating department:', error);
+        res.status(500).json({ error: 'Failed to update department' });

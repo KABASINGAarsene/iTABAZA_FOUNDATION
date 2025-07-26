@@ -153,3 +153,10 @@ router.get('/doctors', async (req, res) => {
 
         if (error) throw error;
 
+         res.json({
+            success: true,
+            data: doctors
+        });
+    } catch (error) {
+        console.error('Error fetching doctors:', error);
+        res.status(500).json({ error: 'Failed to fetch doctors' });

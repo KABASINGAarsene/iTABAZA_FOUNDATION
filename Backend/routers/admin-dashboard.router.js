@@ -349,4 +349,10 @@ router.post('/patients', async (req, res) => {
         res.json({
             success: true,
             message: 'Patient added successfully',
-            data: patient    
+            data: patient  
+         });
+    } catch (error) {
+        console.error('Error adding patient:', error);
+        res.status(500).json({ error: 'Failed to add patient' });
+    }
+});      

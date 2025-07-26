@@ -193,3 +193,8 @@ async function loadDocuments() {
         
     } catch (error) {
         console.error('Error loading documents:', error);
+        document.getElementById('documentsGrid').innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load documents</p>
+            </div>

@@ -288,3 +288,8 @@ async function searchPatientDocuments() {
                     { name: 'Prescription.pdf', date: '2024-01-05' }
                 ]
             }
+            ];
+
+        swal.close();
+        displayPatientDocuments(samplePatientDocs);
+        

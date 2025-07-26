@@ -584,3 +584,11 @@ router.delete('/departments/:id', async (req, res) => {
         res.json({
             success: true,
             message: 'Department deleted successfully'  
+         });
+    } catch (error) {
+        console.error('Error deleting department:', error);
+        res.status(500).json({ error: 'Failed to delete department' });
+    }
+});
+
+module.exports = router;    

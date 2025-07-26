@@ -548,3 +548,9 @@ router.put('/departments/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { dept_name, about, image } = req.body;
+        
+        const { data: department, error } = await supabase
+            .from('departments')
+            .update({ dept_name, about, image })
+            .eq('id', id)
+            .select()

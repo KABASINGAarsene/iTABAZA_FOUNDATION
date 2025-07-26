@@ -488,3 +488,13 @@ function setCardView() {
 function setRowView() {
     docsCont.classList.add('row-view');
     docsCont.classList.remove('card-view');
+    if (rowViewBtn) rowViewBtn.style.color = '#28a745';
+    if (cardViewBtn) cardViewBtn.style.color = '#333';
+}
+
+if (cardViewBtn && rowViewBtn) {
+    cardViewBtn.addEventListener('click', () => {
+        setCardView();
+        if (doctorsCache) renderdata(doctorsCache);
+    });
+    rowViewBtn.addEventListener('click', () => {

@@ -458,3 +458,13 @@ window.addEventListener("load", async (e) => {
         } catch (err) {
             console.error('Department filter error:', err);
             hideLoading();
+            showError(`Failed to load doctors for department: ${err.message}`);
+        }
+    } else {
+        getdata();
+    }
+});
+
+// Add refresh functionality
+window.addEventListener('focus', () => {
+    // Refresh data when user returns to the tab (if cache is expired)

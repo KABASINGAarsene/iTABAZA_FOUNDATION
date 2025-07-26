@@ -434,3 +434,9 @@ router.get('/appointments', async (req, res) => {
                 )
             `)
             .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+
+        res.json({
+            success: true,
+            data: appointments    

@@ -248,3 +248,13 @@ function renderdata(arr) {
                                      onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjVGNUY1Ii8+Cjx0ZXh0IHg9Ijc1IiB5PSI3NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjY2NjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RG9jdG9yPC90ZXh0Pgo8L3N2Zz4K';" />
                             </div>
                             <div class="doc-desc">
+                            <h2>${elem.doctor_name}</h2>
+                                <h4>Department: ${elem.departmentName}</h4>
+                                <p>Experience: ${elem.experience || 'Not specified'} years</p>
+                                <h4>Qualification: ${elem.qualifications || 'Not specified'}</h4>
+                                <p style="color:white; display: none;">${elem._id || elem.id}</p>
+                                <p>Rs.1,000 Consultation Fee</p>
+                                <p style="color: #28a745">${isAvailable ? 'Available' : 'Not Available'}</p>
+                            </div>
+                        </div>
+                        <div class="doc-book" style="display: flex; align-items: center; justify-content: center;">

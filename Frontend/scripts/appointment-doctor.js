@@ -78,3 +78,13 @@ function getSafeImageUrl(imageUrl) {
     }
     
     // Check for problematic URLs
+    const problematicDomains = ['example.com', 'via.placeholder.com', 'pin.it'];
+    const isProblematic = problematicDomains.some(domain => imageUrl.includes(domain));
+    
+    if (isProblematic) {
+        return defaultImage;
+    }
+    
+    // Return the original URL if it seems valid
+    return imageUrl;
+}

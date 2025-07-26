@@ -566,3 +566,9 @@ router.put('/departments/:id', async (req, res) => {
     } catch (error) {
         console.error('Error updating department:', error);
         res.status(500).json({ error: 'Failed to update department' });
+     }
+});
+
+// Delete department
+router.delete('/departments/:id', async (req, res) => {
+    try {    

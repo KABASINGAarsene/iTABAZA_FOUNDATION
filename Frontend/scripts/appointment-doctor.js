@@ -278,3 +278,13 @@ function renderdata(arr) {
                 
                 // Check if user is logged in
                 if (!localStorage.getItem("token")) {
+                    swal("", "Please Login!", "warning").then(function() {
+                        window.location.href = "./login.html";
+                    });
+                    return;
+                }
+                
+                try {
+                    const doctorCard = btn.closest('.doc-card');
+                    const doctorInfo = {
+                        img: doctorCard.querySelector('.doc-img img').src,

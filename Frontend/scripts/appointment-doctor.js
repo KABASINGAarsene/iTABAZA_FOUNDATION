@@ -477,3 +477,14 @@ window.addEventListener('focus', () => {
 // View toggle logic
 const cardViewBtn = document.getElementById('card-view-btn');
 const rowViewBtn = document.getElementById('row-view-btn');
+
+function setCardView() {
+    docsCont.classList.remove('row-view');
+    docsCont.classList.add('card-view');
+    if (cardViewBtn) cardViewBtn.style.color = '#28a745';
+    if (rowViewBtn) rowViewBtn.style.color = '#333';
+}
+
+function setRowView() {
+    docsCont.classList.add('row-view');
+    docsCont.classList.remove('card-view');

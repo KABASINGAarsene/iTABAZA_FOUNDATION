@@ -198,3 +198,8 @@ async function loadDocuments() {
                 <i class="fas fa-exclamation-circle"></i>
                 <p>Failed to load documents</p>
             </div>
+             `;
+    }
+}
+
+function displayDocuments(documents) {

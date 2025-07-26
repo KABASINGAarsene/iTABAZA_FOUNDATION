@@ -458,3 +458,9 @@ router.patch('/appointments/:id/status', async (req, res) => {
             .update({ status })
             .eq('id', id)
             .select()
+             .single();
+
+        if (error) throw error;
+
+        res.json({
+            success: true,

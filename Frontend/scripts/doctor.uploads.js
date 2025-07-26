@@ -158,3 +158,8 @@ function validateFile(file) {
 
 async function loadDocuments() {
     try {
+        const doctor = getCurrentDoctor();
+                if (!doctor) return;
+        
+                // For now, show sample documents since we need to implement the backend
+                const sampleDocuments = [

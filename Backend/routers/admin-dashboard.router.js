@@ -446,3 +446,9 @@ router.get('/appointments', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch appointments' });
     }
 });       
+
+// Update appointment status
+router.patch('/appointments/:id/status', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;

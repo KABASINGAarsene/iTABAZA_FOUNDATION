@@ -238,3 +238,13 @@ function renderdata(arr) {
             `;
         } else {
             // Clean, minimal card view (no date/slot selection)
+            return `
+                <div class="doc-card" style="opacity: ${isAvailable ? '1' : '0.7'}">
+                    <div class="top-cont">
+                        <div class="doc-profile">
+                            <div class="doc-img">
+                                <img alt="doc-pfp" 
+                                     src="${getSafeImageUrl(elem.image)}" 
+                                     onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjVGNUY1Ii8+Cjx0ZXh0IHg9Ijc1IiB5PSI3NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjY2NjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RG9jdG9yPC90ZXh0Pgo8L3N2Zz4K';" />
+                            </div>
+                            <div class="doc-desc">

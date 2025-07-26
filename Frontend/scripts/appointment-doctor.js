@@ -148,3 +148,13 @@ async function getdata(retryCount = 0) {
     // Use cached data if available and not expired
     if (doctorsCache && (now - lastFetchTime) < CACHE_DURATION) {
         renderdata(doctorsCache);
+        return;
+            }
+            
+            showLoading();
+            
+            try {
+                const response = await fetch(`${baseURL}/doctor/availableDoctors`, {
+                    method: 'GET',
+                    headers: getAuthHeaders(),
+                    signal: AbortSignal.timeout(10000) // 10 second timeout

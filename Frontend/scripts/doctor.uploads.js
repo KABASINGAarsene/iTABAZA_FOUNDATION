@@ -203,3 +203,8 @@ async function loadDocuments() {
 }
 
 function displayDocuments(documents) {
+    const container = document.getElementById('documentsGrid');
+    
+    if (!documents || documents.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">

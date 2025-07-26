@@ -438,3 +438,13 @@ window.addEventListener("load", async (e) => {
                 headers: getAuthHeaders(),
                 signal: AbortSignal.timeout(10000)
             });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const data = await response.json();
+            hideLoading();
+            
+            if (data.msg) {
+                swal("", `${data.msg}`, "info").then(function() {

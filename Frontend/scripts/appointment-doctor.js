@@ -408,3 +408,13 @@ docFilterTag.addEventListener("change", async (e) => {
             
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
+                }
+        
+        const data = await response.json();
+        hideLoading();
+        
+        if (data.msg) {
+            swal("", `${data.msg}`, "info").then(function() {
+                getdata();
+            });
+        } else {

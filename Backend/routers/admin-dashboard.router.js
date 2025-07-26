@@ -470,3 +470,9 @@ router.patch('/appointments/:id/status', async (req, res) => {
     } catch (error) {
         console.error('Error updating appointment status:', error);
         res.status(500).json({ error: 'Failed to update appointment status' });
+    }
+});
+
+// Delete appointment
+router.delete('/appointments/:id', async (req, res) => {
+    try {    

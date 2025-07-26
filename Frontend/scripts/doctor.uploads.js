@@ -83,3 +83,8 @@ function handleDragLeave(e) {
 }
 
 function handleDrop(e) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+    
+    const files = Array.from(e.dataTransfer.files);
+    uploadFiles(files);

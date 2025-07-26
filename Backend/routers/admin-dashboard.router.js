@@ -404,3 +404,9 @@ router.delete('/patients/:id', async (req, res) => {
             success: true,
             message: 'Patient deleted successfully'
         });
+     } catch (error) {
+        console.error('Error deleting patient:', error);
+        res.status(500).json({ error: 'Failed to delete patient' });
+    }
+});
+    

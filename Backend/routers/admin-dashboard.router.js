@@ -284,3 +284,9 @@ router.patch('/doctors/:id/toggle-status', async (req, res) => {
             .from('doctors')
             .update({ status: !doctor.status })
             .eq('id', id)
+            .select()
+            .single();
+
+        if (updateError) throw updateError;
+
+        res.json({

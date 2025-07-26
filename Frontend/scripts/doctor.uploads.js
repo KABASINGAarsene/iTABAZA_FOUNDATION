@@ -93,3 +93,7 @@ function handleDrop(e) {
 function handleFileSelection(e) {
     const files = Array.from(e.target.files);
     uploadFiles(files);
+    }
+
+async function uploadFiles(files) {
+    if (!files || files.length === 0) return;

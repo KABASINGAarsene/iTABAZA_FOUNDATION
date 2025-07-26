@@ -42,7 +42,7 @@ function setupEventListeners() {
         });
     });
 
-    
+
     // Upload area interactions
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('fileInput');
@@ -53,3 +53,8 @@ function setupEventListeners() {
     uploadNewBtn.addEventListener('click', () => fileInput.click());
 
     // File input change
+    fileInput.addEventListener('change', handleFileSelection);
+
+    // Drag and drop
+    uploadArea.addEventListener('dragover', handleDragOver);
+    uploadArea.addEventListener('dragleave', handleDragLeave);

@@ -348,3 +348,13 @@ function renderdata(arr) {
 }
 
 // Enhanced search with debouncing
+let searchTimeout;
+let docInputTag = document.querySelector("#doc-sf-left>input");
+docInputTag.addEventListener("input", async (e) => {
+    clearTimeout(searchTimeout);
+    const searchVal = docInputTag.value.trim();
+    
+    if (searchVal.length === 0) {
+        getdata();
+        return;
+    }

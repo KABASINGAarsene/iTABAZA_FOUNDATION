@@ -140,3 +140,10 @@ router.get('/dashboard/stats', async (req, res) => {
 
 // Get all doctors
 router.get('/doctors', async (req, res) => {
+     try {
+        const { data: doctors, error } = await supabase
+            .from('doctors')
+            .select(`
+                *,
+                departments:department_id (
+                

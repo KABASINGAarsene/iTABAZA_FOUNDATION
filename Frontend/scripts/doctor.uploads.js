@@ -128,3 +128,8 @@ async function uploadFiles(files) {
                             const data = await handleApiResponse(response);
                             
                             swal("Success!", `${file.name} uploaded successfully`, "success", { timer: 2000 });
+                            
+            // Reload documents
+            loadDocuments();
+            
+        } catch (error) {

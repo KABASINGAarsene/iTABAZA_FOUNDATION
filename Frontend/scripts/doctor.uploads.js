@@ -42,8 +42,14 @@ function setupEventListeners() {
         });
     });
 
+    
     // Upload area interactions
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('fileInput');
     const browseBtn = document.getElementById('browseBtn');
     const uploadNewBtn = document.getElementById('uploadNewBtn');
+// Browse button
+    browseBtn.addEventListener('click', () => fileInput.click());
+    uploadNewBtn.addEventListener('click', () => fileInput.click());
+
+    // File input change

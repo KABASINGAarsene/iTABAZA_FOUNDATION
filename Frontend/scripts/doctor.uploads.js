@@ -253,3 +253,8 @@ function filterDocuments() {
     const filterValue = document.getElementById('filterType').value;
     const documentCards = document.querySelectorAll('.document-card');
     
+    documentCards.forEach(card => {
+        const cardType = card.getAttribute('data-type');
+        if (filterValue === 'all' || cardType === filterValue) {
+            card.style.display = 'block';
+        } else {

@@ -147,3 +147,8 @@ function validateFile(file) {
         swal("Error", `File ${file.name} is too large. Maximum size is 10MB.`, "error");
         return false;
     }
+
+    if (!allowedTypes.includes(file.type)) {
+        swal("Error", `File type ${file.type} is not supported.`, "error");
+        return false;
+    }

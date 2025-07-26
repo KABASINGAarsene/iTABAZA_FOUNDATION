@@ -298,3 +298,7 @@ async function searchPatientDocuments() {
         swal("Error", "Failed to search patient documents", "error");
     }
 }
+function displayPatientDocuments(patientData) {
+    const container = document.getElementById('patientDocumentsList');
+    
+    if (!patientData || patientData.length === 0) {

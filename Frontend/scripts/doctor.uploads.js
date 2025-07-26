@@ -13,3 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up event listeners
     setupEventListeners();
+    
+    // Load documents
+    loadDocuments();
+});

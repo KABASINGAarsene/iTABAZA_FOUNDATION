@@ -123,3 +123,8 @@ async function uploadFiles(files) {
                     'Authorization': `Bearer ${localStorage.getItem('doctorToken')}`
                 },
                 body: formData
+                });
+                
+                            const data = await handleApiResponse(response);
+                            
+                            swal("Success!", `${file.name} uploaded successfully`, "success", { timer: 2000 });

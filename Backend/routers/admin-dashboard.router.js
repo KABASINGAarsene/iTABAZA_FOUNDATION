@@ -16,3 +16,9 @@ router.post('/login', async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({ error: 'Email and password are required' });
         }
+        
+        // Check if admin exists
+        const { data: admin, error } = await supabase
+            .from('admins')
+            .select('*')
+            .eq('email', email)

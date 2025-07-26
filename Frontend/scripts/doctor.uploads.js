@@ -238,3 +238,8 @@ function displayDocuments(documents) {
             </div>
         </div>
     `).join('');
+    }
+
+function getDocumentIcon(type) {
+    switch (type) {
+        case 'pdf': return 'fa-file-pdf';

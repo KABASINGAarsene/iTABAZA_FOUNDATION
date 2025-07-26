@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recording Test - iTABAZA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <style>
+        .recording-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .recording-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .recording-controls .btn {
+            min-width: 140px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .timer-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin: 20px 0;
+        }
+        
+        .recording-indicator {
+            text-align: center;
+            color: #dc3545;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+        
+        .pulse-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #dc3545;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .audio-player {
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        .status-message {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh;">
+    <div class="recording-container">
+        <h1 class="text-center mb-4">
+            <i class="fas fa-microphone text-primary me-2"></i>
+            Voice Recording Test
+        </h1>
+        
+        <p class="text-center text-muted mb-4">
+            Test the voice recording functionality for the iTABAZA Hospital Management System
+        </p>
+        
+        <div class="recording-controls">
+            <button id="recordBtn" class="btn btn-danger btn-lg">
+                <i class="fas fa-microphone me-2"></i>Start Recording
+            </button>
+            <button id="stopBtn" class="btn btn-secondary btn-lg" disabled>
+                <i class="fas fa-stop me-2"></i>Stop Recording
+            </button>
+            <button id="playBtn" class="btn btn-info btn-lg" disabled>
+                <i class="fas fa-play me-2"></i>Play Recording
+            </button>
+            <button id="deleteBtn" class="btn btn-warning btn-lg" style="display: none;">
+                <i class="fas fa-trash me-2"></i>Delete Recording
+            </button>
+        </div>
+        
+        <div class="timer-display">
+            <span id="timerDisplay">00:00</span>
+            <small class="text-muted">/ 05:00</small>
+        </div>
+        
+        <div class="recording-indicator" id="recordingIndicator" style="display: none;">
+            <div class="pulse-dot"></div>
+            <span>Recording...</span>
+        </div>
+        
+        <div id="audioPlaybackContainer" style="display: none;">
+            <audio id="audioPlayback" controls class="audio-player"></audio>
+            <div class="text-center mt-2">
+                <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Recording saved. You can play it back or record a new one.
+                </small>
+            </div>
+        </div>
+        
+        <div id="statusMessage"></div>
+        
+        <div class="text-center mt-4">
+            <a href="problem-description.html" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Problem Description
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Voice Recording Variables
+        let mediaRecorder, audioChunks = [], timer, seconds = 0;
+        const maxSeconds = 300; // 5 minutes
+        let audioBlob, audioUrl;
+        let isRecording = false;
+        
+        // Voice Recording Elements
+        const recordBtn = document.getElementById('recordBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const playBtn = document.getElementById('playBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const audioPlayback = document.getElementById('audioPlayback');
+        const audioPlaybackContainer = document.getElementById('audioPlaybackContainer');
+        const recordingIndicator = document.getElementById('recordingIndicator');
+        const statusMessage = document.getElementById('statusMessage');
+        
+        // Initialize Voice Recording
+        function initializeVoiceRecording() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showStatus('Audio recording is not supported in this browser. Please use a modern browser and ensure you are accessing this page over HTTPS.', 'error');
+                return;
+            }
+            
+            // Check for microphone permissions
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(() => {
+                    setupRecordingControls();
+                    showStatus('Voice recording is ready. Click "Start Recording" to begin.', 'info');
+                })
+                .catch(() => {
+                    showStatus('Microphone access denied. Please allow microphone permissions and refresh the page.', 'error');
+                });
+        }
+        
+        function setupRecordingControls() {
+            recordBtn.disabled = false;
+            stopBtn.disabled = true;
+            playBtn.disabled = true;
+            
+            recordBtn.onclick = startRecording;
+            stopBtn.onclick = stopRecording;
+            playBtn.onclick = playRecording;
+            deleteBtn.onclick = deleteRecording;
+        }
+        
+        function showStatus(message, type) {
+            statusMessage.innerHTML = `<div class="status-${type}">${message}</div>`;
+        }
+        
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: 'audio/webm;codecs=opus'
+                });
+                
+                audioChunks = [];
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                
+                mediaRecorder.onstop = () => {
+                    audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    audioUrl = URL.createObjectURL(audioBlob);
+                    audioPlayback.src = audioUrl;
+                    audioPlaybackContainer.style.display = 'block';
+                    playBtn.disabled = false;
+                    deleteBtn.style.display = 'inline-block';
+                    
+                    recordingIndicator.style.display = 'none';
+                    showStatus('Recording completed successfully! You can now play it back or record a new one.', 'success');
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                seconds = 0;
+                timerDisplay.textContent = '00:00';
+                
+                // Start timer
+                timer = setInterval(() => {
+                    seconds++;
+                    const minutes = Math.floor(seconds / 60);
+                    const remainingSeconds = seconds % 60;
+                    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+                    
+                    if (seconds >= maxSeconds) {
+                        stopRecording();
+                        showStatus('Maximum recording time (5 minutes) reached. Recording stopped automatically.', 'info');
+                    }
+                }, 1000);
+                
+                recordBtn.disabled = true;
+                stopBtn.disabled = false;
+                recordingIndicator.style.display = 'block';
+                showStatus('Recording in progress... Speak clearly into your microphone.', 'info');
+                
+            } catch (err) {
+                console.error('Audio recording error:', err);
+                showStatus('Could not start audio recording. Please check your browser permissions and try again.', 'error');
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+            }
+            
+            clearInterval(timer);
+            isRecording = false;
+            recordBtn.disabled = false;
+            stopBtn.disabled = true;
+        }
+        
+        function playRecording() {
+            if (audioPlayback.src) {
+                audioPlayback.play();
+            }
+        }
+        
+        function deleteRecording() {
+            if (confirm('Are you sure you want to delete this recording?')) {
+                if (audioUrl) {
+                    URL.revokeObjectURL(audioUrl);
+                }
+                audioBlob = null;
+                audioUrl = null;
+                
+                audioPlaybackContainer.style.display = 'none';
+                audioPlayback.src = '';
+                playBtn.disabled = true;
+                deleteBtn.style.display = 'none';
+                timerDisplay.textContent = '00:00';
+                
+                showStatus('Recording deleted. You can start a new recording.', 'info');
+            }
+        }
+        
+        // Initialize on page load
+        window.onload = function() {
+            initializeVoiceRecording();
+        };
+    </script>
+</body>
+</html> 

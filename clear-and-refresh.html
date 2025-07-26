@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Cache & Refresh Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .button {
+            background: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .button.success {
+            background: #28a745;
+        }
+        .button.success:hover {
+            background: #218838;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: left;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> Fix Doctor Dashboard Name</h1>
+        <p>This will clear your old cached data and get fresh doctor information from the server.</p>
+        
+        <div id="result"></div>
+        
+        <button class="button" onclick="clearAndRefresh()">Clear Cache & Get Fresh Data</button>
+        <br>
+        <button class="button success" onclick="openDashboard()" style="display: none;" id="openBtn">Open Dashboard</button>
+    </div>
+
+    <script>
+        const baseURL = 'http://127.0.0.1:8080';
+        
+        async function clearAndRefresh() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<div class="info"> Clearing cached data and getting fresh login...</div>';
+            
+            try {
+                // Step 1: Clear all cached data
+                localStorage.removeItem('doctorToken');
+                localStorage.removeItem('doctorInfo');
+                sessionStorage.removeItem('doctorToken');
+                sessionStorage.removeItem('doctorInfo');
+                
+                // Step 2: Get available doctors
+                const doctorsResponse = await fetch(`${baseURL}/doctor/allDoctor`);
+                const doctorsData = await doctorsResponse.json();
+                
+                if (!doctorsData.doctor || doctorsData.doctor.length === 0) {
+                    throw new Error('No doctors available');
+                }
+                
+                const firstDoctor = doctorsData.doctor[0];
+                
+                // Step 3: Fresh login with updated backend
+                const loginResponse = await fetch(`${baseURL}/api/dashboard/doctor/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: firstDoctor.email,
+                        password: 'password123'
+                    })
+                });
+                
+                const loginData = await loginResponse.json();
+                
+                if (loginData.success) {
+                    // Step 4: Store fresh data with correct fields
+                    localStorage.setItem('doctorToken', loginData.token);
+                    localStorage.setItem('doctorInfo', JSON.stringify(loginData.doctor));
+                    
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3> Success! Fresh data loaded</h3>
+                            <p><strong>Doctor Name:</strong> ${loginData.doctor.doctor_name}</p>
+                            <p><strong>Qualifications:</strong> ${loginData.doctor.qualifications}</p>
+                            <p><strong>Email:</strong> ${loginData.doctor.email}</p>
+                            <p>The dashboard should now show the correct name!</p>
+                        </div>
+                        <details>
+                            <summary>View Technical Details</summary>
+                            <pre>${JSON.stringify(loginData.doctor, null, 2)}</pre>
+                        </details>
+                    `;
+                    
+                    document.getElementById('openBtn').style.display = 'inline-block';
+                    
+                } else {
+                    throw new Error(loginData.error || 'Login failed');
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error"> Error: ${error.message}</div>`;
+            }
+        }
+        
+        function openDashboard() {
+            window.open('doctor-dashboard.html', '_blank');
+        }
+    </script>
+</body>
+</html>

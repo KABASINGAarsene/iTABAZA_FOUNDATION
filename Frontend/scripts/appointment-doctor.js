@@ -498,3 +498,10 @@ if (cardViewBtn && rowViewBtn) {
         if (doctorsCache) renderdata(doctorsCache);
     });
     rowViewBtn.addEventListener('click', () => {
+        setRowView();
+        if (doctorsCache) renderdata(doctorsCache);
+    });
+}
+
+// Set default view to card view on load
+setCardView(); 

@@ -272,3 +272,9 @@ router.patch('/doctors/:id/toggle-status', async (req, res) => {
 
         // Get current status
         const { data: doctor, error: fetchError } = await supabase
+            .from('doctors')
+            .select('status')
+            .eq('id', id)
+            .single();
+
+        if (fetchError) throw fetchError;

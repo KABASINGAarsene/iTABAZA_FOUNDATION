@@ -358,3 +358,8 @@ window.deleteDocument = function(docId) {
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
+             swal("Deleted!", "Document has been deleted", "success");
+            loadDocuments(); // Reload documents
+        }
+    });
+};

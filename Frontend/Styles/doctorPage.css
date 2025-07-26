@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+*{
+    margin:0;
+    padding:0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+body{
+    font-family: poppins, sans-serif;
+    font-size: 0.9rem;
+}
+#container{
+    margin:6.5rem auto;
+}
+.doc-search-bar{
+    margin:auto;
+    width:80%;
+    display: flex;
+    justify-content: space-between;
+    /* border:1px solid blue; */
+}
+#filter-approval{
+    /* border:1px solid blue; */
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    width:30%;
+}
+#filter-approval>button{
+    padding:5px 10px;
+    background-color: rgb(238, 71, 71);
+    border:none;
+    border-radius: 5px;
+    color:white;
+}
+#filter-approval>p{
+    padding:5px 10px;
+    background-color: #0b9c6c;
+    border-radius: 5px;
+    color:white;
+}
+#doc-sf{
+    /* border:1px solid blue; */
+    width:55%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#doc-sf-left,#doc-sf-right{
+    border:1px solid lightgray;
+    width:48%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#doc-sf-left>input{
+    border:none;
+    padding:0.5rem;
+    width:80%;
+}
+#doc-sf-left>button{
+    padding:0.5rem;
+    width:20%;
+    border:none;
+}
+#doc-sf-right>select{
+    width:50%;
+    padding:0.5rem;
+    border:1px solid lightgray;
+}
+#doctors-cont{
+    /* border:1px solid blue; */
+    width:85%;
+    margin:1rem auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:1.5rem;
+}
+.doc-card {
+    padding: 2rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-radius: 12px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    transition: box-shadow 0.2s;
+    margin-bottom: 0.5rem;
+}
+.doc-card:hover {
+    box-shadow: 0 4px 16px #d0e6f7;
+}
+.top-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    border-radius: 0;
+}
+.doc-profile {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    width: 70%;
+}
+.doc-img > img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e6e6e6;
+}
+.doc-desc {
+    width: auto;
+}
+.doc-desc > * {
+    margin: 0.3rem 0;
+}
+.doc-desc h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+.doc-desc h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0077c0;
+    margin-bottom: 0.1rem;
+}
+.doc-desc p {
+    font-size: 0.97rem;
+    color: #444;
+    margin-bottom: 0.1rem;
+}
+.doc-book {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+}
+.clean-book-btn {
+    padding: 12px 24px;
+    background: #0b9c6c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.clean-book-btn:hover {
+    background: #00775a;
+}
+.select-app{
+    /* border:1px solid black; */
+    width:100%;
+}
+.select-app>form{
+    display:flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center; 
+}
+.select-app>form>div{
+    margin-bottom:1rem;
+    /* border:1px solid black; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.select-app>form select{
+    width:60%;
+    text-align: center;
+    border:1px solid lightgray
+}
+.select-app>form select:focus{
+    outline:none;
+}
+.select-app>form label{
+    font-weight: bold;
+}
+.doc-book input{
+    padding:5px 10px;
+    background-color:#0b9c6c;
+    border:1px solid #0b9c6c;
+    border-radius: 5px;
+    color:white 
+}
+.doc-book input:hover{
+    cursor: pointer;
+}
+#filter-approval>*:hover{
+    cursor:pointer;
+}
+/* Row view styles */
+#doctors-cont.row-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+#doctors-cont.row-view .doc-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem 2rem;
+    min-height: 140px;
+}
+#doctors-cont.row-view .doc-img > img {
+    width: 80px;
+    height: 80px;
+}
+#doctors-cont.row-view .doc-desc {
+    width: 30%;
+}
+#doctors-cont.row-view .doc-book {
+    width: 30%;
+}
+#doctors-cont.row-view .top-cont {
+    flex-direction: row;
+    align-items: center;
+    box-shadow: none;
+    background: none;
+    padding: 0;
+}
+/* Enhanced minimal row view for doctor listing */
+.doc-card.minimal-row {
+    background: #f9fbfd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.2rem 2rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #e6eaf0;
+    transition: box-shadow 0.18s, border 0.18s, background 0.18s;
+}
+.doc-card.minimal-row:hover {
+    box-shadow: 0 6px 24px #d0e6f7;
+    border: 1.5px solid #b3d8f7;
+    background: #f4faff;
+}
+.doc-card.minimal-row .doc-img {
+    flex: 0 0 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.doc-card.minimal-row .doc-img img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e6e6e6;
+    background: #fff;
+}
+.doc-card.minimal-row .row-info {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+.doc-card.minimal-row .row-info .row-name {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.doc-card.minimal-row .row-info .row-dept {
+    color: #0077c0;
+    font-size: 1rem;
+    margin-bottom: 0.1rem;
+}
+.doc-card.minimal-row .row-info .row-exp,
+.doc-card.minimal-row .row-info .row-qual,
+.doc-card.minimal-row .row-info .row-fee {
+    font-size: 0.97rem;
+    color: #444;
+    margin-bottom: 0.1rem;
+}
+.doc-card.minimal-row .row-info .row-available {
+    color: #28a745;
+    font-size: 0.97rem;
+    margin-top: 0.1rem;
+}
+.doc-card.minimal-row .row-action {
+    flex: 0 0 180px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.doc-card.minimal-row .row-book-btn {
+    padding: 12px 24px;
+    background: #0b9c6c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.doc-card.minimal-row .row-book-btn:hover {
+    background: #00775a;
+}
+@media (max-width: 900px) {
+    .doc-card.minimal-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.2rem 1rem;
+    }
+    .doc-card.minimal-row .row-action {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 0.5rem;
+    }
+}
+@media (max-width: 600px) {
+    .doc-card.minimal-row {
+        padding: 0.8rem 0.5rem;
+        gap: 0.7rem;
+    }
+    .doc-card.minimal-row .row-info .row-name {
+        font-size: 1rem;
+    }
+    .doc-card.minimal-row .row-info .row-dept,
+    .doc-card.minimal-row .row-info .row-exp,
+    .doc-card.minimal-row .row-info .row-qual,
+    .doc-card.minimal-row .row-info .row-fee,
+    .doc-card.minimal-row .row-info .row-available {
+        font-size: 0.92rem;
+    }
+    .doc-card.minimal-row .row-book-btn {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+    }
+}

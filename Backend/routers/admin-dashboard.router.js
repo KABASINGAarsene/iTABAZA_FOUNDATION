@@ -188,3 +188,9 @@ router.post('/doctors', async (req, res) => {
                 email,
                 password: hashedPassword,
                 qualifications,
+                experience,
+                phone_no,
+                city,
+                department_id,
+                image,
+                status: true, // Auto-approve admin-created doctors

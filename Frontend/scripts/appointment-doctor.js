@@ -338,3 +338,13 @@ function renderdata(arr) {
             });
             // Row click for future details
             row.addEventListener('click', (e) => {
+                if (e.target.classList.contains('row-book-btn')) return;
+                // Placeholder: show alert or open modal for doctor details
+                // In future, replace with modal or navigation
+                alert('Doctor details coming soon!');
+            });
+        });
+    }
+}
+
+// Enhanced search with debouncing

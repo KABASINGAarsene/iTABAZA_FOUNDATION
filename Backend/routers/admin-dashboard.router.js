@@ -235,4 +235,10 @@ router.put('/doctors/:id', async (req, res) => {
         res.json({
             success: true,
             message: 'Doctor updated successfully',
-            data: doctor    
+            data: doctor 
+        });
+    } catch (error) {
+        console.error('Error updating doctor:', error);
+        res.status(500).json({ error: 'Failed to update doctor' });
+    }
+});       

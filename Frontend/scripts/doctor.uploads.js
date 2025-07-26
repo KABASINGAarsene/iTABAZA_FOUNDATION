@@ -178,3 +178,8 @@ async function loadDocuments() {
                 size: '1.2 MB',
                 uploadDate: '2024-01-14',
                 url: '#'
+                },
+            {
+                id: 3,
+                name: 'X-Ray_Image.jpg',
+                type: 'image',

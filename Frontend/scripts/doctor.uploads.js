@@ -17,3 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load documents
     loadDocuments();
 });
+
+function initializePage() {
+    const doctor = getCurrentDoctor();
+    if (doctor) {
+        document.getElementById('doctorName').textContent = doctor.doctor_name || 'Dr. Unknown';
+        document.getElementById('doctorEmail').textContent = doctor.email || 'unknown@email.com';

@@ -529,3 +529,10 @@ router.post('/departments', async (req, res) => {
             .insert([{ dept_name, about, image }])
             .select()
             .single();
+
+            if (error) throw error;
+
+        res.json({
+            success: true,
+            message: 'Department added successfully',
+            data: department

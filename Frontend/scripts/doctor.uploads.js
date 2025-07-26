@@ -88,3 +88,8 @@ function handleDrop(e) {
     
     const files = Array.from(e.dataTransfer.files);
     uploadFiles(files);
+    }
+
+function handleFileSelection(e) {
+    const files = Array.from(e.target.files);
+    uploadFiles(files);

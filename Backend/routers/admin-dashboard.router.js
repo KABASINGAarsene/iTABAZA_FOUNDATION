@@ -134,3 +134,9 @@ router.get('/dashboard/stats', async (req, res) => {
     }
 });
 
+// =====================================================
+// DOCTORS MANAGEMENT
+// =====================================================
+
+// Get all doctors
+router.get('/doctors', async (req, res) => {

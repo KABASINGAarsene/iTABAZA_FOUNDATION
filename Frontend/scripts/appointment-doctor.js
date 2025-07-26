@@ -418,3 +418,12 @@ docFilterTag.addEventListener("change", async (e) => {
                 getdata();
             });
         } else {
+            renderdata(data.doctor);
+        }
+        
+    } catch (error) {
+        console.error('Filter error:', error);
+        hideLoading();
+        showError(`Filter failed: ${error.message}`);
+    }
+});

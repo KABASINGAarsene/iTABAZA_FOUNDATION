@@ -273,3 +273,7 @@ async function searchPatientDocuments() {
 
     try {
         swal("Searching...", "Looking for patient documents", "info", {
+            buttons: false,
+            closeOnEsc: false,
+            closeOnClickOutside: false,
+        });

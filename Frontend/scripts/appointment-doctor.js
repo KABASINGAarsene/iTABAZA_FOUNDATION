@@ -128,3 +128,13 @@ function showNoDoctors(message = "No doctors available at the moment.") {
         <div class="no-doctors-container" style="text-align: center; padding: 50px;">
             <div style="color: #6c757d; font-size: 48px; margin-bottom: 20px;">👨‍⚕️</div>
             <h3 style="color: #6c757d; margin-bottom: 10px;">No Doctors Found</h3>
+            <p style="color: #666; margin-bottom: 20px;">${message}</p>
+            <button onclick="getdata()" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px;">
+                Refresh
+            </button>
+        </div>
+    `;
+}
+
+// Enhanced data fetching with caching and retry logic
+async function getdata(retryCount = 0) {

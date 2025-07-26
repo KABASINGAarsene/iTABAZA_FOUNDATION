@@ -301,4 +301,10 @@ router.patch('/doctors/:id/toggle-status', async (req, res) => {
 });
 
 // =====================================================
-// PATIENTS MANAGEMENT        
+// PATIENTS MANAGEMENT       
+// =====================================================
+
+// Get all patients
+router.get('/patients', async (req, res) => {
+    try {
+        const { data: patients, error } = await supabase 

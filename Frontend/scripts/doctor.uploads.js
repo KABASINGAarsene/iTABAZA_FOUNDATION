@@ -28,3 +28,8 @@ function initializePage() {
 
 function setupEventListeners() {
     // Logout button
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        swal({
+            title: "Are you sure?",
+            text: "You will be logged out of your account",
+            icon: "warning",

@@ -439,4 +439,10 @@ router.get('/appointments', async (req, res) => {
 
         res.json({
             success: true,
-            data: appointments    
+            data: appointments 
+         });
+    } catch (error) {
+        console.error('Error fetching appointments:', error);
+        res.status(500).json({ error: 'Failed to fetch appointments' });
+    }
+});       

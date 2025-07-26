@@ -37,4 +37,13 @@ async function loadDepartments() {
         
         departmentsLoaded = true;
         console.log('Department mapping created:', depObj);
-        
+        } catch (error) {
+        console.error('Error loading departments:', error);
+        // Fallback to hardcoded departments if API fails
+        depObj = {
+            1: "Neurology",
+            2: "Dermatology", 
+            3: "Dental",
+            4: "Ayurveda",
+            5: "Gastroenterology",
+            6: "Gynaecology",

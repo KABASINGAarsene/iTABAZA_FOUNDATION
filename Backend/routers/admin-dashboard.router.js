@@ -506,3 +506,9 @@ router.get('/departments', async (req, res) => {
             .from('departments')
             .select('*')
             .order('dept_name', { ascending: true });
+        
+        if (error) throw error;
+
+        res.json({
+            success: true,
+            data: departments    

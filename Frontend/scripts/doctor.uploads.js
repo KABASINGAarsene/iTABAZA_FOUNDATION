@@ -208,3 +208,8 @@ function displayDocuments(documents) {
     if (!documents || documents.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
+             <i class="fas fa-folder-open"></i>
+                <p>No documents found</p>
+            </div>
+        `;
+        return;

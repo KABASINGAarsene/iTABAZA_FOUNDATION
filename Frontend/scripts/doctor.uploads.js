@@ -163,3 +163,8 @@ async function loadDocuments() {
         
                 // For now, show sample documents since we need to implement the backend
                 const sampleDocuments = [
+                    {
+                id: 1,
+                name: 'Medical_Certificate.pdf',
+                type: 'pdf',
+                size: '2.5 MB',

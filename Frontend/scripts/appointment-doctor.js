@@ -37,6 +37,7 @@ async function loadDepartments() {
         
         departmentsLoaded = true;
         console.log('Department mapping created:', depObj);
+
         } catch (error) {
         console.error('Error loading departments:', error);
         // Fallback to hardcoded departments if API fails
@@ -47,3 +48,13 @@ async function loadDepartments() {
             4: "Ayurveda",
             5: "Gastroenterology",
             6: "Gynaecology",
+            7: "ENT",
+            8: "General Physician",
+            9: "Orthopedic",
+            10: "Cardiology"
+        };
+        departmentsLoaded = true;
+    }
+}
+
+// Fast synchronous function to get department name from cache

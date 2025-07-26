@@ -200,3 +200,9 @@ router.post('/doctors', async (req, res) => {
             .single();
 
         if (error) throw error;
+
+        res.json({
+            success: true,
+            message: 'Doctor added successfully',
+            data: doctor
+        });

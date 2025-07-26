@@ -428,3 +428,9 @@ router.get('/appointments', async (req, res) => {
                     mobile
                 ),
                 doctors:doctor_id (
+                    doctor_name,
+                    qualifications,
+                    phone_no
+                )
+            `)
+            .order('created_at', { ascending: false });

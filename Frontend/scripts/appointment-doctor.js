@@ -208,3 +208,12 @@ function renderdata(arr) {
         if (!elem || !elem.doctor_name) {
             console.warn('Invalid doctor data:', elem);
             return false;
+            }
+        
+        // Add department name to each doctor
+        elem.departmentName = getDepartmentName(elem.department_id);
+        return true;
+    });
+
+    docsCont.innerHTML = validDoctors.map((elem, index) => {
+        const isAvailable = elem.status && elem.is_available;

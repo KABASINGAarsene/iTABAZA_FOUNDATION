@@ -68,3 +68,8 @@ function setupEventListeners() {
     document.getElementById('patientSearch').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             searchPatientDocuments();
+            }
+    });
+}
+
+function handleDragOver(e) {

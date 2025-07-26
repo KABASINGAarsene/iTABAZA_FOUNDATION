@@ -338,3 +338,8 @@ router.post('/patients', async (req, res) => {
                 first_name,
                 last_name,
                 email,
+                mobile,
+                password: hashedPassword
+            }])
+            .select()
+            .single();

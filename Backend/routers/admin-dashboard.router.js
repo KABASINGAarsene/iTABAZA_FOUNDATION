@@ -320,3 +320,9 @@ router.get('/patients', async (req, res) => {
         });
     } catch (error) {
         console.error('Error fetching patients:', error);
+         res.status(500).json({ error: 'Failed to fetch patients' });
+    }
+});
+
+// Add new patient
+router.post('/patients', async (req, res) => {

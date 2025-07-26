@@ -93,3 +93,9 @@ router.get('/dashboard/stats', async (req, res) => {
 
         const pendingAppointments = appointments?.filter(a => a.status === 'pending').length || 0;
         const confirmedAppointments = appointments?.filter(a => a.status === 'confirmed').length || 0;
+         const completedAppointments = appointments?.filter(a => a.status === 'completed').length || 0;
+
+        const today = new Date().toISOString().split('T')[0];
+        const todayAppointments = appointments?.filter(a => a.appointment_date === today).length || 0;
+
+        const totalRevenue = appointments?.reduce((sum, a) => {

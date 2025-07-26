@@ -168,3 +168,8 @@ async function loadDocuments() {
                 name: 'Medical_Certificate.pdf',
                 type: 'pdf',
                 size: '2.5 MB',
+                uploadDate: '2024-01-15',
+                url: '#'
+            },
+            {
+                id: 2,

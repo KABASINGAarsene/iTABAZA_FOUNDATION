@@ -87,6 +87,7 @@ router.get('/dashboard/stats', async (req, res) => {
         // Get detailed statistics
         const { data: doctors } = await supabase.from('doctors').select('*');
         const { data: appointments } = await supabase.from('appointments').select('*');
+
         const approvedDoctors = doctors?.filter(d => d.status === true).length || 0;
         const pendingDoctors = doctors?.filter(d => d.status === false).length || 0;
         const availableDoctors = doctors?.filter(d => d.is_available === true).length || 0;
@@ -116,4 +117,10 @@ router.get('/dashboard/stats', async (req, res) => {
                     total: totalDoctors,
                     approved: approvedDoctors,
                     pending: pendingDoctors,
-                    available: availableDoctors    
+                    available: availableDoctors  
+                 },
+                appointments: {
+                    total: totalAppointments,
+                    pending: pendingAppointments,
+                    confirmed: confirmedAppointments,
+                    completed: completedAppointments,    

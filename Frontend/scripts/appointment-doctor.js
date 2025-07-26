@@ -358,3 +358,13 @@ docInputTag.addEventListener("input", async (e) => {
         getdata();
         return;
     }
+     
+        // Debounce search requests
+        searchTimeout = setTimeout(async () => {
+            try {
+                showLoading();
+                const response = await fetch(`${baseURL}/doctor/search?q=${encodeURIComponent(searchVal)}`, {
+                    headers: getAuthHeaders(),
+                    signal: AbortSignal.timeout(5000)
+                });
+                

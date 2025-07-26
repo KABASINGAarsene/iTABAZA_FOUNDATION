@@ -23,3 +23,8 @@ function initializePage() {
     if (doctor) {
         document.getElementById('doctorName').textContent = doctor.doctor_name || 'Dr. Unknown';
         document.getElementById('doctorEmail').textContent = doctor.email || 'unknown@email.com';
+        }
+}
+
+function setupEventListeners() {
+    // Logout button

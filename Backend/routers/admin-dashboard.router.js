@@ -241,4 +241,9 @@ router.put('/doctors/:id', async (req, res) => {
         console.error('Error updating doctor:', error);
         res.status(500).json({ error: 'Failed to update doctor' });
     }
-});       
+});  
+
+// Delete doctor
+router.delete('/doctors/:id', async (req, res) => {
+    try {
+        const { id } = req.params;

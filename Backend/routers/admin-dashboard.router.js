@@ -487,4 +487,10 @@ router.delete('/appointments/:id', async (req, res) => {
 
         res.json({
             success: true,
-            message: 'Appointment deleted successfully'    
+            message: 'Appointment deleted successfully'  
+         });
+    } catch (error) {
+        console.error('Error deleting appointment:', error);
+        res.status(500).json({ error: 'Failed to delete appointment' });
+    }
+});      

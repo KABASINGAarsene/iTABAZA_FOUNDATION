@@ -103,3 +103,8 @@ async function uploadFiles(files) {
     
         for (const file of files) {
             if (!validateFile(file)) continue;
+            
+        try {
+            swal("Uploading...", `Uploading ${file.name}`, "info", {
+                buttons: false,
+                closeOnEsc: false,

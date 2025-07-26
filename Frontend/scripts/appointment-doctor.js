@@ -138,3 +138,13 @@ function showNoDoctors(message = "No doctors available at the moment.") {
 
 // Enhanced data fetching with caching and retry logic
 async function getdata(retryCount = 0) {
+    if (isLoading) return;
+    
+    // Load departments first if not already loaded
+    await loadDepartments();
+    
+    const now = Date.now();
+    
+    // Use cached data if available and not expired
+    if (doctorsCache && (now - lastFetchTime) < CACHE_DURATION) {
+        renderdata(doctorsCache);

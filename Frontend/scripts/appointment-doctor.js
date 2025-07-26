@@ -298,3 +298,13 @@ function renderdata(arr) {
                     // Store doctor info and redirect to patient details
                     localStorage.setItem("docObj", JSON.stringify(doctorInfo));
                     window.location.href = "./patient_details.html";
+                    
+                } catch (error) {
+                    console.error('Error processing booking:', error);
+                    swal("Error", "Failed to process booking. Please try again.", "error");
+                }
+            });
+        });
+    } else {
+        // Attach row view listeners: Book button and row click
+        let rowCards = document.querySelectorAll('.doc-card.minimal-row');

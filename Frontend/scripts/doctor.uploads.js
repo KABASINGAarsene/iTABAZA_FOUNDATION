@@ -97,3 +97,9 @@ function handleFileSelection(e) {
 
 async function uploadFiles(files) {
     if (!files || files.length === 0) return;
+
+    const doctor = getCurrentDoctor();
+        if (!doctor) return;
+    
+        for (const file of files) {
+            if (!validateFile(file)) continue;

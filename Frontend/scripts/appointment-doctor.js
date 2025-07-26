@@ -378,3 +378,13 @@ docInputTag.addEventListener("input", async (e) => {
             if (!data || data.length === 0) {
                 showNoDoctors(`No doctors found matching "${searchVal}"`);
             } else {
+                 renderdata(data);
+            }
+            
+        } catch (error) {
+            console.error('Search error:', error);
+            hideLoading();
+            showError(`Search failed: ${error.message}`);
+        }
+    }, 300);
+});

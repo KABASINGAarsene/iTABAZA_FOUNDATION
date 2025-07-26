@@ -277,3 +277,9 @@ async function searchPatientDocuments() {
             closeOnEsc: false,
             closeOnClickOutside: false,
         });
+
+        // For now, show sample patient documents
+        const samplePatientDocs = [
+            {
+                patientName: searchTerm,
+                documents: [

@@ -398,3 +398,9 @@ router.delete('/patients/:id', async (req, res) => {
             .delete()
             .eq('id', id);
  
+        if (error) throw error;
+
+        res.json({
+            success: true,
+            message: 'Patient deleted successfully'
+        });

@@ -76,3 +76,9 @@ router.get('/dashboard/stats', async (req, res) => {
             { count: totalUsers },
             { count: totalDoctors },
             { count: totalAppointments },
+         { count: totalDepartments }
+        ] = await Promise.all([
+            supabase.from('users').select('*', { count: 'exact', head: true }),
+            supabase.from('doctors').select('*', { count: 'exact', head: true }),
+            supabase.from('appointments').select('*', { count: 'exact', head: true }),
+            supabase.from('departments').select('*', { count: 'exact', head: true })    

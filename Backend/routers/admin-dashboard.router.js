@@ -45,4 +45,16 @@ router.post('/login', async (req, res) => {
         // Update last login
         await supabase
             .from('admins')
-            .update({ last_login: new Date() })    
+            .update({ last_login: new Date() })  
+             .eq('id', admin.id);
+
+        res.json({
+            success: true,
+            token,
+            admin: {  
+                 id: admin.id,
+                name: admin.name,
+                email: admin.email,
+                role: admin.role
+            }
+        });

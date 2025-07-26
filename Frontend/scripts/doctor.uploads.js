@@ -218,3 +218,8 @@ function displayDocuments(documents) {
     container.innerHTML = documents.map(doc => `
         <div class="document-card" data-type="${doc.type}">
             <div class="document-icon">
+            <i class="fas ${getDocumentIcon(doc.type)}"></i>
+            </div>
+            <div class="document-info">
+                <h4>${doc.name}</h4>
+                <p>Size: ${doc.size}</p>

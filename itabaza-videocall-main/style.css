@@ -178,3 +178,14 @@ body {
     max-height: 100%;
     overflow-y: auto;
 }
+
+/* Better grid layouts for different participant counts */
+.video-grid.five-videos {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.video-grid.six-videos {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}

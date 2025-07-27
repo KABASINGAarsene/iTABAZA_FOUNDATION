@@ -110,7 +110,7 @@ iTABAZA is not just a digital tool . It's a bridge between **technology and soci
 
 ***iTABAZA** : Revolutionizing Healthcare Access in Rwanda* 
 
-**“Image (homePage.png)”**
+<img width="1355" height="619" alt="Image" src="https://github.com/user-attachments/assets/82919c45-141f-4e9f-b112-856bc9d574e6" />
 
 As Rwanda modernizes its healthcare infrastructure, it is crucial that technological interventions are designed to match the real needs of hospitals, doctors, patients, and policymakers. ***iTABAZA*** is not just another app; it is a thoughtfully engineered solution to Rwanda’s systemic healthcare bottlenecks. 
 

@@ -425,3 +425,45 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Connection status styles */
+.connection-status {
+    animation: fadeIn 0.3s ease;
+}
+
+.connection-status.connecting {
+    animation: pulse 1.5s infinite;
+}
+
+.connection-quality {
+    transition: background-color 0.3s ease;
+}
+
+/* Loading indicator */
+.loading-indicator {
+    animation: pulse 2s infinite;
+}
+
+.video-tile {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Screen share indicator */
+.screen-sharing .video-grid {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.screen-sharing .shared-screen-tile {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.screen-sharing .participants-sidebar {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}

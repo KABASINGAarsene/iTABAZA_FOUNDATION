@@ -103,7 +103,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 
 ## Features Breakdown
 
-### 🎥 Video Grid Layout
+###  Video Grid Layout
 - **1 participant**: Large centered video
 - **2 participants**: Side-by-side layout
 - **3 participants**: Featured speaker + 2 smaller videos

@@ -441,6 +441,4 @@ main{
     justify-content: space-between;
     align-items: center;
 }
-#filter-approval>*:hover{
-    cursor:pointer;
-}
+

@@ -294,3 +294,39 @@ body {
     padding: 12px 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.control-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 24px;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.control-btn.active {
+    background: #1a73e8;
+}
+
+.control-btn.muted {
+    background: #ea4335;
+}
+
+.control-btn.leave-btn {
+    background: #ea4335;
+}
+
+.control-btn.leave-btn:hover {
+    background: #d33b2c;
+}

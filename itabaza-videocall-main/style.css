@@ -103,3 +103,15 @@ body {
 #nameInput:focus {
     border-color: #1a73e8;
 }
+
+.join-btn {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}

@@ -99,3 +99,7 @@ body {
     outline: none;
     transition: border-color 0.2s;
 }
+
+#nameInput:focus {
+    border-color: #1a73e8;
+}

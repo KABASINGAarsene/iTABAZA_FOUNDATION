@@ -136,7 +136,7 @@ Admins can:
 
 * Under admin dashboard can see all booked appointments and all users(numbers and name of platform users)
 
-  **“Image : admin-dashboard.png”**
+<img width="1366" height="628" alt="Image" src="https://github.com/user-attachments/assets/068677b4-2094-46e3-9960-5a41864fcd0e" />
 
 ● Create, edit, or deactivate doctor profiles 
 

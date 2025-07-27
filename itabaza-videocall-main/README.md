@@ -15,7 +15,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 
 ##  Fixed Issues
 
-###  
+###  1. Camera Distribution/Sharing Issue
 **Problem**: Users with cameras on were not visible to other participants.
 
 **Solution Implemented**:

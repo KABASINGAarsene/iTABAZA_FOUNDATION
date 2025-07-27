@@ -26,7 +26,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 - Added loading indicators and connection status feedback
 - Enhanced error handling for video playback failures
 
-
+### 2. Screen Sharing Distribution Issue 
 **Problem**: Screen sharing was not properly transmitted to other participants.
 
 **Solution Implemented**:
@@ -305,7 +305,7 @@ If you encounter issues:
 4. Test with different browsers/devices
 5. Check if the issue is reproducible
 
-##  License
+
 MIT License - Feel free to modify and distribute.
 
 ---

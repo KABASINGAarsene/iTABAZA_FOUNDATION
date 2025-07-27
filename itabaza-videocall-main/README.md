@@ -47,7 +47,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 - Better error handling and recovery mechanisms
 - Optimized offer/answer exchange process
 
-### 4. Audio/Voice Sharing Issue ✅
+### 4. Audio/Voice Sharing Issue 
 **Problem**: Participants could not hear each other's voices during video calls.
 
 **Solution Implemented**:
@@ -295,7 +295,7 @@ video-chat-app/
 - Mobile app versions
 - Meeting rooms/persistence
 
-##  Support
+
 
 If you encounter issues:
 1. Check the browser console for errors

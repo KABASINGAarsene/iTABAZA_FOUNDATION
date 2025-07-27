@@ -119,3 +119,10 @@ body {
 .join-btn:hover {
     background: #1557b0;
 }
+
+/* Meeting Screen */
+.meeting-screen {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}

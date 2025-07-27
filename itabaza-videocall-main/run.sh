@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "🚀 Starting Video Meeting Room..."
-echo "📍 Opening http://localhost:3001 in your browser..."
-echo "🎥 Make sure to allow camera and microphone permissions!"
+echo " Starting Video Meeting Room..."
+echo " Opening http://localhost:3001 in your browser..."
+echo " Make sure to allow camera and microphone permissions!"
 echo ""
 echo "To stop the server, press Ctrl+C"
 echo ""

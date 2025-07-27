@@ -11,7 +11,7 @@ const ENDPOINTS = [
     '/api/config'
 ];
 
-console.log('🧪 Testing Video Chat App Deployment...\n');
+console.log(' Testing Video Chat App Deployment...\n');
 
 async function testEndpoint(url, endpoint) {
     return new Promise((resolve) => {
@@ -49,38 +49,38 @@ async function testEndpoint(url, endpoint) {
 }
 
 async function runTests() {
-    console.log(`📍 Testing: ${TEST_URL}\n`);
+    console.log(` Testing: ${TEST_URL}\n`);
     
     for (const endpoint of ENDPOINTS) {
         console.log(`Testing ${endpoint}...`);
         const result = await testEndpoint(TEST_URL, endpoint);
         
         if (result.error) {
-            console.log(`❌ ${endpoint}: ${result.error}`);
+            console.log(` ${endpoint}: ${result.error}`);
         } else if (result.status === 200) {
-            console.log(`✅ ${endpoint}: OK (${result.status})`);
+            console.log(` ${endpoint}: OK (${result.status})`);
             
             if (endpoint === '/health') {
                 try {
                     const health = JSON.parse(result.data);
-                    console.log(`   📊 Uptime: ${Math.round(health.uptime)}s`);
-                    console.log(`   🏠 Rooms: ${health.rooms}`);
-                    console.log(`   👥 Connections: ${health.connections}`);
+                    console.log(`   Uptime: ${Math.round(health.uptime)}s`);
+                    console.log(`    Rooms: ${health.rooms}`);
+                    console.log(`    Connections: ${health.connections}`);
                 } catch (e) {
-                    console.log(`   ⚠️  Could not parse health data`);
+                    console.log(`     Could not parse health data`);
                 }
             }
         } else {
-            console.log(`⚠️  ${endpoint}: ${result.status}`);
+            console.log(`  ${endpoint}: ${result.status}`);
         }
         console.log('');
     }
     
-    console.log('🎯 Deployment Test Summary:');
-    console.log('✅ If all endpoints return 200, your server is running correctly');
-    console.log('✅ Check browser console for WebRTC connection logs');
-    console.log('✅ Test with multiple browser tabs for video calls');
-    console.log('\n📖 See DEPLOYMENT.md for detailed troubleshooting guide');
+    console.log(' Deployment Test Summary:');
+    console.log(' If all endpoints return 200, your server is running correctly');
+    console.log(' Check browser console for WebRTC connection logs');
+    console.log(' Test with multiple browser tabs for video calls');
+    console.log('\nSee DEPLOYMENT.md for detailed troubleshooting guide');
 }
 
 runTests().catch(console.error); 

@@ -287,7 +287,7 @@ video-chat-app/
 - Optimized connection establishment
 - Added visual feedback for all operations
 
-## 🚀 Future Enhancements
+##  Future Enhancements
 - Chat messaging
 - Recording capabilities
 - Virtual backgrounds

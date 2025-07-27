@@ -2,7 +2,7 @@
 
 A real-time video conferencing application built with WebRTC, Socket.IO, Node.js, and modern web technologies. This application provides a Google Meet-like experience with camera sharing, screen sharing, and audio controls.
 
-##  Features
+
 
 - **Real-time Video Conferencing**: Support for multiple participants with high-quality video
 - **Screen Sharing**: Share your screen with all participants

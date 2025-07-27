@@ -1,6 +1,6 @@
 # Deployment Guide for Video Chat App
 
-## 🚀 Deploying to Render
+##  Deploying to Render
 
 ### Prerequisites
 - Render account
@@ -28,17 +28,17 @@
 
 The main issue with video calls not working on Render is **WebRTC connectivity**. Here's what we've fixed:
 
-#### ✅ Enhanced STUN/TURN Servers
+####  Enhanced STUN/TURN Servers
 - Added multiple STUN servers for better NAT traversal
 - Added free TURN servers as fallback when STUN fails
 - Improved ICE candidate handling
 
-#### ✅ Better Connection Monitoring
+####  Better Connection Monitoring
 - Added connection status indicators
 - Automatic connection restart on failure
 - Connection quality monitoring
 
-#### ✅ Improved Error Handling
+####  Improved Error Handling
 - Better socket.io configuration
 - Enhanced error logging
 - Graceful fallbacks
@@ -63,14 +63,14 @@ The main issue with video calls not working on Render is **WebRTC connectivity**
 
 1. **Open Browser Console** (F12)
 2. **Look for these messages**:
-   - ✅ "Connected to signaling server"
-   - ✅ "ICE connection established"
-   - ✅ "Video playing successfully"
+   -  "Connected to signaling server"
+   -  "ICE connection established"
+   -  "Video playing successfully"
 
 3. **If you see errors**:
-   - ❌ "ICE connection failed" → Network/firewall issue
-   - ❌ "Socket connection error" → Server connectivity issue
-   - ❌ "Camera not available" → Permission issue
+   -  "ICE connection failed" → Network/firewall issue
+   -  "Socket connection error" → Server connectivity issue
+   -  "Camera not available" → Permission issue
 
 ### Step 5: Advanced Configuration
 
@@ -95,7 +95,7 @@ The main issue with video calls not working on Render is **WebRTC connectivity**
 2. **Logs**: Check Render dashboard logs
 3. **Metrics**: Monitor connection success rates
 
-## 🔧 Local Testing
+##  Local Testing
 
 Before deploying, test locally:
 
@@ -109,13 +109,13 @@ npm run dev
 # Open multiple browser tabs to http://localhost:3001
 ```
 
-## 📱 Mobile Testing
+##  Mobile Testing
 
 - **iOS Safari**: Limited WebRTC support
 - **Android Chrome**: Good support
 - **Mobile browsers**: May have restrictions
 
-## 🚨 Common Issues & Solutions
+##  Common Issues & Solutions
 
 ### Issue: "Video not showing on deployed app"
 **Solution**: 
@@ -135,7 +135,7 @@ npm run dev
 - Check if camera is used by other apps
 - Try refreshing the page
 
-## 📞 Support
+##  Support
 
 If issues persist:
 1. Check browser console for specific errors
@@ -143,14 +143,14 @@ If issues persist:
 3. Verify network connectivity
 4. Check Render deployment logs
 
-## 🎯 Success Indicators
+##  Success Indicators
 
 Your deployment is working correctly when:
-- ✅ Video streams appear for all participants
-- ✅ Audio is working (no echo)
-- ✅ Screen sharing works
-- ✅ Connection status shows "Connected"
-- ✅ No console errors
+- Video streams appear for all participants
+-  Audio is working (no echo)
+-  Screen sharing works
+-  Connection status shows "Connected"
+-  No console errors
 
 ---
 

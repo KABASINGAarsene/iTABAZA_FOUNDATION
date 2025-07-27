@@ -171,7 +171,7 @@ video-chat-app/
 5. **Meeting Scheduling**: Add calendar integration
 6. **User Authentication**: Add proper user login system
 
-## 🐛 Comprehensive Troubleshooting Guide
+##  Comprehensive Troubleshooting Guide
 
 ### Camera/Video Issues
 

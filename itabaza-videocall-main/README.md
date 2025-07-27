@@ -119,7 +119,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 - Touch-friendly controls
 - Adaptive video layouts
 
-### 🔒 Security
+###  Security
 - API credentials are stored securely on the server
 - No sensitive information exposed to frontend
 - Secure token-based authentication

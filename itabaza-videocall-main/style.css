@@ -3,3 +3,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+body {
+    font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+    background-color: #202124;
+    color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+}

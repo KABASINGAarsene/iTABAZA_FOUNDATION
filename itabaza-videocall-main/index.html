@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Meeting Room</title>
+    <link rel="icon" type="image/png" href="iTABAZA-logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <img src="iTABAZA-logo.png" alt="iTABAZA Logo" style="height:32px;width:32px;vertical-align:middle;margin-right:10px;">
+                <h1 style="display:inline;vertical-align:middle;">Video Meeting</h1>
+            </div>
+            <div class="header-right">
+                <div class="meeting-info">
+                    <span id="participantCount">0 participants</span>
+                    <span id="meetingTime">00:00</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Pre-join screen -->
+        <div id="preJoinScreen" class="pre-join-screen">
+            <div class="pre-join-content">
+                <h2>Ready to join?</h2>
+                <div class="preview-container">
+                    <video id="previewVideo" autoplay muted></video>
+                </div>
+                <div class="pre-join-controls">
+                    <input type="text" id="nameInput" placeholder="Enter your name" value="Guest User">
+                    <button id="joinButton" class="join-btn">Join Meeting</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main meeting screen -->
+        <div id="meetingScreen" class="meeting-screen" style="display: none;">
+            <!-- Video grid -->
+            <div class="video-grid-container">
+                <div id="videoGrid" class="video-grid">
+                    <!-- Videos will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Bottom controls -->
+            <div class="bottom-controls">
+                <div class="control-buttons">
+                    <button id="muteButton" class="control-btn" title="Mute/Unmute">
+                        <span class="material-icons">mic</span>
+                    </button>
+                    <button id="videoButton" class="control-btn" title="Turn camera on/off">
+                        <span class="material-icons">videocam</span>
+                    </button>
+                    <button id="screenShareButton" class="control-btn" title="Share screen">
+                        <span class="material-icons">screen_share</span>
+                    </button>
+                    <button id="leaveButton" class="control-btn leave-btn" title="Leave meeting">
+                        <span class="material-icons">call_end</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shared content overlay -->
+        <div id="sharedContent" class="shared-content" style="display: none;">
+            <div class="shared-screen-container">
+                <div id="sharedScreen"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

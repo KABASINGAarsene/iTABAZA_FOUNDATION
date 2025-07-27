@@ -42,3 +42,12 @@ body {
     color: #9aa0a6;
     font-size: 14px;
 }
+
+/* Pre-join Screen */
+.pre-join-screen {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}

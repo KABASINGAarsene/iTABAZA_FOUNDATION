@@ -133,3 +133,14 @@ body {
     padding: 20px;
     padding-bottom: 100px; /* Space for controls */
 }
+
+.video-grid {
+    display: grid;
+    gap: 12px;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-auto-rows: minmax(200px, 1fr);
+    align-content: center;
+    justify-content: center;
+}

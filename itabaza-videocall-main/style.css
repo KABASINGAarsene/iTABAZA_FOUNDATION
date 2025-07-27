@@ -157,3 +157,8 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
+
+.video-grid.three-videos {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr;
+}

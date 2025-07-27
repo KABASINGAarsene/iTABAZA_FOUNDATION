@@ -295,7 +295,7 @@ video-chat-app/
 - Mobile app versions
 - Meeting rooms/persistence
 
-## 🤝 Support
+##  Support
 
 If you encounter issues:
 1. Check the browser console for errors

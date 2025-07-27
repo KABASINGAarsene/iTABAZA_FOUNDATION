@@ -109,7 +109,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 - **3 participants**: Featured speaker + 2 smaller videos
 - **4+ participants**: Automatic grid layout
 
-### 🖥️ Screen Sharing
+### Screen Sharing
 - Click the screen share button to share your screen
 - Shared screen appears in fullscreen overlay
 - Other participants see your screen in real-time

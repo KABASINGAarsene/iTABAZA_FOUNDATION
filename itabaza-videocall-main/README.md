@@ -37,7 +37,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 - Proper stream restoration when stopping screen share
 - Added visual indicators for screen sharing status
 
-### 3. Connection Reliability Issues ✅
+### 3. Connection Reliability Issues 
 **Problem**: Unstable WebRTC connections and ICE candidate handling.
 
 **Solution Implemented**:

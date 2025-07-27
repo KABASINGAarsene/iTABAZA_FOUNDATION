@@ -250,7 +250,7 @@ video-chat-app/
 - Very old browser versions
 - Browsers without WebRTC support
 
-## 🔧 Technical Details
+## Technical Details
 
 ### WebRTC Configuration
 - Uses Google STUN servers for NAT traversal

@@ -140,7 +140,7 @@ Admins can:
 
 ● Create, edit, or deactivate doctor profiles 
 
-**Image : “admin-staff-management.png”**
+<img width="1359" height="615" alt="Image" src="https://github.com/user-attachments/assets/dbe137eb-6468-4789-b010-2ff2399ecfd5" />
 
 * Admin also recieves all the support ticket from all the users , in case they are encountering any issue with using the platform 
 
@@ -150,15 +150,15 @@ Let’s walk through how different users interact with the platform: **Patient J
 
 1\. **Registration**: Patient signs up with name, phone number, email 
 
-**“IMAGE: registration-page.png”**
+<img width="1360" height="621" alt="Image" src="https://github.com/user-attachments/assets/deaef307-0a5c-4dc9-9feb-ac19d34d2338" />
 
 2\. **Search & Book**: patient can book appintment with any doctor as listed in on the platform 
 
-**“IMAGE : patient-booking.png”**
+<img width="1366" height="613" alt="Image" src="https://github.com/user-attachments/assets/690a1a3d-c861-4037-8041-913c9a841cbf" />
 
      3\. **Consultation**: The patient visits physically or joins via video call
 
-  	**“IMAGE : appointment-page.png”**
+<img width="1355" height="624" alt="Image" src="https://github.com/user-attachments/assets/a745994a-7a99-49b5-b888-9b9835d88980" />
 
 **Doctor Workflow** 
 
@@ -172,7 +172,7 @@ Let’s walk through how different users interact with the platform: **Patient J
 
 4\. After appointment doctor can upload document to patient 
 
-		“**IMAGE : doctor-uploading.png”**
+<img width="1359" height="628" alt="Image" src="https://github.com/user-attachments/assets/8fc073c0-8a00-4f6b-a447-8e5d894994bd" />
 
 5\. One more thing , if doctor mark the appointment as complete will immidiately update to patient dashboard that that appontent is marked complete , this means patient will be completely informed about his/her appointment before and after meeting doctor.
 
@@ -180,7 +180,7 @@ Let’s walk through how different users interact with the platform: **Patient J
 
 1\. **Dashboard Access**: Overview of hospital platform operations on itabaza 
 
-**“IMAGE : admin-dashboard.png”**
+<img width="1366" height="628" alt="Image" src="https://github.com/user-attachments/assets/9cdf3fc0-cbd9-425a-b879-58a40b9093a0" />
 
       4\. **Support request**: Receive all support request from users of this platform both patient and doctor
 
@@ -236,7 +236,7 @@ After consultation:
 
 ● Patients receive digital prescriptions under his/her dashboard
 
-**“IMAGE : documentunder-patient-dashboard.png”**
+<img width="1357" height="398" alt="Image" src="https://github.com/user-attachments/assets/646f83c8-37e7-43c4-942d-561851692cb9" />
 
 ● Lab test results are uploaded automatically once available 
 

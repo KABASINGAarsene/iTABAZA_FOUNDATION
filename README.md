@@ -23,7 +23,7 @@
 
   **Introduction to iTABAZA**
 
-**“Image (homePage.png)”**
+<img width="1355" height="619" alt="Image" src="https://github.com/user-attachments/assets/82919c45-141f-4e9f-b112-856bc9d574e6" />
 
 **Itabaza**: Solution to Rwandan Health Care System
 

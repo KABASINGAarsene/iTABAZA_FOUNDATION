@@ -68,3 +68,13 @@ body {
     font-size: 24px;
     font-weight: 500;
 }
+
+.preview-container {
+    width: 300px;
+    height: 225px;
+    background: #000;
+    border-radius: 12px;
+    margin: 0 auto 24px;
+    overflow: hidden;
+    position: relative;
+}

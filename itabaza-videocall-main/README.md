@@ -13,7 +13,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 - **Visual Status Indicators**: See when participants are muted or sharing screen
 - **Connection Status**: Real-time connection status indicators
 
-## 🛠️ Fixed Issues
+##  Fixed Issues
 
 ### 1. Camera Distribution/Sharing Issue 
 **Problem**: Users with cameras on were not visible to other participants.

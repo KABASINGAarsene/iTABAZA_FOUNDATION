@@ -57,7 +57,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 - Enhanced audio track handling for better voice transmission
 - Ensured audio tracks are properly transmitted through WebRTC peer connections
 
-## 🔧 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 - Node.js (v14 or higher)

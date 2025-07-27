@@ -128,7 +128,7 @@ iTABAZA is built around a modular system of interconnected features. These modul
 
 ● Share screen on call
 
-**“Image videocall.png”**
+<img width="1366" height="698" alt="Image" src="https://github.com/user-attachments/assets/9fee91d7-1d0f-41ba-b728-386ae3b305dc" />
 
 **Admin Management of Doctor Visibility** 
 

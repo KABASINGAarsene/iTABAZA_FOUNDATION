@@ -304,7 +304,7 @@ If you encounter issues:
 4. Test with different browsers/devices
 5. Check if the issue is reproducible
 
-## 📄 License
+##  License
 MIT License - Feel free to modify and distribute.
 
 ---

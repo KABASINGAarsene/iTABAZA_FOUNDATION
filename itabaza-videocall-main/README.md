@@ -270,7 +270,7 @@ video-chat-app/
 - Minimal server resource usage
 - Optimized for multiple participants
 
-## 📝 Development Notes
+##  Development Notes
 
 ### Key Technologies
 - **WebRTC**: Real-time communication

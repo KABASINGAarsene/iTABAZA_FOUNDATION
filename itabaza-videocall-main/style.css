@@ -212,3 +212,20 @@ body {
     border: 2px solid transparent;
     min-height: 180px;
 }
+
+.video-tile:hover {
+    border-color: #1a73e8;
+    transform: scale(1.02);
+}
+
+.video-tile.fullscreen-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    border-radius: 0;
+    transform: none;
+    border: none;
+}

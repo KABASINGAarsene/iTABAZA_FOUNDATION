@@ -18,7 +18,7 @@ async function loadDepartments() {
         const response = await fetch(`${baseURL}/department/all`, {
             method: 'GET',
             headers: getAuthHeaders()
-        });
+            });
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -37,8 +37,8 @@ async function loadDepartments() {
         
         departmentsLoaded = true;
         console.log('Department mapping created:', depObj);
-        
-    } catch (error) {
+
+        } catch (error) {
         console.error('Error loading departments:', error);
         // Fallback to hardcoded departments if API fails
         depObj = {
@@ -98,7 +98,7 @@ function showLoading() {
             <p style="color: #666; font-size: 16px;">Loading doctors...</p>
         </div>
         <style>
-            @keyframes spin {
+        @keyframes spin {
                 0% { transform: rotate(0deg); }
                 100% { transform: rotate(360deg); }
             }
@@ -108,7 +108,7 @@ function showLoading() {
 
 function hideLoading() {
     isLoading = false;
-}
+    }
 
 function showError(message) {
     docsCont.innerHTML = `
@@ -118,7 +118,7 @@ function showError(message) {
             <p style="color: #666; margin-bottom: 20px;">${message}</p>
             <button onclick="location.reload()" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px;">
                 Try Again
-            </button>
+                </button>
         </div>
     `;
 }
@@ -149,16 +149,16 @@ async function getdata(retryCount = 0) {
     if (doctorsCache && (now - lastFetchTime) < CACHE_DURATION) {
         renderdata(doctorsCache);
         return;
-    }
-    
-    showLoading();
-    
-    try {
-        const response = await fetch(`${baseURL}/doctor/availableDoctors`, {
-            method: 'GET',
-            headers: getAuthHeaders(),
-            signal: AbortSignal.timeout(10000) // 10 second timeout
-        });
+            }
+            
+            showLoading();
+            
+            try {
+                const response = await fetch(`${baseURL}/doctor/availableDoctors`, {
+                    method: 'GET',
+                    headers: getAuthHeaders(),
+                    signal: AbortSignal.timeout(10000) // 10 second timeout
+                    });
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -178,7 +178,7 @@ async function getdata(retryCount = 0) {
         
         hideLoading();
         renderdata(data.doctor);
-        
+            
     } catch (error) {
         console.error('Error fetching doctors:', error);
         hideLoading();
@@ -188,7 +188,7 @@ async function getdata(retryCount = 0) {
             console.log(`Retrying... Attempt ${retryCount + 1}`);
             setTimeout(() => getdata(retryCount + 1), 2000 * (retryCount + 1));
             return;
-        }
+            }
         
         showError(`Failed to load doctors: ${error.message}. Please check your internet connection and try again.`);
     }
@@ -208,7 +208,7 @@ function renderdata(arr) {
         if (!elem || !elem.doctor_name) {
             console.warn('Invalid doctor data:', elem);
             return false;
-        }
+            }
         
         // Add department name to each doctor
         elem.departmentName = getDepartmentName(elem.department_id);
@@ -248,7 +248,7 @@ function renderdata(arr) {
                                      onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjVGNUY1Ii8+Cjx0ZXh0IHg9Ijc1IiB5PSI3NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNjY2NjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RG9jdG9yPC90ZXh0Pgo8L3N2Zz4K';" />
                             </div>
                             <div class="doc-desc">
-                                <h2>${elem.doctor_name}</h2>
+                            <h2>${elem.doctor_name}</h2>
                                 <h4>Department: ${elem.departmentName}</h4>
                                 <p>Experience: ${elem.experience || 'Not specified'} years</p>
                                 <h4>Qualification: ${elem.qualifications || 'Not specified'}</h4>
@@ -258,7 +258,7 @@ function renderdata(arr) {
                             </div>
                         </div>
                         <div class="doc-book" style="display: flex; align-items: center; justify-content: center;">
-                            <button class="clean-book-btn" style="padding:12px 24px;background:#28a745;color:#fff;border:none;border-radius:8px;cursor:pointer;${!isAvailable ? 'opacity:0.5;pointer-events:none;' : ''}">
+                        <button class="clean-book-btn" style="padding:12px 24px;background:#28a745;color:#fff;border:none;border-radius:8px;cursor:pointer;${!isAvailable ? 'opacity:0.5;pointer-events:none;' : ''}">
                                 Book Appointment
                             </button>
                         </div>
@@ -358,17 +358,17 @@ docInputTag.addEventListener("input", async (e) => {
         getdata();
         return;
     }
-    
-    // Debounce search requests
-    searchTimeout = setTimeout(async () => {
-        try {
-            showLoading();
-            const response = await fetch(`${baseURL}/doctor/search?q=${encodeURIComponent(searchVal)}`, {
-                headers: getAuthHeaders(),
-                signal: AbortSignal.timeout(5000)
-            });
-            
-            if (!response.ok) {
+     
+        // Debounce search requests
+        searchTimeout = setTimeout(async () => {
+            try {
+                showLoading();
+                const response = await fetch(`${baseURL}/doctor/search?q=${encodeURIComponent(searchVal)}`, {
+                    headers: getAuthHeaders(),
+                    signal: AbortSignal.timeout(5000)
+                });
+                
+                if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }
             
@@ -378,7 +378,7 @@ docInputTag.addEventListener("input", async (e) => {
             if (!data || data.length === 0) {
                 showNoDoctors(`No doctors found matching "${searchVal}"`);
             } else {
-                renderdata(data);
+                 renderdata(data);
             }
             
         } catch (error) {
@@ -399,16 +399,16 @@ docFilterTag.addEventListener("change", async (e) => {
         return;
     }
     
-    try {
-        showLoading();
-        const response = await fetch(`${baseURL}/doctor/availableDoctors/${filterValue}`, {
-            headers: getAuthHeaders(),
-            signal: AbortSignal.timeout(5000)
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
+        try {
+            showLoading();
+            const response = await fetch(`${baseURL}/doctor/availableDoctors/${filterValue}`, {
+                headers: getAuthHeaders(),
+                signal: AbortSignal.timeout(5000)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+                }
         
         const data = await response.json();
         hideLoading();

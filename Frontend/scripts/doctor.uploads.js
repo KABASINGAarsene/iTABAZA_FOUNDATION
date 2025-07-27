@@ -4,10 +4,10 @@ import { logoutDoctor, getCurrentDoctor, isDoctorAuthenticated } from './doctor.
 document.addEventListener('DOMContentLoaded', function() {
     // Check authentication
     if (!isDoctorAuthenticated()) {
-        window.location.href = './unified-login.html';
-        return;
-    }
-
+            window.location.href = './unified-login.html';
+            return;
+        }
+    
     // Initialize the page
     initializePage();
     
@@ -23,7 +23,7 @@ function initializePage() {
     if (doctor) {
         document.getElementById('doctorName').textContent = doctor.doctor_name || 'Dr. Unknown';
         document.getElementById('doctorEmail').textContent = doctor.email || 'unknown@email.com';
-    }
+        }
 }
 
 function setupEventListeners() {
@@ -34,21 +34,21 @@ function setupEventListeners() {
             text: "You will be logged out of your account",
             icon: "warning",
             buttons: true,
-            dangerMode: true,
-        }).then((willLogout) => {
-            if (willLogout) {
-                logoutDoctor();
-            }
+                        dangerMode: true,
+                    }).then((willLogout) => {
+                        if (willLogout) {
+                            logoutDoctor();
+                            }
         });
     });
+
 
     // Upload area interactions
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('fileInput');
     const browseBtn = document.getElementById('browseBtn');
     const uploadNewBtn = document.getElementById('uploadNewBtn');
-
-    // Browse button
+// Browse button
     browseBtn.addEventListener('click', () => fileInput.click());
     uploadNewBtn.addEventListener('click', () => fileInput.click());
 
@@ -68,7 +68,7 @@ function setupEventListeners() {
     document.getElementById('patientSearch').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             searchPatientDocuments();
-        }
+            }
     });
 }
 
@@ -88,22 +88,22 @@ function handleDrop(e) {
     
     const files = Array.from(e.dataTransfer.files);
     uploadFiles(files);
-}
+    }
 
 function handleFileSelection(e) {
     const files = Array.from(e.target.files);
     uploadFiles(files);
-}
+    }
 
 async function uploadFiles(files) {
     if (!files || files.length === 0) return;
 
     const doctor = getCurrentDoctor();
-    if (!doctor) return;
-
-    for (const file of files) {
-        if (!validateFile(file)) continue;
-
+        if (!doctor) return;
+    
+        for (const file of files) {
+            if (!validateFile(file)) continue;
+            
         try {
             swal("Uploading...", `Uploading ${file.name}`, "info", {
                 buttons: false,
@@ -114,21 +114,21 @@ async function uploadFiles(files) {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('doctorId', doctor.id);
-            formData.append('fileName', file.name);
-            formData.append('fileType', file.type);
-
-            const response = await fetch(`${baseURL}/doctor/upload-document`, {
-                method: 'POST',
+                        formData.append('fileName', file.name);
+                        formData.append('fileType', file.type);
+            
+                        const response = await fetch(`${baseURL}/doctor/upload-document`, {
+                            method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('doctorToken')}`
                 },
                 body: formData
-            });
-
-            const data = await handleApiResponse(response);
-            
-            swal("Success!", `${file.name} uploaded successfully`, "success", { timer: 2000 });
-            
+                });
+                
+                            const data = await handleApiResponse(response);
+                            
+                            swal("Success!", `${file.name} uploaded successfully`, "success", { timer: 2000 });
+                            
             // Reload documents
             loadDocuments();
             
@@ -153,17 +153,17 @@ function validateFile(file) {
         return false;
     }
 
-    return true;
+      return true;
 }
 
 async function loadDocuments() {
     try {
         const doctor = getCurrentDoctor();
-        if (!doctor) return;
-
-        // For now, show sample documents since we need to implement the backend
-        const sampleDocuments = [
-            {
+                if (!doctor) return;
+        
+                // For now, show sample documents since we need to implement the backend
+                const sampleDocuments = [
+                    {
                 id: 1,
                 name: 'Medical_Certificate.pdf',
                 type: 'pdf',
@@ -178,7 +178,7 @@ async function loadDocuments() {
                 size: '1.2 MB',
                 uploadDate: '2024-01-14',
                 url: '#'
-            },
+                },
             {
                 id: 3,
                 name: 'X-Ray_Image.jpg',
@@ -188,7 +188,7 @@ async function loadDocuments() {
                 url: '#'
             }
         ];
-
+        
         displayDocuments(sampleDocuments);
         
     } catch (error) {
@@ -198,7 +198,7 @@ async function loadDocuments() {
                 <i class="fas fa-exclamation-circle"></i>
                 <p>Failed to load documents</p>
             </div>
-        `;
+             `;
     }
 }
 
@@ -208,42 +208,42 @@ function displayDocuments(documents) {
     if (!documents || documents.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
-                <i class="fas fa-folder-open"></i>
+             <i class="fas fa-folder-open"></i>
                 <p>No documents found</p>
             </div>
         `;
         return;
-    }
+        }
 
     container.innerHTML = documents.map(doc => `
         <div class="document-card" data-type="${doc.type}">
             <div class="document-icon">
-                <i class="fas ${getDocumentIcon(doc.type)}"></i>
+            <i class="fas ${getDocumentIcon(doc.type)}"></i>
             </div>
             <div class="document-info">
                 <h4>${doc.name}</h4>
                 <p>Size: ${doc.size}</p>
-                <p>Uploaded: ${doc.uploadDate}</p>
+                 <p>Uploaded: ${doc.uploadDate}</p>
             </div>
             <div class="document-actions">
                 <button class="action-btn view-btn" onclick="viewDocument('${doc.id}')">
                     <i class="fas fa-eye"></i>
-                </button>
+                     </button>
                 <button class="action-btn download-btn" onclick="downloadDocument('${doc.id}')">
                     <i class="fas fa-download"></i>
                 </button>
                 <button class="action-btn delete-btn" onclick="deleteDocument('${doc.id}')">
-                    <i class="fas fa-trash"></i>
+                <i class="fas fa-trash"></i>
                 </button>
             </div>
         </div>
     `).join('');
-}
+    }
 
 function getDocumentIcon(type) {
     switch (type) {
         case 'pdf': return 'fa-file-pdf';
-        case 'document': return 'fa-file-word';
+         case 'document': return 'fa-file-word';
         case 'image': return 'fa-file-image';
         default: return 'fa-file';
     }
@@ -258,7 +258,7 @@ function filterDocuments() {
         if (filterValue === 'all' || cardType === filterValue) {
             card.style.display = 'block';
         } else {
-            card.style.display = 'none';
+             card.style.display = 'none';
         }
     });
 }
@@ -283,17 +283,17 @@ async function searchPatientDocuments() {
             {
                 patientName: searchTerm,
                 documents: [
-                    { name: 'Medical_History.pdf', date: '2024-01-10' },
+                       { name: 'Medical_History.pdf', date: '2024-01-10' },
                     { name: 'Lab_Results.pdf', date: '2024-01-08' },
                     { name: 'Prescription.pdf', date: '2024-01-05' }
                 ]
             }
-        ];
+            ];
 
         swal.close();
         displayPatientDocuments(samplePatientDocs);
         
-    } catch (error) {
+        } catch (error) {
         console.error('Error searching patient documents:', error);
         swal("Error", "Failed to search patient documents", "error");
     }
@@ -308,7 +308,7 @@ function displayPatientDocuments(patientData) {
                 <i class="fas fa-search"></i>
                 <p>No documents found for this patient</p>
             </div>
-        `;
+            `;
         return;
     }
 
@@ -318,32 +318,32 @@ function displayPatientDocuments(patientData) {
             <div class="patient-documents">
                 ${patient.documents.map(doc => `
                     <div class="patient-document-item">
-                        <div class="document-info">
+                    <div class="document-info">
                             <i class="fas fa-file-pdf"></i>
                             <span>${doc.name}</span>
                         </div>
                         <div class="document-date">
-                            ${doc.date}
+                        ${doc.date}
                         </div>
                         <div class="document-actions">
                             <button class="action-btn view-btn">
                                 <i class="fas fa-eye"></i>
-                            </button>
+                                </button>
                             <button class="action-btn download-btn">
                                 <i class="fas fa-download"></i>
                             </button>
                         </div>
-                    </div>
+                        </div>
                 `).join('')}
             </div>
         </div>
     `).join('');
-}
+    }
 
 // Global functions for document actions
 window.viewDocument = function(docId) {
     swal("View Document", "Document viewer coming soon!", "info");
-};
+    };
 
 window.downloadDocument = function(docId) {
     swal("Download", "Document download starting...", "success", { timer: 1500 });
@@ -358,7 +358,7 @@ window.deleteDocument = function(docId) {
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
-            swal("Deleted!", "Document has been deleted", "success");
+             swal("Deleted!", "Document has been deleted", "success");
             loadDocuments(); // Reload documents
         }
     });

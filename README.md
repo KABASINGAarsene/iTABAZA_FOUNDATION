@@ -110,7 +110,7 @@ iTABAZA is not just a digital tool . It's a bridge between **technology and soci
 
 ***iTABAZA** : Revolutionizing Healthcare Access in Rwanda* 
 
-**“Image (homePage.png)”**
+<img width="1355" height="619" alt="Image" src="https://github.com/user-attachments/assets/82919c45-141f-4e9f-b112-856bc9d574e6" />
 
 As Rwanda modernizes its healthcare infrastructure, it is crucial that technological interventions are designed to match the real needs of hospitals, doctors, patients, and policymakers. ***iTABAZA*** is not just another app; it is a thoughtfully engineered solution to Rwanda’s systemic healthcare bottlenecks. 
 
@@ -128,7 +128,7 @@ iTABAZA is built around a modular system of interconnected features. These modul
 
 ● Share screen on call
 
-**“Image videocall.png”**
+<img width="1366" height="698" alt="Image" src="https://github.com/user-attachments/assets/9fee91d7-1d0f-41ba-b728-386ae3b305dc" />
 
 **Admin Management of Doctor Visibility** 
 
@@ -136,7 +136,7 @@ Admins can:
 
 * Under admin dashboard can see all booked appointments and all users(numbers and name of platform users)
 
-  **“Image : admin-dashboard.png”**
+<img width="1366" height="628" alt="Image" src="https://github.com/user-attachments/assets/068677b4-2094-46e3-9960-5a41864fcd0e" />
 
 ● Create, edit, or deactivate doctor profiles 
 

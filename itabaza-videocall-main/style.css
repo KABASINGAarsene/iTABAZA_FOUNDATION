@@ -35,3 +35,10 @@ body {
     font-size: 20px;
     font-weight: 500;
 }
+
+.meeting-info {
+    display: flex;
+    gap: 24px;
+    color: #9aa0a6;
+    font-size: 14px;
+}

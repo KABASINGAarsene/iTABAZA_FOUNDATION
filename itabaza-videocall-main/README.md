@@ -311,4 +311,4 @@ MIT License - Feel free to modify and distribute.
 
 **Note**: This application is designed for local/private network use. For production deployment, consider implementing TURN servers for better NAT traversal and additional security measures.
 
-Enjoy your video meetings! 🎉
+Enjoy your video meetings! 

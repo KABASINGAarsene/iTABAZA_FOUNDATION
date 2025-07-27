@@ -114,7 +114,7 @@ A real-time video conferencing application built with WebRTC, Socket.IO, Node.js
 - Shared screen appears in fullscreen overlay
 - Other participants see your screen in real-time
 
-### 📱 Responsive Design
+###  Responsive Design
 - Works on desktop, tablet, and mobile
 - Touch-friendly controls
 - Adaptive video layouts

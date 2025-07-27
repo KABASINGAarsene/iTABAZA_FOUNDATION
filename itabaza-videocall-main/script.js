@@ -74,11 +74,11 @@ async function startPreview() {
 function initializeSocketConnection() {
     // Handle socket connection events
     socket.on('connect', () => {
-        console.log('✅ Connected to signaling server');
+        console.log('Connected to signaling server');
     });
     
     socket.on('disconnect', (reason) => {
-        console.log('❌ Disconnected from signaling server:', reason);
+        console.log(' Disconnected from signaling server:', reason);
         if (reason === 'io server disconnect') {
             // Server disconnected us, try to reconnect
             socket.connect();
@@ -86,15 +86,15 @@ function initializeSocketConnection() {
     });
     
     socket.on('connect_error', (error) => {
-        console.error('❌ Socket connection error:', error);
+        console.error(' Socket connection error:', error);
     });
     
     socket.on('reconnect', (attemptNumber) => {
-        console.log(`✅ Reconnected to signaling server after ${attemptNumber} attempts`);
+        console.log(` Reconnected to signaling server after ${attemptNumber} attempts`);
     });
     
     socket.on('reconnect_error', (error) => {
-        console.error('❌ Socket reconnection error:', error);
+        console.error(' Socket reconnection error:', error);
     });
     
     socket.on('user-connected', (userId, userName) => {
@@ -170,9 +170,9 @@ function initializeSocketConnection() {
             const pc = peerConnections[fromUserId];
             if (pc && pc.remoteDescription) {
                 await pc.addIceCandidate(candidate);
-                console.log(`✅ Added ICE candidate from ${fromUserId}`);
+                console.log(`Added ICE candidate from ${fromUserId}`);
             } else {
-                console.log(`⏳ Queuing ICE candidate from ${fromUserId} (remote description not ready)`);
+                console.log(` Queuing ICE candidate from ${fromUserId} (remote description not ready)`);
                 // Queue the candidate for later
                 if (!iceCandidatesQueue[fromUserId]) {
                     iceCandidatesQueue[fromUserId] = [];
@@ -180,7 +180,7 @@ function initializeSocketConnection() {
                 iceCandidatesQueue[fromUserId].push(candidate);
             }
         } catch (error) {
-            console.error(`❌ Error handling ICE candidate from ${fromUserId}:`, error);
+            console.error(` Error handling ICE candidate from ${fromUserId}:`, error);
         }
     });
     
@@ -318,7 +318,7 @@ function createPeerConnection(userId, isInitiator = false) {
                     }
                     
                     await remoteVideo.play();
-                    console.log(`✅ Video playing successfully for ${userId}`);
+                    console.log(` Video playing successfully for ${userId}`);
                     hideParticipantAvatar(userId);
                     showConnectionStatus(userId, 'connected');
                     
@@ -377,7 +377,7 @@ function createPeerConnection(userId, isInitiator = false) {
                 }
             });
             
-            console.log(`✅ Video stream successfully set for ${userId}`);
+            console.log(` Video stream successfully set for ${userId}`);
         } else {
             console.warn(`Could not set video stream for ${userId}:`, {
                 remoteVideo: !!remoteVideo,
@@ -399,20 +399,20 @@ function createPeerConnection(userId, isInitiator = false) {
     pc.onconnectionstatechange = () => {
         console.log(`Connection state with ${userId}: ${pc.connectionState}`);
         if (pc.connectionState === 'connected') {
-            console.log(`✅ Successfully connected to ${userId}`);
+            console.log(` Successfully connected to ${userId}`);
             showConnectionStatus(userId, 'connected');
         } else if (pc.connectionState === 'failed') {
-            console.log(`❌ Connection failed with ${userId}`);
+            console.log(` Connection failed with ${userId}`);
             showConnectionStatus(userId, 'failed');
             // Try to restart connection after a delay
             setTimeout(() => {
                 if (peerConnections[userId] && peerConnections[userId].connectionState === 'failed') {
-                    console.log(`🔄 Attempting to restart connection with ${userId}`);
+                    console.log(` Attempting to restart connection with ${userId}`);
                     restartConnection(userId);
                 }
             }, 5000);
         } else if (pc.connectionState === 'disconnected') {
-            console.log(`⚠️ Connection disconnected with ${userId}`);
+            console.log(`Connection disconnected with ${userId}`);
             showConnectionStatus(userId, 'disconnected');
         }
     };
@@ -421,10 +421,10 @@ function createPeerConnection(userId, isInitiator = false) {
     pc.oniceconnectionstatechange = () => {
         console.log(`ICE connection state with ${userId}: ${pc.iceConnectionState}`);
         if (pc.iceConnectionState === 'failed') {
-            console.log(`❌ ICE connection failed with ${userId}`);
+            console.log(` ICE connection failed with ${userId}`);
             showConnectionStatus(userId, 'ice-failed');
         } else if (pc.iceConnectionState === 'connected') {
-            console.log(`✅ ICE connection established with ${userId}`);
+            console.log(` ICE connection established with ${userId}`);
         }
     };
     
@@ -468,20 +468,20 @@ async function processQueuedIceCandidates(userId) {
     const queuedCandidates = iceCandidatesQueue[userId];
     
     if (pc && pc.remoteDescription && queuedCandidates && queuedCandidates.length > 0) {
-        console.log(`⏩ Processing ${queuedCandidates.length} queued ICE candidates for ${userId}`);
+        console.log(` Processing ${queuedCandidates.length} queued ICE candidates for ${userId}`);
         
         for (const candidate of queuedCandidates) {
             try {
                 await pc.addIceCandidate(candidate);
-                console.log(`✅ Added queued ICE candidate for ${userId}`);
+                console.log(` Added queued ICE candidate for ${userId}`);
             } catch (error) {
-                console.error(`❌ Failed to add queued ICE candidate for ${userId}:`, error);
+                console.error(` Failed to add queued ICE candidate for ${userId}:`, error);
             }
         }
         
         // Clear the queue
         delete iceCandidatesQueue[userId];
-        console.log(`✅ Processed all queued ICE candidates for ${userId}`);
+        console.log(` Processed all queued ICE candidates for ${userId}`);
     }
 }
 
@@ -951,14 +951,14 @@ async function startScreenShare() {
             if (videoSender && videoTrack) {
                 const replaceVideoPromise = videoSender.replaceTrack(videoTrack)
                     .then(() => {
-                        console.log(`✅ Successfully replaced video track for ${userId}`);
+                        console.log(` Successfully replaced video track for ${userId}`);
                     })
                     .catch(error => {
-                        console.error(`❌ Failed to replace video track for ${userId}:`, error);
+                        console.error(` Failed to replace video track for ${userId}:`, error);
                         // Try to re-add the track
                         return pc.addTrack(videoTrack, combinedStream)
-                            .then(() => console.log(`✅ Re-added video track for ${userId}`))
-                            .catch(e => console.error(`❌ Failed to re-add video track for ${userId}:`, e));
+                            .then(() => console.log(` Re-added video track for ${userId}`))
+                            .catch(e => console.error(` Failed to re-add video track for ${userId}:`, e));
                     });
                 trackReplacementPromises.push(replaceVideoPromise);
             } else {
@@ -967,9 +967,9 @@ async function startScreenShare() {
                 if (videoTrack) {
                     try {
                         pc.addTrack(videoTrack, combinedStream);
-                        console.log(`✅ Added new video track for ${userId}`);
+                        console.log(` Added new video track for ${userId}`);
                     } catch (error) {
-                        console.error(`❌ Failed to add video track for ${userId}:`, error);
+                        console.error(` Failed to add video track for ${userId}:`, error);
                     }
                 }
             }
@@ -983,10 +983,10 @@ async function startScreenShare() {
                 if (audioSender) {
                     const replaceAudioPromise = audioSender.replaceTrack(audioTrack)
                         .then(() => {
-                            console.log(`✅ Successfully replaced audio track for ${userId}`);
+                            console.log(` Successfully replaced audio track for ${userId}`);
                         })
                         .catch(error => {
-                            console.error(`❌ Failed to replace audio track for ${userId}:`, error);
+                            console.error(` Failed to replace audio track for ${userId}:`, error);
                         });
                     trackReplacementPromises.push(replaceAudioPromise);
                 }
@@ -996,16 +996,16 @@ async function startScreenShare() {
         // Wait for all track replacements to complete
         try {
             await Promise.allSettled(trackReplacementPromises);
-            console.log('✅ All track replacements completed');
+            console.log(' All track replacements completed');
         } catch (error) {
-            console.error('❌ Some track replacements failed:', error);
+            console.error(' Some track replacements failed:', error);
         }
         
         // Update local video display with screen share
         const localVideo = document.querySelector(`#participant-${currentUser.id} video`);
         if (localVideo) {
             localVideo.srcObject = combinedStream;
-            console.log('✅ Updated local video display with screen share');
+            console.log('Updated local video display with screen share');
             
             // Ensure local video plays
             try {
@@ -1021,7 +1021,7 @@ async function startScreenShare() {
         // Notify other participants that screen sharing started
         socket.emit('screen-share-started', currentUser.id);
         
-        console.log('✅ Screen sharing started and transmitted to all peers');
+        console.log(' Screen sharing started and transmitted to all peers');
         
         // Listen for screen share end (when user clicks "Stop sharing" in browser)
         videoTrack.addEventListener('ended', () => {
@@ -1041,7 +1041,7 @@ async function startScreenShare() {
         }
         
     } catch (error) {
-        console.error('❌ Failed to start screen share:', error);
+        console.error(' Failed to start screen share:', error);
         
         // Reset UI state on failure
         screenShareButton.classList.remove('active');
@@ -1206,27 +1206,27 @@ function showConnectionStatus(userId, status) {
             case 'connected':
                 statusText = 'Connected';
                 backgroundColor = 'rgba(34, 139, 34, 0.9)';
-                icon = '✅';
+                icon = '';
                 break;
             case 'failed':
                 statusText = 'Connection Failed';
                 backgroundColor = 'rgba(220, 53, 69, 0.9)';
-                icon = '❌';
+                icon = '';
                 break;
             case 'disconnected':
                 statusText = 'Disconnected';
                 backgroundColor = 'rgba(255, 193, 7, 0.9)';
-                icon = '⚠️';
+                icon = '';
                 break;
             case 'ice-failed':
                 statusText = 'ICE Failed';
                 backgroundColor = 'rgba(220, 53, 69, 0.9)';
-                icon = '🌐';
+                icon = '';
                 break;
             case 'connecting':
                 statusText = 'Connecting...';
                 backgroundColor = 'rgba(0, 123, 255, 0.9)';
-                icon = '⏳';
+                icon = '';
                 break;
         }
         
@@ -1264,7 +1264,7 @@ function showConnectionStatus(userId, status) {
 // Restart connection with a participant
 async function restartConnection(userId) {
     try {
-        console.log(`🔄 Restarting connection with ${userId}`);
+        console.log(` Restarting connection with ${userId}`);
         
         // Close existing connection
         if (peerConnections[userId]) {
@@ -1285,14 +1285,14 @@ async function restartConnection(userId) {
         setTimeout(async () => {
             try {
                 await createOffer(userId);
-                console.log(`✅ Restart offer sent to ${userId}`);
+                console.log(`Restart offer sent to ${userId}`);
             } catch (error) {
-                console.error(`❌ Failed to create restart offer for ${userId}:`, error);
+                console.error(` Failed to create restart offer for ${userId}:`, error);
             }
         }, 1000);
         
     } catch (error) {
-        console.error(`❌ Failed to restart connection with ${userId}:`, error);
+        console.error(` Failed to restart connection with ${userId}:`, error);
     }
 }
 
@@ -1322,7 +1322,7 @@ function showParticipantAvatar(userId) {
 function addClickToPlay(videoElement, userId) {
     const playButton = document.createElement('div');
     playButton.className = 'play-button';
-    playButton.innerHTML = '▶️ Click to play video';
+    playButton.innerHTML = ' Click to play video';
     playButton.style.cssText = `
         position: absolute;
         top: 50%;
@@ -1362,7 +1362,7 @@ function addLoadingIndicator(userId) {
     if (participantElement) {
         const loadingIndicator = document.createElement('div');
         loadingIndicator.className = 'loading-indicator';
-        loadingIndicator.innerHTML = '⏳ Connecting...';
+        loadingIndicator.innerHTML = ' Connecting...';
         loadingIndicator.style.cssText = `
             position: absolute;
             top: 12px;

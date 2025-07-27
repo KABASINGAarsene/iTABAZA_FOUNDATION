@@ -98,4 +98,6 @@ input[type="submit"]:hover{
     color: #2691d9;
     text-decoration: none;
 }
-
+.homelink a:hover{
+    text-decoration: underline;
+}

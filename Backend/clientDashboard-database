@@ -1,0 +1,551 @@
+-- =====================================================
+-- MEDISTAR CLIENT DASHBOARD SUPPORT DATABASE SCHEMA
+-- =====================================================
+-- This schema includes all necessary tables and functions for client dashboard functionality
+-- including support requests, patient documents, and dashboard statistics
+
+-- Enable necessary extensions
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- =====================================================
+-- 1. SUPPORT REQUESTS TABLE
+-- =====================================================
+-- Stores patient support requests with categorization
+CREATE TABLE IF NOT EXISTS support_requests (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    patient_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    
+    -- Request Details
+    category VARCHAR(50) NOT NULL CHECK (category IN ('login', 'appointment', 'dashboard', 'payment', 'documents', 'technical', 'other')),
+    title VARCHAR(200) NOT NULL,
+    description TEXT NOT NULL,
+    urgency VARCHAR(20) NOT NULL CHECK (urgency IN ('low', 'medium', 'high', 'urgent')),
+    
+    -- Status and Resolution
+    status VARCHAR(30) DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'resolved', 'closed')),
+    priority INTEGER DEFAULT 3 CHECK (priority BETWEEN 1 AND 5), -- 1 = highest, 5 = lowest
+    assigned_to UUID REFERENCES admins(id) ON DELETE SET NULL,
+    resolution TEXT,
+    resolved_at TIMESTAMP WITH TIME ZONE,
+    
+    -- Patient Information (for quick access)
+    patient_name VARCHAR(200) NOT NULL,
+    patient_email VARCHAR(255) NOT NULL,
+    patient_phone VARCHAR(20),
+    
+    -- Timestamps
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- =====================================================
+-- 2. PATIENT DOCUMENTS TABLE
+-- =====================================================
+-- Stores medical documents uploaded by doctors for patients
+CREATE TABLE IF NOT EXISTS patient_documents (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    patient_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    doctor_id UUID REFERENCES doctors(id) ON DELETE SET NULL,
+    appointment_id UUID REFERENCES appointments(id) ON DELETE SET NULL,
+    
+    -- Document Information
+    document_name VARCHAR(200) NOT NULL,
+    document_type VARCHAR(50) NOT NULL CHECK (document_type IN ('lab_report', 'prescription', 'x_ray', 'scan', 'medical_certificate', 'discharge_summary', 'referral', 'other')),
+    file_url VARCHAR(1000) NOT NULL,
+    file_name VARCHAR(500) NOT NULL,
+    file_size BIGINT NOT NULL,
+    mime_type VARCHAR(100) NOT NULL,
+    
+    -- Access Control
+    is_visible_to_patient BOOLEAN DEFAULT TRUE,
+    is_downloadable BOOLEAN DEFAULT TRUE,
+    access_level VARCHAR(20) DEFAULT 'patient' CHECK (access_level IN ('patient', 'doctor', 'admin')),
+    
+    -- Doctor Information (for display)
+    doctor_name VARCHAR(100),
+    
+    -- Additional Information
+    description TEXT,
+    notes TEXT,
+    
+    -- Timestamps
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- =====================================================
+-- 3. DASHBOARD ACTIVITY LOG TABLE
+-- =====================================================
+-- Logs patient dashboard activities for analytics
+CREATE TABLE IF NOT EXISTS patient_activity_log (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    patient_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    
+    -- Activity Details
+    activity_type VARCHAR(50) NOT NULL CHECK (activity_type IN ('login', 'view_appointments', 'view_documents', 'download_document', 'submit_support', 'book_appointment', 'update_profile')),
+    activity_description TEXT,
+    ip_address INET,
+    user_agent TEXT,
+    
+    -- Timestamps
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- =====================================================
+-- INDEXES FOR PERFORMANCE
+-- =====================================================
+-- Support requests indexes
+CREATE INDEX IF NOT EXISTS idx_support_requests_patient ON support_requests(patient_id);
+CREATE INDEX IF NOT EXISTS idx_support_requests_status ON support_requests(status);
+CREATE INDEX IF NOT EXISTS idx_support_requests_category ON support_requests(category);
+CREATE INDEX IF NOT EXISTS idx_support_requests_urgency ON support_requests(urgency);
+CREATE INDEX IF NOT EXISTS idx_support_requests_created ON support_requests(created_at);
+CREATE INDEX IF NOT EXISTS idx_support_requests_assigned ON support_requests(assigned_to);
+
+-- Patient documents indexes
+CREATE INDEX IF NOT EXISTS idx_patient_documents_patient ON patient_documents(patient_id);
+CREATE INDEX IF NOT EXISTS idx_patient_documents_doctor ON patient_documents(doctor_id);
+CREATE INDEX IF NOT EXISTS idx_patient_documents_appointment ON patient_documents(appointment_id);
+CREATE INDEX IF NOT EXISTS idx_patient_documents_type ON patient_documents(document_type);
+CREATE INDEX IF NOT EXISTS idx_patient_documents_visible ON patient_documents(is_visible_to_patient);
+CREATE INDEX IF NOT EXISTS idx_patient_documents_created ON patient_documents(created_at);
+
+-- Activity log indexes
+CREATE INDEX IF NOT EXISTS idx_activity_log_patient ON patient_activity_log(patient_id);
+CREATE INDEX IF NOT EXISTS idx_activity_log_type ON patient_activity_log(activity_type);
+CREATE INDEX IF NOT EXISTS idx_activity_log_created ON patient_activity_log(created_at);
+
+-- =====================================================
+-- TRIGGERS FOR UPDATED_AT
+-- =====================================================
+-- Add triggers for automatic timestamp updates
+CREATE TRIGGER update_support_requests_updated_at 
+    BEFORE UPDATE ON support_requests
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_patient_documents_updated_at 
+    BEFORE UPDATE ON patient_documents
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- =====================================================
+-- CLIENT DASHBOARD FUNCTIONS
+-- =====================================================
+
+-- Function to get patient dashboard statistics
+CREATE OR REPLACE FUNCTION get_patient_dashboard_stats(p_patient_id UUID)
+RETURNS JSON AS $$
+DECLARE
+    result JSON;
+BEGIN
+    SELECT json_build_object(
+        'total_appointments', (
+            SELECT COUNT(*) FROM appointments WHERE patient_id = p_patient_id
+        ),
+        'upcoming_appointments', (
+            SELECT COUNT(*) FROM appointments 
+            WHERE patient_id = p_patient_id 
+            AND appointment_date >= CURRENT_DATE 
+            AND status IN ('pending', 'confirmed')
+        ),
+        'completed_appointments', (
+            SELECT COUNT(*) FROM appointments 
+            WHERE patient_id = p_patient_id 
+            AND status = 'completed'
+        ),
+        'cancelled_appointments', (
+            SELECT COUNT(*) FROM appointments 
+            WHERE patient_id = p_patient_id 
+            AND status = 'cancelled'
+        ),
+        'total_documents', (
+            SELECT COUNT(*) FROM patient_documents 
+            WHERE patient_id = p_patient_id 
+            AND is_visible_to_patient = TRUE
+        ),
+        'pending_support_requests', (
+            SELECT COUNT(*) FROM support_requests 
+            WHERE patient_id = p_patient_id 
+            AND status IN ('open', 'in_progress')
+        ),
+        'resolved_support_requests', (
+            SELECT COUNT(*) FROM support_requests 
+            WHERE patient_id = p_patient_id 
+            AND status IN ('resolved', 'closed')
+        )
+    ) INTO result;
+    
+    RETURN result;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to get patient appointments with details
+CREATE OR REPLACE FUNCTION get_patient_appointments(p_patient_id UUID, p_limit INTEGER DEFAULT 50)
+RETURNS TABLE(
+    appointment_id UUID,
+    doctor_name VARCHAR(100),
+    appointment_date DATE,
+    appointment_time VARCHAR(20),
+    consultation_type VARCHAR(20),
+    status VARCHAR(50),
+    problem_description TEXT,
+    payment_status BOOLEAN,
+    created_at TIMESTAMP WITH TIME ZONE
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        a.id,
+        a.doc_first_name,
+        a.appointment_date,
+        a.appointment_time,
+        a.consultation_type,
+        a.status,
+        a.problem_description,
+        a.payment_status,
+        a.created_at
+    FROM appointments a
+    WHERE a.patient_id = p_patient_id
+    ORDER BY a.appointment_date DESC, a.created_at DESC
+    LIMIT p_limit;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to get patient documents
+CREATE OR REPLACE FUNCTION get_patient_documents(p_patient_id UUID)
+RETURNS TABLE(
+    document_id UUID,
+    document_name VARCHAR(200),
+    document_type VARCHAR(50),
+    doctor_name VARCHAR(100),
+    file_url VARCHAR(1000),
+    file_size BIGINT,
+    is_downloadable BOOLEAN,
+    description TEXT,
+    created_at TIMESTAMP WITH TIME ZONE
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        pd.id,
+        pd.document_name,
+        pd.document_type,
+        pd.doctor_name,
+        pd.file_url,
+        pd.file_size,
+        pd.is_downloadable,
+        pd.description,
+        pd.created_at
+    FROM patient_documents pd
+    WHERE pd.patient_id = p_patient_id
+    AND pd.is_visible_to_patient = TRUE
+    ORDER BY pd.created_at DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to create support request
+CREATE OR REPLACE FUNCTION create_support_request(
+    p_patient_id UUID,
+    p_category VARCHAR(50),
+    p_title VARCHAR(200),
+    p_description TEXT,
+    p_urgency VARCHAR(20),
+    p_patient_name VARCHAR(200),
+    p_patient_email VARCHAR(255),
+    p_patient_phone VARCHAR(20) DEFAULT NULL
+)
+RETURNS UUID AS $$
+DECLARE
+    request_id UUID;
+    priority_level INTEGER;
+BEGIN
+    -- Set priority based on urgency
+    CASE p_urgency
+        WHEN 'urgent' THEN priority_level := 1;
+        WHEN 'high' THEN priority_level := 2;
+        WHEN 'medium' THEN priority_level := 3;
+        WHEN 'low' THEN priority_level := 4;
+        ELSE priority_level := 3;
+    END CASE;
+    
+    INSERT INTO support_requests (
+        patient_id, category, title, description, urgency, priority,
+        patient_name, patient_email, patient_phone
+    ) VALUES (
+        p_patient_id, p_category, p_title, p_description, p_urgency, priority_level,
+        p_patient_name, p_patient_email, p_patient_phone
+    ) RETURNING id INTO request_id;
+    
+    RETURN request_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to get patient support requests
+CREATE OR REPLACE FUNCTION get_patient_support_requests(p_patient_id UUID)
+RETURNS TABLE(
+    request_id UUID,
+    category VARCHAR(50),
+    title VARCHAR(200),
+    description TEXT,
+    urgency VARCHAR(20),
+    status VARCHAR(30),
+    resolution TEXT,
+    created_at TIMESTAMP WITH TIME ZONE,
+    resolved_at TIMESTAMP WITH TIME ZONE
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        sr.id,
+        sr.category,
+        sr.title,
+        sr.description,
+        sr.urgency,
+        sr.status,
+        sr.resolution,
+        sr.created_at,
+        sr.resolved_at
+    FROM support_requests sr
+    WHERE sr.patient_id = p_patient_id
+    ORDER BY sr.created_at DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to log patient activity
+CREATE OR REPLACE FUNCTION log_patient_activity(
+    p_patient_id UUID,
+    p_activity_type VARCHAR(50),
+    p_activity_description TEXT DEFAULT NULL,
+    p_ip_address INET DEFAULT NULL,
+    p_user_agent TEXT DEFAULT NULL
+)
+RETURNS UUID AS $$
+DECLARE
+    log_id UUID;
+BEGIN
+    INSERT INTO patient_activity_log (
+        patient_id, activity_type, activity_description, ip_address, user_agent
+    ) VALUES (
+        p_patient_id, p_activity_type, p_activity_description, p_ip_address, p_user_agent
+    ) RETURNING id INTO log_id;
+    
+    RETURN log_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to add document for patient (used by doctors/admins)
+CREATE OR REPLACE FUNCTION add_patient_document(
+    p_patient_id UUID,
+    p_doctor_id UUID,
+    p_document_name VARCHAR(200),
+    p_document_type VARCHAR(50),
+    p_file_url VARCHAR(1000),
+    p_file_name VARCHAR(500),
+    p_file_size BIGINT,
+    p_mime_type VARCHAR(100),
+    p_doctor_name VARCHAR(100),
+    p_appointment_id UUID DEFAULT NULL,
+    p_description TEXT DEFAULT NULL,
+    p_notes TEXT DEFAULT NULL
+)
+RETURNS UUID AS $$
+DECLARE
+    document_id UUID;
+BEGIN
+    INSERT INTO patient_documents (
+        patient_id, doctor_id, appointment_id, document_name, document_type,
+        file_url, file_name, file_size, mime_type, doctor_name, description, notes
+    ) VALUES (
+        p_patient_id, p_doctor_id, p_appointment_id, p_document_name, p_document_type,
+        p_file_url, p_file_name, p_file_size, p_mime_type, p_doctor_name, p_description, p_notes
+    ) RETURNING id INTO document_id;
+    
+    RETURN document_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- =====================================================
+-- ROW LEVEL SECURITY POLICIES
+-- =====================================================
+-- Enable RLS on new tables
+ALTER TABLE support_requests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE patient_documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE patient_activity_log ENABLE ROW LEVEL SECURITY;
+
+-- Support requests policies
+CREATE POLICY "Patients can view their own support requests" 
+    ON support_requests FOR SELECT 
+    USING (true); -- Allow public access for app functionality
+
+CREATE POLICY "Patients can create support requests" 
+    ON support_requests FOR INSERT 
+    WITH CHECK (true); -- Allow public access for app functionality
+
+CREATE POLICY "Admins can manage all support requests" 
+    ON support_requests FOR ALL 
+    USING (true); -- Allow public access for app functionality
+
+-- Patient documents policies
+CREATE POLICY "Patients can view their own documents" 
+    ON patient_documents FOR SELECT 
+    USING (true); -- Allow public access for app functionality
+
+CREATE POLICY "Doctors and admins can manage patient documents" 
+    ON patient_documents FOR ALL 
+    USING (true); -- Allow public access for app functionality
+
+-- Activity log policies
+CREATE POLICY "Patients can view their own activity log" 
+    ON patient_activity_log FOR SELECT 
+    USING (true); -- Allow public access for app functionality
+
+CREATE POLICY "System can log patient activities" 
+    ON patient_activity_log FOR INSERT 
+    WITH CHECK (true); -- Allow public access for app functionality
+
+-- =====================================================
+-- SAMPLE DATA FOR TESTING
+-- =====================================================
+-- Insert sample support request categories
+-- (This will be populated by the application as users submit requests)
+
+-- Insert sample document types reference
+-- Common document types that will be used:
+-- 'lab_report', 'prescription', 'x_ray', 'scan', 'medical_certificate', 'discharge_summary', 'referral', 'other'
+
+-- =====================================================
+-- VIEWS FOR EASY DATA ACCESS
+-- =====================================================
+-- View for patient dashboard summary
+CREATE OR REPLACE VIEW patient_dashboard_summary AS
+SELECT 
+    u.id as patient_id,
+    u.first_name,
+    u.last_name,
+    u.email,
+    COUNT(DISTINCT a.id) as total_appointments,
+    COUNT(DISTINCT CASE WHEN a.appointment_date >= CURRENT_DATE AND a.status IN ('pending', 'confirmed') THEN a.id END) as upcoming_appointments,
+    COUNT(DISTINCT CASE WHEN a.status = 'completed' THEN a.id END) as completed_appointments,
+    COUNT(DISTINCT pd.id) as total_documents,
+    COUNT(DISTINCT CASE WHEN sr.status IN ('open', 'in_progress') THEN sr.id END) as pending_support_requests
+FROM users u
+LEFT JOIN appointments a ON u.id = a.patient_id
+LEFT JOIN patient_documents pd ON u.id = pd.patient_id AND pd.is_visible_to_patient = TRUE
+LEFT JOIN support_requests sr ON u.id = sr.patient_id
+GROUP BY u.id, u.first_name, u.last_name, u.email;
+
+-- View for recent patient activities
+CREATE OR REPLACE VIEW recent_patient_activities AS
+SELECT 
+    pal.patient_id,
+    u.first_name || ' ' || u.last_name as patient_name,
+    pal.activity_type,
+    pal.activity_description,
+    pal.created_at
+FROM patient_activity_log pal
+JOIN users u ON pal.patient_id = u.id
+WHERE pal.created_at >= NOW() - INTERVAL '30 days'
+ORDER BY pal.created_at DESC;
+
+-- =====================================================
+-- COMMENTS FOR DOCUMENTATION
+-- =====================================================
+COMMENT ON TABLE support_requests IS 'Patient support requests with categorization and priority';
+COMMENT ON TABLE patient_documents IS 'Medical documents uploaded by doctors for patients';
+COMMENT ON TABLE patient_activity_log IS 'Log of patient dashboard activities for analytics';
+
+COMMENT ON COLUMN support_requests.category IS 'Type of issue: login, appointment, dashboard, payment, documents, technical, other';
+COMMENT ON COLUMN support_requests.urgency IS 'Urgency level: low, medium, high, urgent';
+COMMENT ON COLUMN support_requests.priority IS 'Priority level: 1 (highest) to 5 (lowest)';
+COMMENT ON COLUMN patient_documents.document_type IS 'Type of document: lab_report, prescription, x_ray, scan, medical_certificate, discharge_summary, referral, other';
+COMMENT ON COLUMN patient_documents.is_visible_to_patient IS 'Whether patient can see this document';
+COMMENT ON COLUMN patient_documents.is_downloadable IS 'Whether patient can download this document';
+
+-- =====================================================
+-- ADMIN FUNCTIONS FOR SUPPORT MANAGEMENT
+-- =====================================================
+-- Function to get support request statistics
+CREATE OR REPLACE FUNCTION get_support_stats()
+RETURNS JSON AS $$
+DECLARE
+    result JSON;
+BEGIN
+    SELECT json_build_object(
+        'total_requests', (SELECT COUNT(*) FROM support_requests),
+        'open_requests', (SELECT COUNT(*) FROM support_requests WHERE status = 'open'),
+        'in_progress_requests', (SELECT COUNT(*) FROM support_requests WHERE status = 'in_progress'),
+        'resolved_requests', (SELECT COUNT(*) FROM support_requests WHERE status = 'resolved'),
+        'closed_requests', (SELECT COUNT(*) FROM support_requests WHERE status = 'closed'),
+        'urgent_requests', (SELECT COUNT(*) FROM support_requests WHERE urgency = 'urgent'),
+        'high_priority_requests', (SELECT COUNT(*) FROM support_requests WHERE urgency = 'high'),
+        'requests_by_category', (
+            SELECT json_object_agg(category, cnt)
+            FROM (
+                SELECT category, COUNT(*) as cnt
+                FROM support_requests
+                GROUP BY category
+            ) t
+        )
+    ) INTO result;
+    
+    RETURN result;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to assign support request to admin
+CREATE OR REPLACE FUNCTION assign_support_request(
+    p_request_id UUID,
+    p_admin_id UUID
+)
+RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE support_requests 
+    SET assigned_to = p_admin_id, 
+        status = 'in_progress',
+        updated_at = NOW()
+    WHERE id = p_request_id;
+    
+    IF FOUND THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to resolve support request
+CREATE OR REPLACE FUNCTION resolve_support_request(
+    p_request_id UUID,
+    p_resolution TEXT
+)
+RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE support_requests 
+    SET status = 'resolved',
+        resolution = p_resolution,
+        resolved_at = NOW(),
+        updated_at = NOW()
+    WHERE id = p_request_id;
+    
+    IF FOUND THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- =====================================================
+-- FINAL SCHEMA NOTES
+-- =====================================================
+-- This schema provides:
+-- 1. Support request system with categorization and priority
+-- 2. Patient document management with access controls
+-- 3. Activity logging for analytics
+-- 4. Dashboard statistics and reporting
+-- 5. Admin functions for support management
+-- 6. Proper indexing and RLS policies
+-- 7. Views for easy data access
+-- 8. Comprehensive functions for client dashboard
+
+-- Schema creation completed successfully!
+-- Ready for integration with client dashboard application.

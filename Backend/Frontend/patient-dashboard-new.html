@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - ITABAZA</title>
+    <link rel="icon" href="./Files/iTABAZA-logo-crop.jpeg">
+    <link rel="stylesheet" href="./css/all.css">
+    <link rel="stylesheet" href="./Styles/responsive.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <style>
+        /* Use same styles as doctor dashboard but with different color scheme */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f9fa;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar with patient color scheme */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding: 0 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .sidebar-header p {
+            margin: 5px 0 0;
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #fff;
+        }
+
+        .sidebar-menu a.active {
+            background: rgba(255,255,255,0.2);
+            border-left-color: #fff;
+        }
+
+        .sidebar-menu a i {
+            margin-right: 15px;
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-menu a span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            padding: 0 20px;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .top-header {
+            background: white;
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .page-subtitle {
+            color: #666;
+            margin: 5px 0 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #218838;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .content-area {
+            padding: 30px;
+        }
+
+        /* Page Content Styles */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        /* Dashboard Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .stat-icon.appointments {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+
+        .stat-icon.upcoming {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+        }
+
+        .stat-icon.documents {
+            background: linear-gradient(45deg, #ffc107, #fd7e14);
+        }
+
+        .stat-icon.support {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+        }
+
+        .stat-content h3 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .stat-content p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Appointment Cards */
+        .appointment-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .appointment-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #28a745;
+        }
+
+        .appointment-card.pending {
+            border-left-color: #ffc107;
+        }
+
+        .appointment-card.confirmed {
+            border-left-color: #28a745;
+        }
+
+        .appointment-card.completed {
+            border-left-color: #6c757d;
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .appointment-doctor {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .appointment-time {
+            background: #f8f9fa;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .appointment-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .appointment-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .appointment-detail i {
+            color: #28a745;
+        }
+
+        /* Document Table */
+        .document-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .document-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .document-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .document-table td {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            color: #666;
+        }
+
+        .document-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Support Form */
+        .support-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #28a745;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .support-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-radio {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-radio:hover {
+            border-color: #28a745;
+        }
+
+        .category-radio input[type="radio"] {
+            margin: 0;
+        }
+
+        .category-radio input[type="radio"]:checked + label {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .category-radio:has(input[type="radio"]:checked) {
+            border-color: #28a745;
+            background: #f8fff8;
+        }
+
+        /* Badge Styles */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .badge.status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge.status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .badge.type-virtual {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.type-in-person {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        /* Loading States */
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading-spinner i {
+            font-size: 24px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .appointment-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="./Files/iTABAZA-logo-crop.jpeg" alt="Patient Avatar" id="patientAvatar">
+                <h3 id="patientName">Loading...</h3>
+                <p id="patientEmail">Loading...</p>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#appointments" class="nav-link active" data-page="appointments">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Appointment Records</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#documents" class="nav-link" data-page="documents">
+                        <i class="fas fa-file-medical"></i>
+                        <span>Documents</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#support" class="nav-link" data-page="support">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Support</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-info">
+                    <h1 class="page-title" id="pageTitle">Appointment Records</h1>
+                    <p class="page-subtitle" id="pageSubtitle">View your appointment history</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon appointments">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalAppointments">0</h3>
+                            <p>Total Appointments</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon upcoming">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="upcomingAppointments">0</h3>
+                            <p>Upcoming Appointments</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon documents">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalDocuments">0</h3>
+                            <p>Available Documents</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon support">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="supportTickets">0</h3>
+                            <p>Support Tickets</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointments Page -->
+                <div class="page-content active" id="appointments-page">
+                    <div class="appointment-grid" id="appointmentGrid">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading appointments...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documents Page -->
+                <div class="page-content" id="documents-page">
+                    <div class="document-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Document Name</th>
+                                    <th>Type</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="documentsTableBody">
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <div class="loading-spinner">
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                            Loading documents...
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Support Page -->
+                <div class="page-content" id="support-page">
+                    <div class="support-form">
+                        <h3><i class="fas fa-question-circle"></i> Submit Support Request</h3>
+                        <form id="supportForm">
+                            <div class="form-group">
+                                <label>Support Category:</label>
+                                <div class="support-categories">
+                                    <div class="category-radio">
+                                        <input type="radio" id="appointmentIssue" name="ticketType" value="appointment_issue" required>
+                                        <label for="appointmentIssue">Appointment Issue</label>
+                                    </div>
+                                    <div class="category-radio">
+                                        <input type="radio" id="loginIssue" name="ticketType" value="login_issue" required>
+                                        <label for="loginIssue">Login Issue</label>
+                                    </div>
+                                    <div class="category-radio">
+                                        <input type="radio" id="paymentIssue" name="ticketType" value="payment_issue" required>
+                                        <label for="paymentIssue">Payment Issue</label>
+                                    </div>
+                                    <div class="category-radio">
+                                        <input type="radio" id="dashboardIssue" name="ticketType" value="dashboard_updating_request" required>
+                                        <label for="dashboardIssue">Dashboard Update</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="supportSubject">Subject:</label>
+                                <input type="text" id="supportSubject" name="subject" placeholder="Brief description of your issue" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supportDescription">Description:</label>
+                                <textarea id="supportDescription" name="description" placeholder="Please describe your issue in detail..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="supportPriority">Priority:</label>
+                                <select id="supportPriority" name="priority" required>
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Submit Support Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Appointment Details Modal -->
+    <div id="appointmentDetailsModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+      <div class="modal-content" style="background:#fff; border-radius:10px; max-width:500px; width:90%; padding:30px; position:relative;">
+        <span id="closeAppointmentModal" style="position:absolute; top:10px; right:20px; font-size:24px; cursor:pointer;">&times;</span>
+        <h2>Appointment Details</h2>
+        <div id="appointmentDetailsBody">
+          <!-- Populated by JS -->
+        </div>
+        <h3 style="margin-top:24px;">Related Documents</h3>
+        <ul id="appointmentDocumentsList">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+    </div>
+
+    <script type="module" src="./Scripts/patient-dashboard-new.js"></script>
+</body>
+</html>

@@ -168,7 +168,7 @@ Let’s walk through how different users interact with the platform: **Patient J
 
 3\. Doctor can submit support ticket , and this support ticket in case he/she is encountering issue with appointment booked or any other thing inconvenient to him/her under his/her dashboard
 
-**“IMAGE: support-ticket.png”**
+<img width="1363" height="626" alt="Image" src="https://github.com/user-attachments/assets/9480b2e5-aa60-4dea-8117-b6e04a299078" />
 
 4\. After appointment doctor can upload document to patient 
 

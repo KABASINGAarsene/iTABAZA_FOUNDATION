@@ -237,13 +237,6 @@ video-chat-app/
   - Close other bandwidth-intensive applications
   - Try reducing video quality (future enhancement)
 
-### Browser Compatibility
-
-**Recommended Browsers**:
-- Chrome 80+ (best performance)
-- Firefox 75+
-- Safari 14+ (macOS/iOS)
-- Edge 80+
 
 **Not Recommended**:
 - Internet Explorer
@@ -270,14 +263,6 @@ video-chat-app/
 - Minimal server resource usage
 - Optimized for multiple participants
 
-##  Development Notes
-
-### Key Technologies
-- **WebRTC**: Real-time communication
-- **Socket.IO**: Signaling server
-- **Express.js**: Web server
-- **Modern JavaScript**: ES6+ features
-- **CSS Grid/Flexbox**: Responsive layouts
 
 ### Recent Improvements
 - Enhanced error handling and recovery
@@ -304,12 +289,5 @@ If you encounter issues:
 3. Try the troubleshooting steps above
 4. Test with different browsers/devices
 5. Check if the issue is reproducible
-
-
-MIT License - Feel free to modify and distribute.
-
----
-
-**Note**: This application is designed for local/private network use. For production deployment, consider implementing TURN servers for better NAT traversal and additional security measures.
 
 Enjoy your video meetings! 

@@ -27,11 +27,15 @@
 
 **Itabaza**: Solution to Rwandan Health Care System
 
-In Rwanda, long waiting lines, delays, and injustice are often the big problem of the way people have to travel to obtain quality healthcare services. Clients have to wake up at early hours just to undergo endless queues in hospitals only to be referred to the nether side of possibility which includes rejection or being neglected. A lack of a credible appointment mechanism means that most Rwandans have to resort to chance or personal relations as a method of getting necessary attention promptly, a disparity that is unfair in addition to being time-wasting and health-threatening. Such a discouraging truth discourages a lot of people to receive care at an early stage, which sometimes entails unnecessary complications. Besides that, the lack of elaborate feedback system compels healthcare providers to lack realisation of areas critical in service gap, hence hindering their effectiveness to perform.
+The reason I am writing this is because in Rwanda many people have to travel long queues, waiting times and unfairness in the quest to obtain quality health. First of all, queues are so long that patients are forced to wake up in the middle of the night, in order to wait in lines. Upon their arrival they can be directed to a place that is the equivalent of the no-go zone and here they are told that it is not impossible or they are ignored. The whole thing is unfair and aggravating since the country does not use an effective appointment system yet, and thus, people can skip the line by chance or personal acquaintances. Such a gap is time-wasting and at times even life-threatening. It is also very much a reason why many ill individuals end up waiting too long to get help and hence ending up with more serious problems in the future.
 
-Meet Itabaza- an innovative, locally-grown digital platform designed by a special team of committed Rwandan scientists to change access to health care through equal, transparent, and efficient services. Itabaza makes it easy on patients to make medical appointments online, enabling in-person visits, as well as video visits, so patients can cut the time, eliminate overcrowding, and have flexible access to care. In addition to booking an appointment, Itabaza can provide patients with necessary medical documents in the digital version and can leave feedback about their experience and make it their voices that will be used to engage in constant improvement. Stressing on equal access and accountability, Itabaza is not just a tool, it is a movement towards the healthcare system where every person knows their rights and the quality of healthcare services will be timely and reliable to all Rwandans.
+The other problem is that the system does not provide good feedback. Doctors and nurses cannot visualise easily where gaps in the service are and thus, they can hardly make improvements. They are not able to be as effective as they could be because they do not know what is really going on.
 
-The future of Rwanda in terms of healthcare with Itabaza is the future in which a healthcare institution will be unwilling to leave a patient alone because of prolonged waits or favoritism, one in which technology will actually help to fill a gap instead of creating one and one in which the experience of the patient is empowered by trust, respect, and transparency. One appointment at a time we can make Rwanda a healthier place.
+Altogether, the issues of long long waitings, delays, and inequality treatment do not allow most Rwandan people to get the healthcare they need.
+
+Itabaza- a Rwandan digital platform and game changer created by a team of dedicated Rwandan software engineering students with aim of transforming access to health care with equal, transparent and efficient services. Itabaza simplifies the process of making medical appointments over the internet so that patients can visit the clinic in person, or even do a video visit, to reduce the time and overcrowding on the one hand, or to enable on-demand flexibility in access to care. Besides making an appointment, due to getting the required medical documents, it will be possible to leave feedback regarding their experience and, in this way, it will be their voices that will be used in order to constantly improve it. With the emphasis put on equality in access and accountability, Itabaza is not a tool, but it is a movement to the health care system in which everyone will be aware of their rights and the quality of healthcare services will be timely and reliable to every inhabitant of Rwanda.
+
+Itabaza, which is the future of the healthcare landscape in Rwanda, means that the doctors and the nurses will no longer leave a patient hanging around hours without attending to them or favoring some patients. Holes will be varnished with technologies rather than exacerbating the issues, and each patient will get a feeling that they are the ones that are trusted, respected, and informed. Just start with a single appointment and Rwanda can get healthier in the eyes of all.
 
 **1.1 Problem Statement** 
 
@@ -196,7 +200,7 @@ The platform recognizes and separates user privileges clearly.
 
 **2.4 Accessibility & Inclusiveness** 
 
-One of Hospital Quick’s strongest pillars is its **uncompromising inclusiveness.** 
+One of iTABAZA’s strongest main objective is its **uncompromising inclusiveness.** 
 
 **USSD & SMS for Rural Access  (future development)** 
 
@@ -224,7 +228,7 @@ We have discovered that ussd is costly high to integrate it into the code becaus
 
 iTABAZA is more than just a software platform , it is a **healthcare revolution** built to meet the unique challenges of Rwanda’s growing population. By providing tools tailored to every role in the medical ecosystem and ensuring access for even the most vulnerable, it sets a new standard in African digital health innovation. 
 
-In the next chapter, we will dive deeper into **technical and architectural design** , how this system was built, the tech stacks used, and how scalability, security, and data privacy were prioritized from day one.
+In the next following part, we will dive deeper into **technical and architectural design** , how this system was built, the tech stacks used, and how scalability, security, and data privacy were prioritized from day one.
 
  **KEY FUNCTIONALITIES** 
 
@@ -254,7 +258,7 @@ Ideal for:
 
 
   
-To deliver more stable and reliable healthcare service across Rwanda, Hospital Quick is built on a modern, secure, and highly accessible digital infrastructure. In this chapter, we break down the technical design of the system in a way that is easy to understand, even for those without a background in software engineering . This ensures transparency and helps all doctors, and users like patient , grasp how the system works behind the scenes. 
+iTABAZA is developed through an advanced, safe, and highly accessible digital infrastructure so as to provide more consistent and consistent healthcare service in the country of Rwanda. This document part is dedicated to the technical design of the system made in layperson terms even by persons who are not software engineers . This makes it transparent and understandable by all the doctors and individuals such as patient who use the system.. 
 
 **4.1 System Architecture** 
 
